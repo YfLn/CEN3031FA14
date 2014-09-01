@@ -1,9 +1,10 @@
-CEN3031FA14
+Project description: We do not have a project YET
 
 Team Name: UNDECIDED
 
-GatorLinkID: yufanlin, yufanlin@ufl.edu
-            Elli Carranza - ecarranza
+GatorLinkID: yufanlin - yufanlin@ufl.edu
+             Elli Carranza - ecarranza
 
-Project description: We do not have a project YET
+CEN3031FA14
+
 ===========
