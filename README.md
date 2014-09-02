@@ -7,9 +7,9 @@ GatorLinkID: Yufan Lin - yufanlin,
              Tyler Willis - tjww2794,
              Ishin Iwasaki - iiwasaki
 
-GroupA(Front-end): Ishin Iwasaki - iiwasaki,				   
+GroupA(Front-end): Ishin Iwasaki - iiwasaki, Elli, Chris		   
 
-GroupB(Back-end):             
+GroupB(Back-end): Kun        
 
 CEN3031FA14
 
