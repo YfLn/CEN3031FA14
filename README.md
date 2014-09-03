@@ -11,7 +11,7 @@ GatorLinkID: Yufan Lin - yufanlin,
              Chris Whitten - cwhitten,
 
 GroupA(Front-end): Ishin Iwasaki - iiwasaki, Elli Carranza - ecarranza, Richard Leon - rleon019,				   
-GroupB(Back-end): Kun Cao - kuncao0228
+GroupB(Back-end): Kun Cao - kuncao0228, Yufan Lin - yufanlin
 
 CEN3031FA14
 
