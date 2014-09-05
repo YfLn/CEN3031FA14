@@ -8,7 +8,8 @@ GatorLinkID: Yufan Lin - yufanlin,
              Ishin Iwasaki - iiwasaki,
              Richard Leon - rleon019,
              Kun Cao - kuncao0228,
-             Chris Whitten - cwhitten
+             Chris Whitten - cwhitten,
+             Hugo
 
 GroupA(Front-end): Ishin Iwasaki - iiwasaki, Elli Carranza - ecarranza, Richard Leon - rleon019, Chris Whitten - cwhitten 				   
 
