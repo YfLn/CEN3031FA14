@@ -1,4 +1,4 @@
-Project description: We do not have a project YET
+Project description: Customer: Joost Impink. Make a web app for UF faculty, researchers, and grad students to share databases that they use. Users can also create a portfolio so that they can keep track of databases they use, as well as add databases that they find that other users have added. 
 
 Team Name: UNDECIDED
 
