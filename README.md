@@ -1,4 +1,4 @@
-Project description: We do not have a project YET
+Project description: Customer: Joost Impink. Make a web app for UF faculty, researchers, and grad students to share databases that they use. Users can also create a portfolio so that they can keep track of databases they use, as well as add databases that they find that other users have added. 
 
 Team Name: UNDECIDED
 
@@ -19,3 +19,18 @@ GroupB(Back-end): Kun Cao - kuncao0228, Yufan Lin - yufanlin, Tyler Willis - tjw
 CEN3031FA14
 
 ===========
+
+User Schema (PLEASE CHANGE THIS IF FIELDS ARE ADDED/UPDATED/REMOVED) (
+Name;
+Email Address;
+Profile Picture;
+Research Interests;
+Portfolio (not relevant to register page))
+------
+Database Schema(
+Name;
+Description;
+Tags;
+URL;
+Members (not relevant to creation);
+isFree? (boolean value))
