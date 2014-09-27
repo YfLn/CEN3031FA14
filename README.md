@@ -20,17 +20,17 @@ CEN3031FA14
 
 ===========
 
-User Schema (PLEASE CHANGE THIS IF FIELDS ARE ADDED/UPDATED/REMOVED)
-Name
-Email Address
-Profile Picture
-Research Interests
-Portfolio (not relevant to register page)
-
-Database Schema
-Name
-Description
-Tags
-URL
-Members (not relevant to creation)
-isFree? (boolean value)
+User Schema (PLEASE CHANGE THIS IF FIELDS ARE ADDED/UPDATED/REMOVED) (
+Name;
+Email Address;
+Profile Picture;
+Research Interests;
+Portfolio (not relevant to register page))
+------
+Database Schema(
+Name;
+Description;
+Tags;
+URL;
+Members (not relevant to creation);
+isFree? (boolean value))
