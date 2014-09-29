@@ -37,22 +37,19 @@ var UserSchema = new Schema({
 		default: '',
 		validate: [validateLocalStrategyProperty, 'Please fill in your last name']
 	},
-	username: {
-		type: String,
-		unique: 'testing error message',
-		required: 'Please fill in a username',
-		trim: true
-	},
 	displayName: {
 		type: String,
 		trim: true
 	},
-	email: {
+	// Essentially Renamed Email field...
+	username: {
 		type: String,
 		trim: true,
 		default: '',
 		validate: [validateLocalStrategyProperty, 'Please fill in your email'],
-		match: [/.+\@.+\..+/, 'Please fill a valid email address']
+		match: [/^.*@ufl\.edu$/, 'Please fill in a valid @ufl.edu email address']
+		// Previously matched to : "/.+\@.+\..+/"
+		// Still need to add some for of authentication to make sure its a real UF email.
 	},
 	researchinterests: {
 		type: String,
@@ -67,6 +64,7 @@ var UserSchema = new Schema({
 	salt: {
 		type: String
 	},
+	//test
 	provider: {
 		type: String,
 		required: 'Provider is required'
