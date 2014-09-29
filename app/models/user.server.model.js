@@ -64,6 +64,7 @@ var UserSchema = new Schema({
 	salt: {
 		type: String
 	},
+	//test
 	provider: {
 		type: String,
 		required: 'Provider is required'
