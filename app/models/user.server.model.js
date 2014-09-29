@@ -37,11 +37,11 @@ var UserSchema = new Schema({
 		default: '',
 		validate: [validateLocalStrategyProperty, 'Please fill in your last name']
 	},
-	research: {
+	username: {
 		type: String,
-		trim: true,
-		default: '',
-		validate: [validateLocalStrategyProperty, 'Please fill in your research interests']
+		unique: 'testing error message',
+		required: 'Please fill in a username',
+		trim: true
 	},
 	displayName: {
 		type: String,

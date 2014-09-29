@@ -12,16 +12,17 @@
 					<input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="user.lastName" placeholder="Last Name">
 				</div>
 				<div class="form-group">
-					<label for="Research">Research Interets</label>
-					<input type="text" id="Research" name="Research" class="form-control" data-ng-model="user.research" placeholder="Research Interets">
-				</div>
-				<div class="form-group">
 					<label for="email">Email</label>
-					<input type="email" id="email" name="email" class="form-control" data-ng-model="user.email" placeholder="Email">
+					<input type="email" id="email" name="email" class="form-control" data-ng-model="user.email" placeholder="youraccount@ufl.edu">
 				</div>
 				<div class="form-group">
 					<label for="username">Username</label>
 					<input type="text" id="username" name="username" class="form-control" data-ng-model="user.username" placeholder="Username">
+				</div>
+				<div class="form-group">
+					<label for="researchinterests">Research Interests</label>
+					<textarea type="researchinterests" maxlength="300" id="researchinterests" name="researchinterests" class="form-control" data-ng-model="user.researchinterests" ng-trim="false" placeholder="Enter a brief description of your research interests" style="height:60px; text-align:left"></textarea>
+					<span>{{300 - credentials.researchinterests.length}} character(s) remaining</span>
 				</div>
 				<div class="text-center form-group">
 					<button type="submit" class="btn btn-large btn-primary">Save Profile</button>
