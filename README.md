@@ -34,5 +34,3 @@ Tags;
 URL;
 Members (not relevant to creation);
 isFree? (boolean value))
-
-I need to test something
