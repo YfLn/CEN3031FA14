@@ -41,9 +41,6 @@ exports.forgot = function(req, res, next) {
 							message: 'It seems like you signed up using your ' + user.provider + ' account'
 						});
 					} else {
-						return res.status(400).send({
-							message: 'you are here'
-						});
 						user.resetPasswordToken = token;
 						user.resetPasswordExpires = Date.now() + 3600000; // 1 hour
 
