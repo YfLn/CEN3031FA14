@@ -49,7 +49,7 @@ var UserSchema = new Schema({
 		validate: [validateLocalStrategyProperty, 'Please fill in your email'],
 		match: [/^.*@ufl\.edu$/, 'Please fill in a valid @ufl.edu email address']
 		// Previously matched to : "/.+\@.+\..+/"
-		// Still need to add some for of authentication to make sure its a real UF email.
+		// Still need to add some form of authentication to make sure its a real UF email.
 	},
 	researchinterests: {
 		type: String,
@@ -64,7 +64,6 @@ var UserSchema = new Schema({
 	salt: {
 		type: String
 	},
-	//test
 	provider: {
 		type: String,
 		required: 'Provider is required'
