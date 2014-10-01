@@ -4,16 +4,16 @@
 		<h1 data-ng-bind="database.name"></h1>
 	</div>
 	<!-- Description Here -->
-	<div>
+	<div class="page-header">
 		<p data-ng-bind="database.description"></p>
 	</div>
 	<!-- isFree Here, desperately needs formatting -->
-	<div>
+	<div class="page-header">
 		<p>Free : </p>
 		<p data-ng-bind="database.isFree"></p>
 	</div>
 	<!-- Buttons for Delete / Edit -->
-	<div class="pull-right" data-ng-show="authentication.user._id == database.user._id">
+	<div class="" data-ng-show="authentication.user._id == database.user._id">
 		<a class="btn btn-primary" href="/#!/databases/{{database._id}}/edit">
 			<i class="glyphicon glyphicon-edit"></i>
 		</a>

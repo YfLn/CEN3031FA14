@@ -46,7 +46,7 @@ var UserSchema = new Schema({
 		type: String,
 		trim: true,
 		default: '',
-		validate: [validateLocalStrategyProperty, 'Please fill in your email'],
+		validate: [validateLocalStrategyProperty, 'Please fill in your UF email'],
 		match: [/^.*@ufl\.edu$/, 'Please fill in a valid @ufl.edu email address']
 		// Previously matched to : "/.+\@.+\..+/"
 		// Still need to add some form of authentication to make sure its a real UF email.
