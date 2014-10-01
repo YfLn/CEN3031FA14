@@ -14,14 +14,13 @@
                     <!-- Checkbox to specify whether it is a free or paid resource, defaults free (true) -->
                     <label class="control-label" for="isFree">Free</label>
                     <div class="controls">
-                        <input type="checkbox" checked="true" data-ng-model="isFree" id="isFree" class="form-control">
+                        <input type="checkbox" data-ng-model="isFree" id="isFree" class="form-control" checked>
                     </div>
                     <!-- Field for the description of the DB, possibly later add a char limit and possible suggestions -->
                     <label class="control-label" for="description">Description</label>
                     <div class="controls">
                         <input type="text" data-ng-model="description" id="description" class="form-control" placeholder="Provide a brief description of the database" required>
                     </div>
-                </div>
                 </div>
                 <div class="form-group">
                     <input type="submit" class="btn btn-default">
