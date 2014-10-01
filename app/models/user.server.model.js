@@ -49,7 +49,7 @@ var UserSchema = new Schema({
 		validate: [validateLocalStrategyProperty, 'Please fill in your email'],
 		match: [/^.*@ufl\.edu$/, 'Please fill in a valid @ufl.edu email address']
 		// Previously matched to : "/.+\@.+\..+/"
-		// Still need to add some for of authentication to make sure its a real UF email.
+		// Still need to add some form of authentication to make sure its a real UF email.
 	},
 	researchinterests: {
 		type: String,
@@ -59,7 +59,7 @@ var UserSchema = new Schema({
 	password: {
 		type: String,
 		default: '',
-		validate: [validateLocalStrategyPassword, 'Password should be longer']
+		validate: [validateLocalStrategyPassword, 'Password should be atleast 6 characters long']
 	},
 	salt: {
 		type: String
