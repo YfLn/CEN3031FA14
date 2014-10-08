@@ -19,7 +19,8 @@
                     <!-- Field for the description of the DB, possibly later add a char limit and possible suggestions -->
                     <label class="control-label" for="description">Description</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="description" id="description" class="form-control" placeholder="Provide a brief description of the database" required>
+                        <textarea type="text" data-ng-model="description" id="description" maxlength="500" class="form-control" placeholder="Provide a brief description of the database" required></textarea>
+                        <span>{{500 - description.length}} character(s) remaining</span>
                     </div>
                 </div>
                 <div class="form-group">
