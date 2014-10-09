@@ -21,15 +21,15 @@ describe('Database Model Unit Tests:', function() {
 		user = new User({
 			firstName: 'Full',
 			lastName: 'Name',
-			displayName: 'Full Name',
-			email: 'test@test.com',
-			username: 'username',
+			username: 'test@ufl.edu',
 			password: 'password'
 		});
 
 		user.save(function() { 
 			database = new Database({
 				name: 'Database Name',
+				isFree: true,
+				description: 'a database we created for a test',
 				user: user
 			});
 
