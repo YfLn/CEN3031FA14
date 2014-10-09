@@ -18,20 +18,18 @@ var user, user2;
 describe('User Model Unit Tests:', function() {
 	before(function(done) {
 		user = new User({
-			firstName: 'Full',
-			lastName: 'Name',
-			displayName: 'Full Name',
-			email: 'test@test.com',
-			username: 'username',
+			firstName: 'Firsty',
+			lastName: 'Namey',
+			username: 'user@ufl.edu',
+			researchinterests: 'generic research interests'
 			password: 'password',
 			provider: 'local'
 		});
 		user2 = new User({
 			firstName: 'Full',
 			lastName: 'Name',
-			displayName: 'Full Name',
-			email: 'test@test.com',
-			username: 'username',
+			username: 'user@ufl.edu',
+			researchinterests: 'generic research interests'
 			password: 'password',
 			provider: 'local'
 		});
