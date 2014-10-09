@@ -21,13 +21,15 @@ describe('User Model Unit Tests:', function() {
 			firstName: 'Firsty',
 			lastName: 'Namey',
 			username: 'user@ufl.edu',
+			researchinterests: 'generic research interests'
 			password: 'password',
 			provider: 'local'
 		});
 		user2 = new User({
 			firstName: 'Full',
 			lastName: 'Name',
-			username: 'test@test.com',
+			username: 'user@ufl.edu',
+			researchinterests: 'generic research interests'
 			password: 'password',
 			provider: 'local'
 		});
