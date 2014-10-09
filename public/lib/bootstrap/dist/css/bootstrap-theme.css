@@ -211,11 +211,12 @@
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ff428bca', endColorstr='#ff357ebd', GradientType=0);
   background-repeat: repeat-x;
 }
+/* THIS IS WHERE THE STYLING FOR THE NAVBAR IS */
 .navbar-default {
-  background-image: -webkit-linear-gradient(top, #fff 0%, #f8f8f8 100%);
-  background-image:      -o-linear-gradient(top, #fff 0%, #f8f8f8 100%);
-  background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#f8f8f8));
-  background-image:         linear-gradient(to bottom, #fff 0%, #f8f8f8 100%);
+  background-image: -webkit-linear-gradient(top, #fff 0%, #ff0000 100%);
+  background-image:      -o-linear-gradient(top, #fff 0%, #ff0000 100%);
+  background-image: -webkit-gradient(linear, left top, left bottom, from(#fff), to(#ff0000));
+  background-image:         linear-gradient(to bottom, #f9955F 0%, #f8831F 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffffffff', endColorstr='#fff8f8f8', GradientType=0);
   filter: progid:DXImageTransform.Microsoft.gradient(enabled = false);
   background-repeat: repeat-x;
@@ -227,7 +228,7 @@
   background-image: -webkit-linear-gradient(top, #ebebeb 0%, #f3f3f3 100%);
   background-image:      -o-linear-gradient(top, #ebebeb 0%, #f3f3f3 100%);
   background-image: -webkit-gradient(linear, left top, left bottom, from(#ebebeb), to(#f3f3f3));
-  background-image:         linear-gradient(to bottom, #ebebeb 0%, #f3f3f3 100%);
+  background-image:         linear-gradient(to bottom, #f07A10 0%, #EA760A 100%);
   filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#ffebebeb', endColorstr='#fff3f3f3', GradientType=0);
   background-repeat: repeat-x;
   -webkit-box-shadow: inset 0 3px 9px rgba(0, 0, 0, .075);
