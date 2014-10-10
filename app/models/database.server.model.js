@@ -18,8 +18,7 @@ var DatabaseSchema = new Schema({
 	},
 	isFree: {
 		type: Boolean,
-		default: false,
-		trim: true
+		default: false
 	},
 	description: {
 		type: String,

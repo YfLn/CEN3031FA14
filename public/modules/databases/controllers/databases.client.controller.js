@@ -63,5 +63,7 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 				databaseId: $stateParams.databaseId
 			});
 		};
+		//sort order for the list database page
+		$scope.sortorder = 'name';
 	}
 ]);

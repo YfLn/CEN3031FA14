@@ -1,18 +1,21 @@
 <section data-ng-controller="SettingsController">
 	<div class="page-header">
-		<font size="6"><span data-ng-bind="user.firstName"></span> <span data-ng-bind="user.lastName"></span></font>
+		<h2> <span data-ng-bind-template= "{{user.firstName}} {{user.lastName}}"></span>'s Profile </h2>
 	</div>
-	<div class="page-header">
-		<h1 data-ng-bind="user.username"></h1>
-	</div>
-	<div class="page-header">
-		<h1 data-ng-bind="user.researchinterests"></h1>
-	</div>
+	
+	<h3>Research Interests</h3>
+	<p><span  data-ng-bind="user.researchinterests"></span></p>
+	
+	<h3>Contact Email</h3>
+	<p><span data-ng-bind="user.username">
+	
+	<h3>Portfolio</h3>
+	<p> Coming soon! </p>
+
 	<div class="pull-right">
 		<a class="btn btn-primary" href="/#!/settings/edit">
 			Edit Profile
-			<i class="glyphicon glyphicon-edit"></i>
+			<i class="glyphicon glyphicon-edit"></i> 
 		</a>
 	</div>
-
 </section>
