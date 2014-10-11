@@ -58,9 +58,9 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 		// Redirect to View profile page after a certain number of ms
 		$scope.redirectToViewProfile = function(ms){
 			$timeout(function(){
-					$location.path("/settings/profile");
+					$location.path('/settings/profile');
 				},ms);
-		}
+		};
 
 		// Change user password
 		$scope.changeUserPassword = function() {
