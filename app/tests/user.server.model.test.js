@@ -21,7 +21,7 @@ describe('User Model Unit Tests:', function() {
 			firstName: 'Firsty',
 			lastName: 'Namey',
 			username: 'user@ufl.edu',
-			researchinterests: 'generic research interests'
+			researchinterests: 'generic research interests',
 			password: 'password',
 			provider: 'local'
 		});
@@ -29,7 +29,7 @@ describe('User Model Unit Tests:', function() {
 			firstName: 'Full',
 			lastName: 'Name',
 			username: 'user@ufl.edu',
-			researchinterests: 'generic research interests'
+			researchinterests: 'generic research interests',
 			password: 'password',
 			provider: 'local'
 		});
