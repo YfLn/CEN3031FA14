@@ -99,7 +99,7 @@
 			// test scope value
 			expect(scope.authentication.user).toBe('Fred');
 			expect(scope.error).toEqual(undefined);
-			expect($location.url()).toBe('/');
+			expect($location.url()).toBe('/databases');
 		});
 
 		it('$scope.signup() should fail to register with duplicate Username', function() {
