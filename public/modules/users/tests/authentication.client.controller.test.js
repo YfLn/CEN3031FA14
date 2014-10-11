@@ -55,7 +55,7 @@
 
 			// Test scope value
 			expect(scope.authentication.user).toEqual('Fred');
-			expect($location.url()).toEqual('/');
+			expect($location.url()).toEqual('/databases');
 		});
 
 		it('$scope.signin() should fail to log in with nothing', function() {
