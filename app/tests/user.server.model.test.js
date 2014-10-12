@@ -26,8 +26,8 @@ describe('User Model Unit Tests:', function() {
 			provider: 'local'
 		});
 		user2 = new User({
-			firstName: 'Full',
-			lastName: 'Name',
+			firstName: 'Firsty',
+			lastName: 'Namey',
 			username: 'user@ufl.edu',
 			researchinterests: 'generic research interests',
 			password: 'password',
