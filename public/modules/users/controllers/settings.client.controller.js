@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users').controller('SettingsController', ['$scope', '$http', '$location', 'Users', 'Authentication',
-	function($scope, $http, $location, Users, Authentication) {
+angular.module('users').controller('SettingsController', ['$scope', '$http', '$timeout','$location', 'Users', 'Authentication',
+	function($scope, $http, $timeout, $location, Users, Authentication) {
 		$scope.user = Authentication.user;
 
 		// If user is not signed in then redirect back home
@@ -53,6 +53,13 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$l
 			} else {
 				$scope.submitted = true;
 			}
+		};
+
+		// Redirect to View profile page after a certain number of ms
+		$scope.redirectToViewProfile = function(ms){
+			$timeout(function(){
+					$location.path('/settings/profile');
+				},ms);
 		};
 
 		// Change user password
