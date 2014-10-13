@@ -56,7 +56,6 @@
 			// Test scope value
 			expect(scope.authentication.user).toEqual('Fred');
 			expect($location.url()).toEqual('/databases');
-			expect($location.url()).toEqual('/');
 		});
 
 		it('$scope.signin() should fail to log in with nothing', function() {
@@ -101,7 +100,6 @@
 			expect(scope.authentication.user).toBe('Fred');
 			expect(scope.error).toEqual(undefined);
 			expect($location.url()).toBe('/databases');
-			expect($location.url()).toBe('/');
 		});
 
 		it('$scope.signup() should fail to register with duplicate Username', function() {
