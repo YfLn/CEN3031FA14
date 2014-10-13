@@ -4,14 +4,13 @@
 angular.module('databases').controller('DatabasesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Databases',
 	function($scope, $stateParams, $location, Authentication, Databases ) {
 		$scope.authentication = Authentication;
-
 		// Create new Database
 		$scope.create = function() {
 			// Create new Database object
 			var database = new Databases ({
 				name: this.name,
-				isFree: this.isFree,
-				description: this.description
+				description: this.description,
+				isFree: this.isFree
 			});
 
 			// Redirect after save
@@ -20,7 +19,7 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 
 				// Clear form fields
 				$scope.name = '';
-				$scope.description = '';
+
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});

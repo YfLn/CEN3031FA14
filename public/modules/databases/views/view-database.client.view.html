@@ -8,9 +8,8 @@
 		<p data-ng-bind="database.description"></p>
 	</div>
 	<!-- isFree Here, desperately needs formatting -->
-	<div class="page-header">
-		<p>Free : </p>
-		<p data-ng-bind="database.isFree"></p>
+	<div class="page-header" data-ng-show="database.isFree">
+		<p>This database is FREEEEEEE</p>
 	</div>
 	<!-- Buttons for Delete / Edit -->
 	<div class="" data-ng-show="authentication.user._id == database.user._id">
