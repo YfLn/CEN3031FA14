@@ -55,6 +55,7 @@
 
 			// Test scope value
 			expect(scope.authentication.user).toEqual('Fred');
+			expect($location.url()).toEqual('/databases');
 			expect($location.url()).toEqual('/');
 		});
 
@@ -99,6 +100,7 @@
 			// test scope value
 			expect(scope.authentication.user).toBe('Fred');
 			expect(scope.error).toEqual(undefined);
+			expect($location.url()).toBe('/databases');
 			expect($location.url()).toBe('/');
 		});
 
@@ -112,7 +114,7 @@
 			$httpBackend.flush();
 
 			// Test scope value
-			expect(scope.error).toBe('Username already exists');
+			expect(scope.error).toBe('Email Address already exists');
 		});
 	});
 }());
