@@ -114,7 +114,7 @@
 			$httpBackend.flush();
 
 			// Test scope value
-			expect(scope.error).toBe('Email Address already exists');
+			expect(scope.error).toBe('Username already exists');
 		});
 	});
 }());
