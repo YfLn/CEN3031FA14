@@ -44,6 +44,7 @@ var UserSchema = new Schema({
 	// Essentially Renamed Email field...
 	username: {
 		type: String,
+		unique: 'User already exists',
 		trim: true,
 		default: '',
 		validate: [validateLocalStrategyProperty, 'Please fill in your UF email'],
