@@ -1,8 +1,10 @@
-<section class="row" data-ng-controller="SettingsController">
-	<h3 class="col-md-12 text-center">My Profile</h3>
-	<div class="col-xs-offset-2 col-xs-8 col-md-offset-5 col-md-2">
+<section class=".container-fluid" data-ng-controller="SettingsController">
+	<div class="page-header">
+		<h2>My Profile</h2>
+	</div>
+	<div class="col-md-8 text-left">
 		<form name="userForm" data-ng-submit="updateUserProfile(userForm.$valid); redirectToViewProfile(1000);" class="signin form-horizontal" autocomplete="off">
-			<fieldset><hr>
+			<fieldset>
 				<div class="form-group">
 					<label for="firstName">First Name</label>
 					<input type="text" id="firstName" name="firstName" class="form-control" data-ng-model="user.firstName" placeholder="First Name">
@@ -33,3 +35,5 @@
 		</form>
 	</div>
 </section>
+<!--class="col-xs-offset-2 col-xs-8 col-md-offset-5 col-md-2"
+class="col-md-8 text-left"-->
