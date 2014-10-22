@@ -20,10 +20,22 @@ var DatabaseSchema = new Schema({
 		type: Boolean,
 		default: false
 	},
-	description: {
+	descriptionLong: {
+		type: String,
+		default: '',
+		required: 'Please provide a description of the dddDatabase',
+		trim: true
+	},
+	descriptionShort: {
 		type: String,
 		default: '',
 		required: 'Please provide a description of the Database',
+		trim: true
+	},
+	url: {
+		type: String,
+		default: '',
+		required: 'Please provide the URL of the Database',
 		trim: true
 	},
 	created: {

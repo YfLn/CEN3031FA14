@@ -9,8 +9,10 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 			// Create new Database object
 			var database = new Databases ({
 				name: this.name,
-				description: this.description,
-				isFree: this.isFree
+				descriptionShort: this.descriptionShort,
+				descriptionLong: this.descriptionLong,
+				isFree: this.isFree,
+				url: this.url
 			});
 
 			// Redirect after save
