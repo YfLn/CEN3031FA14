@@ -11,15 +11,27 @@
                     <div class="controls">
                         <input type="text" data-ng-model="database.name" id="name" class="form-control" placeholder="Name" required>
                     </div>
+                    <!-- Field for the DB url -->
+                    <label class="control-label" for="url">URL</label>
+                    <div class="controls">
+                        <input type="text" data-ng-model="database.url" id="url" class="form-control" placeholder="Database URL" required>
+                    </div>
                     <!-- Checkbox to specify whether it is a free or paid resource, defaults free (true) -->
                     <label class="control-label" for="isFree">Free</label>
                     <div class="controls">
                         <input type="checkbox" data-ng-model="database.isFree" id="isFree">
                     </div>
-                    <!-- Field for the description of the DB, possibly later add a char limit and possible suggestions -->
-                    <label class="control-label" for="description">Description</label>
+                    <!-- Field for the "Short" description of the DB -->
+                    <label class="control-label" for="descriptionShort">List Description</label>
                     <div class="controls">
-                        <input type="text" data-ng-model="database.description" id="description" class="form-control" placeholder="Description" required>
+                        <textarea type="text" data-ng-model="database.descriptionShort" id="database.descriptionShort" maxlength="100" class="form-control" placeholder="Provide an in depth description of the database" required></textarea>
+                        <span>{{100 - database.descriptionShort.length}} character(s) remaining</span>
+                    </div>
+                    <!-- Field for the "Long" description of the DB, possibly later add possible suggestions -->
+                    <label class="control-label" for="descriptionLong">Full Description</label>
+                    <div class="controls">
+                        <textarea type="text" data-ng-model="database.descriptionLong" id="database.descriptionLong" maxlength="500" class="form-control" placeholder="Provide an in depth description of the database" required></textarea>
+                        <span>{{500 - database.descriptionLong.length}} character(s) remaining</span>
                     </div>
                 </div>
                 <div class="form-group">

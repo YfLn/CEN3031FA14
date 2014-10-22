@@ -3,13 +3,21 @@
 	<div class="page-header">
 		<h1 data-ng-bind="database.name"></h1>
 	</div>
-	<!-- Description Here -->
+	<!-- Short Description Here, should this be visibile in view DB or just in the list of DBs? -->
 	<div class="page-header">
-		<p data-ng-bind="database.description"></p>
+		<p data-ng-bind="database.descriptionShort"></p>
+	</div>
+	<!-- Long Description Here -->
+	<div class="page-header">
+		<p data-ng-bind="database.descriptionLong"></p>
+	</div>
+	<!-- URL is here -->
+	<div class="page-header">
+		<p data-ng-bind="database.url"></p>
 	</div>
 	<!-- isFree Here, desperately needs formatting -->
 	<div class="page-header" data-ng-show="database.isFree">
-		<p>This database is FREEEEEEE</p>
+		<p>This database is free</p>
 	</div>
 	<!-- Buttons for Delete / Edit -->
 	<div class="" data-ng-show="authentication.user._id == database.user._id">
