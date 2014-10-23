@@ -6,21 +6,21 @@
 		<form name="userForm" data-ng-submit="updateUserProfile(userForm.$valid); redirectToViewProfile(1000);" class="signin form-horizontal" autocomplete="off">
 			<fieldset>
 				<div class="form-group">
+					<label for="username">UF Email Address</label>
+					<p id="username" name="username" data-ng-model="user.username">{{user.username}}</p>
+				</div>
+				<div class="form-group">
 					<label for="firstName">First Name</label>
-					<input type="text" id="firstName" name="firstName" class="form-control" data-ng-model="user.firstName" placeholder="First Name">
+					<input type="text" id="firstName" name="firstName" class="form-control" data-ng-model="user.firstName" placeholder="First Name"readonly>
 				</div>
 				<div class="form-group">
 					<label for="lastName">Last Name</label>
-					<input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="user.lastName" placeholder="Last Name">
-				</div>
-				<div class="form-group">
-					<label for="username">UF Email Address</label>
-					<input type="username" id="username" name="username" class="form-control" data-ng-model="user.username" placeholder="youraccount@ufl.edu" readonly>
+					<input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="user.lastName" placeholder="Last Name" readonly>
 				</div>
 				<div class="form-group">
 					<label for="researchinterests">Research Interests</label>
 					<textarea type="researchinterests" maxlength="300" id="researchinterests" name="researchinterests" class="form-control" data-ng-model="user.researchinterests" ng-trim="false" placeholder="Enter a brief description of your research interests" style="height:60px; text-align:left"></textarea>
-					<span>{{300 - credentials.researchinterests.length}} character(s) remaining</span>
+					<span>{{300 - user.researchinterests.length}} character(s) remaining</span>
 				</div>
 				<div class="text-center form-group">
 					<button type="submit" class="btn btn-large btn-primary">Save Profile</button>
