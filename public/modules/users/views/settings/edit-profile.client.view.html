@@ -1,9 +1,9 @@
-<section class=".container-fluid" data-ng-controller="SettingsController">
+<section class=".container-fluid" data-ng-controller="SettingsController" onload="copyInterests()">
 	<div class="page-header">
 		<h2>My Profile</h2>
 	</div>
 	<div class="col-md-8 text-left">
-		<form name="userForm" data-ng-submit="updateUserProfile(userForm.$valid); redirectToViewProfile(1000);" class="signin form-horizontal" autocomplete="off">
+		<form name="userForm" class="signin form-horizontal" autocomplete="off">
 			<fieldset>
 				<div class="form-group">
 					<label for="username">UF Email Address</label>
@@ -20,10 +20,11 @@
 				<div class="form-group">
 					<label for="researchinterests">Research Interests</label>
 					<textarea type="researchinterests" maxlength="300" id="researchinterests" name="researchinterests" class="form-control" data-ng-model="user.researchinterests" ng-trim="false" placeholder="Enter a brief description of your research interests" style="height:60px; text-align:left"></textarea>
-					<span>{{300 - user.researchinterests.length}} character(s) remaining</span>
+					<span>{{300 - researchInterests.length}} character(s) remaining</span>
 				</div>
 				<div class="text-center form-group">
-					<button type="submit" class="btn btn-large btn-primary">Save Profile</button>
+					<button type="submit" class="btn btn-large btn-primary" ng-click="updateUserProfile(userForm.$valid); redirectToViewProfile(1000);">Save Profile</button>
+					<button type="reset" class="btn btn-large btn-primary" ng-click="cancelChanges(); redirectToViewProfile(0);">Cancel</button>
 				</div>
 				<div data-ng-show="success" class="text-center text-success">
 					<strong>Profile Saved Successfully</strong>
