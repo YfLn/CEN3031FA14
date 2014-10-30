@@ -2,8 +2,11 @@
 
 angular.module('users').controller('SettingsController', ['$scope', '$http', '$timeout','$location', 'Users', 'Authentication',
 	function($scope, $http, $timeout, $location, Users, Authentication) {
-		$scope.user = Authentication.user;
+		$scope.user ={};
+		angular.copy(Authentication.user, $scope.user); //Deep copy so that changes can be reverted
 
+		$scope.originalUser = {}; //Keep the original copy of the user
+		angular.copy($scope.user, $scope.originalUser);
 		// If user is not signed in then redirect back home
 		if (!$scope.user) $location.path('/');
 
@@ -54,6 +57,10 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 				$scope.submitted = true;
 			}
 		};
+
+		$scope.cancelChanges = function(){
+			Authentication.user = $scope.originalUser;
+		}
 
 		// Redirect to View profile page after a certain number of ms
 		$scope.redirectToViewProfile = function(ms){
