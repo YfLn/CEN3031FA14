@@ -69,11 +69,6 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 				},ms);
 		};
 
-		//Same as redirectToViewProfile without the timeout for testing purposes
-		$scope.redirect = function(){
-			$location.path('settings/profile');
-		}
-
 		// Change user password
 		$scope.changeUserPassword = function() {
 			$scope.success = $scope.error = null;
