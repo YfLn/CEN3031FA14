@@ -60,7 +60,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 
 		$scope.cancelChanges = function(){
 			Authentication.user = $scope.originalUser;
-		}
+		};
 
 		// Redirect to View profile page after a certain number of ms
 		$scope.redirectToViewProfile = function(ms){

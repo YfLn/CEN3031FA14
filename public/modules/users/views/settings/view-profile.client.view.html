@@ -2,20 +2,37 @@
 	<div class="page-header">
 		<h2> <span data-ng-bind-template= "{{user.firstName}} {{user.lastName}}"></span>'s Profile </h2>
 	</div>
+	<div class="pull-left">
+		<h3>Research Interests</h3>
+		<p><span  data-ng-bind="user.researchinterests"></span></p>
 	
-	<h3>Research Interests</h3>
-	<p><span  data-ng-bind="user.researchinterests"></span></p>
-	
-	<h3>Contact Email</h3>
-	<p><span data-ng-bind="user.username">
-	
-	<h3>Portfolio</h3>
-	<p> Coming soon! </p>
+		<h3>Contact Email</h3>
+		<p><span data-ng-bind="user.username">
+	</div>
 
 	<div class="pull-right">
-		<a class="btn btn-primary" href="/#!/settings/edit">
+			<h3>Portfolio</h3>
+			<div class="list-group" data-ng-controller="DatabasesController" data-ng-init="find()" style="min-width:450px !important; height: 300px !important; overflow-y:scroll; max-width:450px">
+        <a data-ng-repeat="database in databases | orderBy:sortorder" data-ng-href="#!/databases/{{database._id}}" class="list-group-item">
+            <div style="display:flex">
+			<small class="list-group-item-text" id="attributes" style="min-width: 350px; max-width:350px;">
+                <h4 class="list-group-item-heading" data-ng-bind="database.name"></h4>
+				Posted on
+				<span data-ng-bind="database.created | date:'medium'"></span>
+				by
+				<span data-ng-bind="database.user.displayName"></span><hr style="margin-top:2px; margin-bottom:2px;">
+				<p class="list-group=item-heading" data-ng-bind="database.descriptionShort" style="padding-top: 2px;"></p>
+			</small>
+        </div>
+        </a>
+    </div>
+		<a class="btn btn-primary pull-right" href="/#!/settings/edit">
 			Edit Profile
 			<i class="glyphicon glyphicon-edit"></i> 
+		</a>
+		<a class="btn btn-secondary pull-right" style="margin-right:5px;">
+			Edit Portfolio
+			<i class="glyphicon glyphicon-edit"></i>
 		</a>
 	</div>
 </section>
