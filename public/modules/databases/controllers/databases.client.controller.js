@@ -2,7 +2,7 @@
 
 // Databases controller
 angular.module('databases').controller('DatabasesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Databases',
-	function($scope, $stateParams, $location, Authentication, Databases ) {
+	function($scope, $stateParams, $location, Authentication, Databases) {
 		$scope.authentication = Authentication;
 		// Create new Database
 		$scope.create = function() {
