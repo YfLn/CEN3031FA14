@@ -61,7 +61,6 @@
 		});
 
 		it('$scope.cancelChanges() should revert the changes to user model', function(){
-			Authentication.user = 'Fred'; 
 
 			//Go to edit profile page
 			$location.path('/settings/edit'); 
@@ -76,7 +75,6 @@
 			//Backend simulate updating user
 			$httpBackend.expectPUT('users').respond(200, {name:'Fred', researchinterests:'Food'});
 
-			Authentication.user = [{name:'Joe'}, {researchinterests:'Drills'}]; //Previous value of Authentication.user
 			scope.user = [{name:'Fred'},{researchinterests:'Food'}]; //The newly defined user
 
 			scope.updateUserProfile(true); //Try to update user profile with the values in scope
@@ -85,6 +83,20 @@
 			//Expect the values of Authentication.user to be changed to scope.user
 			expect(Authentication.user.name).toEqual('Fred');
 			expect(Authentication.user.researchinterests).toEqual('Food');
+		});
+
+		it('$scope.updateUserProfile() should just display error message if backend responds with an error', function(){
+			$httpBackend.expectPUT('users').respond(400, {message:'Failed to update user'});
+
+			scope.user = [{name:'Fred'},{researchinterests:'Food'}]; //The newly defined user
+
+			scope.updateUserProfile(true);
+			$httpBackend.flush();
+
+			//Expect scope.error to equal error response
+			expect(scope.error).toEqual('Failed to update user');
+			//The Authentication.user should not be defined if the update failed.
+			expect(Authentication.user).toBeUndefined(); 
 		});
 
 		it('$scope.changeUserPassword() should clear the form when the password is successfully change', function(){
