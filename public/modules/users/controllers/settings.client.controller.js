@@ -7,6 +7,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 
 		$scope.originalUser = {}; //Keep the original copy of the user
 		angular.copy($scope.user, $scope.originalUser);
+		
 		// If user is not signed in then redirect back home
 		if (!$scope.user) $location.path('/');
 
