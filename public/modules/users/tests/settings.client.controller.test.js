@@ -108,5 +108,15 @@
 			expect(scope.success).toEqual(true);
 			expect(scope.passwordDetails).toEqual(null);
 		});
+
+		it('$scope.changeUserPassword() should display error message if password change was unsuccessful', function(){
+			$httpBackend.expect('POST', '/users/password').respond(400, {message:'Password Change Failed'});
+
+			scope.changeUserPassword();
+			$httpBackend.flush();
+
+			expect(scope.error).toEqual('Password Change Failed');
+			expect(scope.success).toBeNull();
+		});
 	});
 }());
