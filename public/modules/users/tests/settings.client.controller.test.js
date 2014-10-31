@@ -86,5 +86,15 @@
 			expect(Authentication.user.name).toEqual('Fred');
 			expect(Authentication.user.researchinterests).toEqual('Food');
 		});
+
+		it('$scope.changeUserPassword() should clear the form when the password is successfully change', function(){
+			$httpBackend.expect('POST', '/users/password').respond(200, 'Password Changed Successfully');
+
+			scope.changeUserPassword();
+			$httpBackend.flush();
+
+			expect(scope.success).toEqual(true);
+			expect(scope.passwordDetails).toEqual(null);
+		});
 	});
 }());
