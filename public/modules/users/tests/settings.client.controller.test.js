@@ -71,5 +71,20 @@
 
 			expect(Authentication.user).toEqual('Joe');
 		});
+
+		it('$scope.updateUserProfile() should correctly update the user model', function(){
+			//Backend simulate updating user
+			$httpBackend.expectPUT('users').respond(200, {name:'Fred', researchinterests:'Food'});
+
+			Authentication.user = [{name:'Joe'}, {researchinterests:'Drills'}]; //Previous value of Authentication.user
+			scope.user = [{name:'Fred'},{researchinterests:'Food'}]; //The newly defined user
+
+			scope.updateUserProfile(true); //Try to update user profile with the values in scope
+			$httpBackend.flush();
+
+			//Expect the values of Authentication.user to be changed to scope.user
+			expect(Authentication.user.name).toEqual('Fred');
+			expect(Authentication.user.researchinterests).toEqual('Food');
+		});
 	});
 }());
