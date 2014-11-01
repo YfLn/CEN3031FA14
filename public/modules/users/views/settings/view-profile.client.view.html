@@ -13,7 +13,26 @@
 	<p> Coming soon! </p>
 
 	<div class="pull-right">
+<<<<<<< Updated upstream
 		<a class="btn btn-primary" href="/#!/settings/edit">
+=======
+			<h3>Portfolio</h3>
+			<div class="list-group" style="min-width:450px !important; height: 300px !important; overflow-y:scroll; max-width:450px">
+        <a data-ng-repeat="portfolio in user.portfolios" class="list-group-item">
+            <div style="display:flex">
+			<small class="list-group-item-text" id="attributes" style="min-width: 350px; max-width:350px;">
+                <h4 class="list-group-item-heading" data-ng-bind="portfolio.name"></h4>
+				Posted on
+				<span data-ng-bind="portfolio.created | date:'medium'"></span>
+				by
+				<span data-ng-bind="portfolio.user.displayName"></span><hr style="margin-top:2px; margin-bottom:2px;">
+				<p class="list-group=item-heading" data-ng-bind="portfolio.descriptionShort" style="padding-top: 2px;"></p>
+			</small>
+        </div>
+        </a>
+    </div>
+		<a class="btn btn-primary pull-right" href="/#!/settings/edit">
+>>>>>>> Stashed changes
 			Edit Profile
 			<i class="glyphicon glyphicon-edit"></i> 
 		</a>

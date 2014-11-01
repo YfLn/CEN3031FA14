@@ -24,6 +24,7 @@ var validateLocalStrategyPassword = function(password) {
 /**
  * User Schema
  */
+
 var UserSchema = new Schema({
 	firstName: {
 		type: String,
@@ -57,6 +58,13 @@ var UserSchema = new Schema({
 		trim: false,
 		default: ''
 	},
+	
+	//portfolios goes here
+	portfolios: [{
+    	type: Schema.ObjectId,
+    	ref: 'Database'
+  	}],
+
 	password: {
 		type: String,
 		default: '',

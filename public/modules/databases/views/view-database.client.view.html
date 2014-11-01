@@ -1,4 +1,4 @@
-<section data-ng-controller="DatabasesController" data-ng-init="findOne()">
+<section data-ng-controller="DatabasesController" data-ng-controller="SettingsController" data-ng-init="findOne()" >
 	<!-- Name Here -->
 	<div class="page-header">
 		<h1 data-ng-bind="database.name"></h1>
@@ -19,6 +19,14 @@
 	<div class="page-header" data-ng-show="database.isFree">
 		<p>This database is free</p>
 	</div>
+
+	<!--add Databases into Porfolio-->
+	<div class="">
+		<a class="btn btn-primary" data-ng-click="addDatabases()">
+			<i class="glyphicon glyphicon-heart"></i>
+		</a>
+	</div>
+
 	<!-- Buttons for Delete / Edit -->
 	<div class="" data-ng-show="authentication.user._id == database.user._id">
 		<a class="btn btn-primary" href="/#!/databases/{{database._id}}/edit">
