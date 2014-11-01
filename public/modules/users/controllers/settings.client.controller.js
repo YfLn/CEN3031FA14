@@ -1,16 +1,13 @@
 'use strict';
 
-<<<<<<< Updated upstream
 angular.module('users').controller('SettingsController', ['$scope', '$http', '$timeout','$location', 'Users', 'Authentication',
 	function($scope, $http, $timeout, $location, Users, Authentication) {
-		$scope.user = Authentication.user;
-=======
-angular.module('users').controller('SettingsController', ['$scope', '$http', '$timeout','$location', 'Users', 'Authentication',  'Databases',
-	function($scope, $http, $timeout, $location, Users, Authentication, Databases) {
 		$scope.user ={};
 		angular.copy(Authentication.user, $scope.user); //Deep copy so that changes can be reverted
->>>>>>> Stashed changes
 
+		$scope.originalUser = {}; //Keep the original copy of the user
+		angular.copy($scope.user, $scope.originalUser);
+		
 		// If user is not signed in then redirect back home
 		if (!$scope.user) $location.path('/');
 
@@ -62,6 +59,10 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 			}
 		};
 
+		$scope.cancelChanges = function(){
+			Authentication.user = $scope.originalUser;
+		};
+
 		// Redirect to View profile page after a certain number of ms
 		$scope.redirectToViewProfile = function(ms){
 			$timeout(function(){
@@ -80,23 +81,6 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 			}).error(function(response) {
 				$scope.error = response.message;
 			});
-		};
-
-		// add databases into portfolio
-		$scope.addDatabases = function() {
-			$scope.success = $scope.error = null;
-
-			var Myuser = new Users($scope.user);
-			var Mydatabase = new Databases($scope.database);
-
-			Myuser.portfolios.push(Mydatabase._id);
-			
-			Myuser.$update(function(response) {
-					console.log("Actualize!! con : " + user.portfolios.length + "__" + response);
-				}, function(errorResponse) {
-            		console.log("updatError: " + errorResponse);
-            		$scope.error = errorResponse;
-				});
 		};
 	}
 ]);

@@ -13,7 +13,7 @@
 	</div>
 	<!-- URL is here -->
 	<div class="page-header">
-		<p data-ng-bind="database.url"></p>
+		<a data-ng-bind="database.url" ng-href="{{database.url}}"></a>
 	</div>
 	<!-- isFree Here, desperately needs formatting -->
 	<div class="page-header" data-ng-show="database.isFree">
