@@ -1,9 +1,12 @@
 'use strict';
 
-angular.module('users').controller('SettingsController', ['$scope', '$http', '$timeout','$location', 'Users', 'Authentication',
-	function($scope, $http, $timeout, $location, Users, Authentication) {
+angular.module('users').controller('SettingsController', ['$scope', '$http', '$timeout','$location', 'Users', 'Authentication', '$modal',
+	function($scope, $http, $timeout, $location, Users, Authentication, $modal) {
 		$scope.user ={};
 		angular.copy(Authentication.user, $scope.user); //Deep copy so that changes can be reverted
+
+		//Temporary message for modal
+		var text = "Temporary message";
 
 		$scope.originalUser = {}; //Keep the original copy of the user
 		angular.copy($scope.user, $scope.originalUser);
@@ -82,5 +85,25 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 				$scope.error = response.message;
 			});
 		};
+
+		//Modal settings and functions
+		$scope.open = function (size) {
+
+			var modalInstance = $modal.open({
+		      templateUrl: 'delete-modal.client.view.html',
+		      controller: 'SettingsController',
+		      size: size
+		    });
+		};
+
+		$scope.ok = function () {
+			$modalInstance.dismiss('okay');
+		};
+
+		$scope.cancel = function () {
+			$modalInstance.dismiss('cancel');
+		};
 	}
 ]);
+
+
