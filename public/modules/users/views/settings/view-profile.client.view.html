@@ -12,8 +12,8 @@
 
 	<div class="pull-right">
 			<h3>Portfolio</h3>
-			<div class="list-group" style="min-width:450px !important; height: 300px !important; overflow-y:scroll; max-width:450px">
-        <a data-ng-repeat="portfolio in user.portfolios" class="list-group-item">
+			<div data-ng-init="findAll()" class="list-group" style="min-width:450px !important; height: 300px !important; overflow-y:scroll; max-width:450px">
+        <a data-ng-repeat="portfolio in user.portfolios" data-ng-href="#!/databases/{{portfolio._id}}" class="list-group-item">
             <div style="display:flex">
 			<small class="list-group-item-text" id="attributes" style="min-width: 350px; max-width:350px;">
                 <h4 class="list-group-item-heading" data-ng-bind="portfolio.name"></h4>

@@ -5,6 +5,7 @@
  */
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
+	//DatabaseSchema = require('mongoose').model('Database'),
 	crypto = require('crypto');
 
 /**
@@ -24,7 +25,6 @@ var validateLocalStrategyPassword = function(password) {
 /**
  * User Schema
  */
-
 var UserSchema = new Schema({
 	firstName: {
 		type: String,
@@ -58,19 +58,18 @@ var UserSchema = new Schema({
 		trim: false,
 		default: ''
 	},
-	
+
 	//portfolios goes here
-	portfolios: [{
-    	type: Schema.ObjectId,
-    	ref: 'Database'
-  	}],
+	portfolios: [{ 
+		type: Schema.ObjectId, 
+		ref: 'Database' 
+	}],
 
 	password: {
 		type: String,
 		default: '',
 		validate: [validateLocalStrategyPassword, 'Password should be atleast 6 characters long']
 	},
-	
 	salt: {
 		type: String
 	},
