@@ -1,8 +1,8 @@
 'use strict';
 
 // Databases controller
-angular.module('databases').controller('DatabasesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Databases',
-	function($scope, $stateParams, $location, Authentication, Databases) {
+angular.module('databases').controller('DatabasesController', ['$scope', '$stateParams', '$location', 'Users', 'Authentication', 'Databases',
+	function($scope, $stateParams, $location, Users, Authentication, Databases) {
 		$scope.authentication = Authentication;
 		// Create new Database
 		$scope.create = function() {
@@ -65,6 +65,32 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 				databaseId: $stateParams.databaseId
 			});
 		};
+
+		// Add databases into portfolio
+		$scope.addDatabases = function() {
+            $scope.success = $scope.error = null;
+            var user = new Users(Authentication.user);
+            var database = new Databases($scope.database);
+            user.portfolios.push(database._id);
+
+            user.$update(function(response) {
+					$scope.success = true;
+					Authentication.user = response;
+				}, function(response) {
+					$scope.error = response.data.message;
+				});
+
+
+
+
+            //user.$update(function(data) {
+                //$scope.success = true;
+                //Authentication.user = data;
+            //}, function(err) {
+                //$scope.error = response.data.message;
+            //});
+        };
+
 		//sort order for the list database page
 		$scope.sortorder = 'name';
 	}
