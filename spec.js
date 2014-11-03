@@ -49,7 +49,7 @@ describe('Logging in',function() {
 	it ('should be able to log in', function() {
   	browser.get('http://localhost:3000');
 
-  	username.sendKeys('Test@ufl.edu'); 
+  	username.sendKeys('test1@ufl.edu'); 
   	password.sendKeys('test123');
 
   	element(by.buttonText('Sign in')).click();
@@ -77,6 +77,8 @@ var longDescription = element(by.model('descriptionLong'));
 var dblist = element.all(by.repeater('database in databases'));
 var query = element(by.model('query'));
 var deletebutton = element(by.className('glyphicon-trash'));
+var addbutton = element(by.className('addDatabases'));
+var porlist = element.all(by.repeater('portfolio in user.portfolios'));
 
 describe('Databases', function(){
 	it ('should be able to create a database', function(){
@@ -147,6 +149,15 @@ describe('Databases', function(){
 
 	});
 
+	it('should add a DB to a portfolio', function(){
+		browser.get('http://localhost:3000/#!/databases');
+		element.all(by.repeater('database in databases')).get(0).click();
+		addbutton.click();
+		browser.get('http://localhost:3000/#!/settings/profile');
+		expect(porlist.count()).toBe(1);
+
+	});
+
 	it('should delete the DBs', function(){
 		browser.get('http://localhost:3000/#!/databases');
 		element.all(by.repeater('database in databases')).get(0).click();
@@ -165,6 +176,18 @@ describe('Databases', function(){
 		expect(dblist.count()).toBe(0);
 
 
+	});
+
+});
+
+describe('Signing off', function(){
+	it('should be able to sign out', function(){
+
+	browser.get('http://localhost:3000/#!/databases');
+	element(by.linkText('TestFirst TestLast')).click();
+	element(by.linkText('Signout')).click();
+
+	expect(browser.getCurrentUrl()).toEqual('http://localhost:3000/#!/');
 	});
 
 });
