@@ -1,7 +1,8 @@
 'use strict';
 
-angular.module('users').controller('SettingsController', ['$scope', '$http', '$timeout','$location', 'Users', 'Authentication', '$modal',
-	function($scope, $http, $timeout, $location, Users, Authentication, $modal) {
+angular.module('users').controller('SettingsController', ['$scope', '$http', '$timeout','$location', 'Users', 'Authentication',  'Databases', '$modal',
+	function($scope, $http, $timeout, $location, Users, Authentication, Databases, $modal) {
+
 		$scope.user ={};
 		angular.copy(Authentication.user, $scope.user); //Deep copy so that changes can be reverted
 
@@ -100,9 +101,32 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 			$modalInstance.dismiss('okay');
 		};
 
-		$scope.cancel = function () {
-			$modalInstance.dismiss('cancel');
+		// Find existing Database in Porfolio
+		$scope.findAll = function() {		
+			
+			for(var i = 0; i < $scope.user.portfolios.length; i++)
+			{
+				console.log($scope.user);
+				$scope.user.portfolios[i] = Databases.get({databaseId: Authentication.user.portfolios[i]});
+			}
 		};
+
+		// add databases into portfolio
+		//$scope.addDatabases = function(database, user) {
+			//$scope.success = $scope.error = null;
+
+			//var user = new Users($scope.user);
+			//var database = new Databases($scope.database);
+
+			//user.portfolios.push(database._id);
+			
+			//user.$update(function(response) {
+					//$scope.success = true;
+					//Authentication.user = response;
+				//}, function(response) {
+					//$scope.error = response.data.message;
+				//});
+		//};
 	}
 ]);
 
