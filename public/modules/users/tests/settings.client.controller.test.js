@@ -10,6 +10,7 @@
 			$httpBackend,
 			$stateParams,
 			$location,
+			$modal,
 			$timeout;
 
 		beforeEach(function() {
@@ -32,7 +33,7 @@
 		// The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
 		// This allows us to inject a service but then attach it to a variable
 		// with the same name as the service.
-		beforeEach(inject(function($controller, $rootScope, _$location_, _$stateParams_, _$httpBackend_, _$timeout_,_Authentication_) {
+		beforeEach(inject(function($controller, $rootScope, _$location_, _$stateParams_, _$httpBackend_, _$timeout_,_Authentication_, _$modal_) {
 			// Set a new global scope
 			scope = $rootScope.$new();
 
@@ -40,6 +41,7 @@
 			$stateParams = _$stateParams_;
 			$httpBackend = _$httpBackend_;
 			$location = _$location_;
+			$modal = _$modal_;
 			$timeout = _$timeout_;
 			Authentication = _Authentication_; //Manually import Authentication service because signin() method is not in this scope.
 
@@ -118,5 +120,11 @@
 			expect(scope.error).toEqual('Password Change Failed');
 			expect(scope.success).toBeNull();
 		});
+
+		/*it('$scope.open(size) should open modal and cancel option to delete account', function(){
+			$location.path('/settings/edit'); //Go to edit profile page
+			scope.open('sm');
+			expect($modal.templateURL).toEqual('delete-modal.client.view.html');
+		});*/
 	});
 }());
