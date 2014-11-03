@@ -3,7 +3,9 @@
 // Databases controller
 angular.module('databases').controller('DatabasesController', ['$scope', '$stateParams', '$location', 'Users', 'Authentication', 'Databases',
 	function($scope, $stateParams, $location, Users, Authentication, Databases) {
-		$scope.authentication = Authentication;
+		$scope.user = {};
+		angular.copy(Authentication.user, $scope.user);
+
 		// Create new Database
 		$scope.create = function() {
 			// Create new Database object
@@ -69,7 +71,7 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 		// Add databases into portfolio
 		$scope.addDatabaseToPortfolio = function() {
             $scope.success = $scope.error = null;
-            var user = new Users(Authentication.user);
+            var user = new Users($scope.user);
             var database = new Databases($scope.database);
 
             //Check if database is in portfolio. If not, add to portfolio.
@@ -82,15 +84,12 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 				}, function(response) {
 					$scope.error = response.data.message;
 				});        	
-            
-
-
             }
         };
 
         $scope.checkForDatabaseInPortfolio = function() {
         	$scope.success = $scope.error = null;
-        	var user = new Users(Authentication.user);
+        	var user = new Users($scope.user);
         	var database = new Databases($scope.database);
 
         	if(user.portfolios.indexOf(database._id) === -1) {
@@ -102,7 +101,7 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 
         $scope.removeDatabaseFromPortfolio = function() {
         	$scope.success = $scope.error = null;
-        	var user = new Users(Authentication.user);
+        	var user = new Users($scope.user);
         	var database = new Databases($scope.database);
 
         	user.portfolios.splice(user.portfolios.indexOf(database._id), 1);
