@@ -3,9 +3,9 @@
     <div class="page-header">
         <h1 data-ng-bind="database.name"></h1>
         <!--add Databases into Porfolio-->          
-        <button ng-show="checkForDatabaseInPortfolio()" data-ng-click="addDatabases()" class="btn addDatabases">
+        <button ng-show="checkForDatabaseInPortfolio()" data-ng-click="addDatabaseToPortfolio()" class="btn addDatabases">
         Add Database To Your Portfolio <i class="glyphicon glyphicon-plus"></i></button> 
-        <button ng-show="!checkForDatabaseInPortfolio()" data-ng-click="removeDatabase()" class="btn removeDatabase"> Remove Database From Portfolio <i class="glyphicon glyphicon-minus"></i></button>
+        <button ng-show="!checkForDatabaseInPortfolio()" data-ng-click="removeDatabaseFromPortfolio()" class="btn removeDatabase"> Remove Database From Portfolio <i class="glyphicon glyphicon-minus"></i></button>
     </div>
     <!-- Short Description Here, should this be visibile in view DB or just in the list of DBs? -->
     <div class="page-header">
@@ -44,5 +44,6 @@
             by
             <span data-ng-bind="database.user.displayName"></span>
         </em>
-    </small>    
+    </small> 
+
 </section>

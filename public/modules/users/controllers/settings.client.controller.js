@@ -93,21 +93,5 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 			}
 		};
 
-		// add databases into portfolio
-		//$scope.addDatabases = function(database, user) {
-			//$scope.success = $scope.error = null;
-
-			//var user = new Users($scope.user);
-			//var database = new Databases($scope.database);
-
-			//user.portfolios.push(database._id);
-			
-			//user.$update(function(response) {
-					//$scope.success = true;
-					//Authentication.user = response;
-				//}, function(response) {
-					//$scope.error = response.data.message;
-				//});
-		//};
 	}
 ]);

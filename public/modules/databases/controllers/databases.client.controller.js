@@ -67,7 +67,7 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 		};
 
 		// Add databases into portfolio
-		$scope.addDatabases = function() {
+		$scope.addDatabaseToPortfolio = function() {
             $scope.success = $scope.error = null;
             var user = new Users(Authentication.user);
             var database = new Databases($scope.database);
@@ -75,13 +75,16 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
             //Check if database is in portfolio. If not, add to portfolio.
             if (user.portfolios.indexOf(database._id) === -1) {
             	user.portfolios.push(database._id);
-
+            	
                 user.$update(function(response) {
 					$scope.success = true;
 					Authentication.user = response;
 				}, function(response) {
 					$scope.error = response.data.message;
 				});        	
+            
+
+
             }
         };
 
@@ -97,7 +100,7 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
         	return false;
         };
 
-        $scope.removeDatabase = function() {
+        $scope.removeDatabaseFromPortfolio = function() {
         	$scope.success = $scope.error = null;
         	var user = new Users(Authentication.user);
         	var database = new Databases($scope.database);
