@@ -69,10 +69,11 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 		};
 
 		// Add databases into portfolio
-		$scope.addDatabaseToPortfolio = function() {
+		$scope.addDatabaseToPortfolio = function(arg_database) {
             $scope.success = $scope.error = null;
             var user = new Users($scope.user);
             var database = new Databases($scope.database);
+            if(arg_database) {database = arg_database;}
 
             //Check if database is in portfolio. If not, add to portfolio.
             if (user.portfolios.indexOf(database._id) === -1) {
@@ -81,16 +82,18 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
                 user.$update(function(response) {
 					$scope.success = true;
 					Authentication.user = response;
+					$scope.user = response;
 				}, function(response) {
 					$scope.error = response.data.message;
 				});        	
             }
         };
 
-        $scope.checkForDatabaseInPortfolio = function() {
+        $scope.checkForDatabaseInPortfolio = function(arg_database) {
         	$scope.success = $scope.error = null;
         	var user = new Users($scope.user);
         	var database = new Databases($scope.database);
+        	if(arg_database) {database = arg_database;}
 
         	if(user.portfolios.indexOf(database._id) === -1) {
         		return true;
@@ -99,16 +102,18 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
         	return false;
         };
 
-        $scope.removeDatabaseFromPortfolio = function() {
+        $scope.removeDatabaseFromPortfolio = function(arg_database) {
         	$scope.success = $scope.error = null;
         	var user = new Users($scope.user);
         	var database = new Databases($scope.database);
+        	if(arg_database) {database = arg_database;}
 
         	user.portfolios.splice(user.portfolios.indexOf(database._id), 1);
 
         	user.$update(function(response) {
         		$scope.success = true;
         		Authentication.user = response;
+        		$scope.user = response;
         	}, function(response) {
         		$scope.error = response.data.message;
         	});
