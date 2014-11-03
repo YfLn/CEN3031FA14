@@ -5,6 +5,7 @@
  */
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema,
+	//DatabaseSchema = require('mongoose').model('Database'),
 	crypto = require('crypto');
 
 /**
@@ -57,6 +58,13 @@ var UserSchema = new Schema({
 		trim: false,
 		default: ''
 	},
+
+	//portfolios goes here
+	portfolios: [{ 
+		type: Schema.ObjectId, 
+		ref: 'Database' 
+	}],
+
 	password: {
 		type: String,
 		default: '',

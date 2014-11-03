@@ -7,7 +7,9 @@ var _ = require('lodash'),
 	errorHandler = require('../errors'),
 	mongoose = require('mongoose'),
 	passport = require('passport'),
-	User = mongoose.model('User');
+	User = mongoose.model('User'),
+	Database = mongoose.model('Database'),
+	async = require('async');
 
 /**
  * Signup
@@ -46,6 +48,23 @@ exports.signup = function(req, res) {
 	});
 };
 
+//var lookupPortfolios = function(user, callback){
+	
+	//var findFunctions = [];
+	//for(var i = 0; i < user.portfolios.length; i++)
+	//{
+		//findFunctions.push(function(callback){
+			//Database.findOne({_id: user.portfolios[i]}).exec(callback);
+		//});	
+	//}
+	//async.parallel(findFunctions, function(err, results){
+		//if(err !== null)
+			//return callback(err);
+		//user.portfolios = results;
+		//callback(null, user);
+	//});
+//};
+
 /**
  * Signin after passport authentication
  */
@@ -57,13 +76,22 @@ exports.signin = function(req, res, next) {
 			// Remove sensitive data before login
 			user.password = undefined;
 			user.salt = undefined;
+			// Look up for portfolio
+			//lookupPortfolios(user, function(err, user){
+				//if(err !== null){
+					//res.status(500).send(err);
+				//}
+				//else{
 
-			req.login(user, function(err) {
-				if (err) {
-					res.status(400).send(err);
-				} else {
-					res.jsonp(user);
-				}
+					req.login(user, function(err) {
+						if (err) {
+							res.status(400).send(err);
+						} else {
+							res.jsonp(user);					
+							console.log(user);
+						}
+					//});
+				//}
 			});
 		}
 	})(req, res, next);

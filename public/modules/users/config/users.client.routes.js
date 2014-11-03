@@ -13,6 +13,10 @@ angular.module('users').config(['$stateProvider',
 			url: '/settings/profile',
 			templateUrl: 'modules/users/views/settings/view-profile.client.view.html'
 		}).
+		//state('viewDatabase', {
+			//url: '/databases/:databaseId',
+			//templateUrl: 'modules/databases/views/view-database.client.view.html'
+		//}).
 		state('password', {
 			url: '/settings/password',
 			templateUrl: 'modules/users/views/settings/change-password.client.view.html'
