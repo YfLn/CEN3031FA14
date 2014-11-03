@@ -2,7 +2,34 @@
 	<div class="page-header">
 		<h2>My Profile</h2>
 	</div>
-	<div class="col-md-8 text-left">
+
+	<!--Modal display and controller call-->
+	<div data-ng-controller="SettingsController">
+    	<script type="text/ng-template" id="delete-modal.client.view.html">
+    		<div class="modal-header">
+    			<h3 class="modal-title"> Delete Account </h3>
+    		</div>
+    		<div class="modal-body">
+            	<p>Are you sure you want to delete your account?</p>
+            	<div class="form-group">
+					<label for="password">Verify Password</label>
+					<input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="Verify Password">
+				</div>
+        	</div>
+        	<div class="modal-footer">
+            	<button class="btn btn-primary" ng-click="ok()">Okay</button>
+            	<button class="btn" ng-click="$dismiss()">Cancel</button>
+        	</div>
+    	</script>
+    </div>
+
+	<div class="text-right">
+			<!--Must ask backend about this and also routing and pop up message to verify 
+			http://plnkr.co/edit/Wd9hxToFDKM7lU5yBDno?p=preview-->
+			<button ng-click="open('sm')" type="delete" class="btn btn-large btn-danger">Delete Profile</button>
+	</div>
+
+	<div class="col-md-6 text-left">
 		<form name="userForm" class="signin form-horizontal" autocomplete="off">
 			<fieldset>
 				<div class="form-group">
