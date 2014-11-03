@@ -3,7 +3,7 @@
         <h1>Databases</h1>
     </div>
     <div class="input-group" style="margin-bottom:10px">
-         Search: <input ng-model="query" class="form-control" placeholder = "Title or Poster Name">
+         Search: <input ng-model="query" class="form-control" placeholder = "Title or Short Description">
     </div>
     <div class="list-group">
         <a data-ng-repeat="database in databases | orderBy:sortorder | filter:query" data-ng-href="#!/databases/{{database._id}}" class="list-group-item">
