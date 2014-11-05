@@ -5,7 +5,7 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 	function($scope, $stateParams, $location, Users, Authentication, Databases) {
 		$scope.user = {};
 		angular.copy(Authentication.user, $scope.user);
-
+		$scope.authentication = Authentication;
 		// Create new Database
 		$scope.create = function() {
 			// Create new Database object
@@ -71,7 +71,7 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 		// Add databases into portfolio
 		$scope.addDatabaseToPortfolio = function(arg_database) {
             $scope.success = $scope.error = null;
-            var user = new Users($scope.user);
+            var user = new Users(Authentication.user);
             var database = new Databases($scope.database);
             if(arg_database) {database = arg_database;}
 
@@ -91,7 +91,7 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 
         $scope.checkForDatabaseInPortfolio = function(arg_database) {
         	$scope.success = $scope.error = null;
-        	var user = new Users($scope.user);
+        	var user = new Users(Authentication.user);
         	var database = new Databases($scope.database);
         	if(arg_database) {database = arg_database;}
 
@@ -104,7 +104,7 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 
         $scope.removeDatabaseFromPortfolio = function(arg_database) {
         	$scope.success = $scope.error = null;
-        	var user = new Users($scope.user);
+        	var user = new Users(Authentication.user);
         	var database = new Databases($scope.database);
         	if(arg_database) {database = arg_database;}
 
