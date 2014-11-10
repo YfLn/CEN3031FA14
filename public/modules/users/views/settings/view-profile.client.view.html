@@ -16,7 +16,7 @@
         <li data-ng-repeat="portfolio in user.portfolios" data-ng-href="#!/databases/{{portfolio._id}}" class="list-group-item">
             <div style="display:flex">
             	<div class="pull-left;" style="min-width:50px; vertical-align:center; padding-top:3px;" ng-show="checkEditPortfolio()">
-                	<button ng-show="!angular.element(document.getElementById('DatabasesController')).scope().checkForDatabaseInPortfolio({{portfolio}}) && checkEditPortfolio()" data-ng-click="removeDBfromP({{portfolio}})" class="btn removeDatabase"><i class="glyphicon glyphicon-minus"></i></button>
+                	<button ng-show="!angular.element(document.getElementById('DatabasesController')).scope().checkForDatabaseInPortfolio(portfolio) && checkEditPortfolio()" data-ng-click="removeDBfromP(portfolio)" class="btn removeDatabase"><i class="glyphicon glyphicon-minus"></i></button>
             	</div>
 			<a class="list-group-item-text" data-ng-href="#!/databases/{{portfolio._id}}" id="attributes" style="min-width: 350px; max-width:350px;">
                 <h4 class="list-group-item-heading" data-ng-bind="portfolio.name"></h4>
