@@ -143,11 +143,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 		};*/
 
 		$scope.removeDBfromP = function(portfolio_arg) {
-			//console.log($scope.originalUser.portfolios.indexOf(portfolio_arg));
-			//console.log($scope.user.portfolios[0]._id);
-			console.log('Portfolio ID passed to function: ' + portfolio_arg._id);
-			console.log('Index of object in portfolio: ' + $scope.user.portfolios.indexOf(portfolio_arg));
-			$scope.user.portfolios.splice($scope.user.portfolios.indexOf(portfolio_arg),1);
+			$scope.user.portfolios.splice(portfolio_arg,1);
 		};
 
 	}
