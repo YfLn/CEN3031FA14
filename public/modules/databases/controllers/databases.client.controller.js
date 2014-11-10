@@ -4,6 +4,10 @@
 angular.module('databases').controller('DatabasesController', ['$scope', '$stateParams', '$location', 'Users', 'Authentication', 'Databases',
 	function($scope, $stateParams, $location, Users, Authentication, Databases) {
 
+		$scope.user = {};
+		angular.copy(Authentication.user, $scope.user);
+		$scope.authentication = Authentication;
+		
 		// Create new Database
 		$scope.create = function() {
 			// Create new Database object
