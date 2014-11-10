@@ -7,7 +7,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 		angular.copy(Authentication.user, $scope.user); //Deep copy so that changes can be reverted
 
 		//Temporary message for modal
-		var text = "Temporary message";
+		var text = 'Temporary message';
 
 		$scope.originalUser = {}; //Keep the original copy of the user
 		angular.copy($scope.user, $scope.originalUser);

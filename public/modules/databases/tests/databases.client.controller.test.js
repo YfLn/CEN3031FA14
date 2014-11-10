@@ -6,6 +6,8 @@
 		// Initialize global variables
 		var DatabasesController,
 		scope,
+		Authentication,
+		Auth,
 		$httpBackend,
 		$stateParams,
 		$location;
@@ -35,7 +37,7 @@
 		// The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
 		// This allows us to inject a service but then attach it to a variable
 		// with the same name as the service.
-		beforeEach(inject(function($controller, $rootScope, _$location_, _$stateParams_, _$httpBackend_) {
+		beforeEach(inject(function($controller, $rootScope, _$location_, _$stateParams_, _$httpBackend_, _Authentication_) {
 			// Set a new global scope
 			scope = $rootScope.$new();
 
@@ -43,10 +45,12 @@
 			$stateParams = _$stateParams_;
 			$httpBackend = _$httpBackend_;
 			$location = _$location_;
+			Auth = _Authentication_;
 
 			// Initialize the Databases controller.
 			DatabasesController = $controller('DatabasesController', {
-				$scope: scope
+				$scope: scope,
+				Authentication: Auth
 			});
 		}));
 
@@ -148,7 +152,7 @@
 
 			// Create new Databases array and include the Database
 			scope.databases = [sampleDatabase];
-
+			
 			// Set expected DELETE response
 			$httpBackend.expectDELETE(/databases\/([0-9a-fA-F]{24})$/).respond(204);
 
@@ -159,5 +163,31 @@
 			// Test array after successful delete
 			expect(scope.databases.length).toBe(0);
 		}));
+
+		it('$scope.addDatabaseToPortfolio() should correctly add database to Authentication.user', function(){
+			$httpBackend.expectPUT('users').respond(200, 
+					{name:'Fred', researchinterests:'Food', portfolios:['0','1']});
+
+			Auth.user = {name:'Fred', researchinterests:'Food', portfolios:['0']};
+			scope.database = {_id: '1'};
+
+			scope.addDatabaseToPortfolio();
+			$httpBackend.flush();
+
+			expect(Auth.user.portfolios).toEqual(['0','1']);
+		});
+
+		it('$scope.removeDatabaseFromPortfolio() should correctly remove database from Authentication.user', function(){
+			$httpBackend.expectPUT('users').respond(200, 
+					{name:'Fred', researchinterests:'Food', portfolios:['0']});
+
+			Auth.user = {name:'Fred', researchinterests:'Food', portfolios:['0','1']};
+			scope.database = {_id: '1'};
+
+			scope.removeDatabaseFromPortfolio();
+			$httpBackend.flush();
+
+			expect(Auth.user.portfolios).toEqual(['0']);
+		});
 	});
 }());
