@@ -13,25 +13,32 @@
 	<div class="pull-right">
 			<h3>Portfolio</h3>
 			<div data-ng-init="findAll()" class="list-group" style="min-width:450px !important; height: 300px !important; overflow-y:scroll; max-width:450px">
-        <a data-ng-repeat="portfolio in user.portfolios" data-ng-href="#!/databases/{{portfolio._id}}" class="list-group-item">
+        <li data-ng-repeat="portfolio in user.portfolios" data-ng-href="#!/databases/{{portfolio._id}}" class="list-group-item">
             <div style="display:flex">
-			<small class="list-group-item-text" id="attributes" style="min-width: 350px; max-width:350px;">
+            	<div class="pull-left;" style="min-width:50px; vertical-align:center; padding-top:3px;" ng-show="checkEditPortfolio()">
+                	<button ng-show="!angular.element(document.getElementById('DatabasesController')).scope().checkForDatabaseInPortfolio({{portfolio}}) && checkEditPortfolio()" data-ng-click="removeDBfromP({{portfolio}})" class="btn removeDatabase"><i class="glyphicon glyphicon-minus"></i></button>
+            	</div>
+			<a class="list-group-item-text" data-ng-href="#!/databases/{{portfolio._id}}" id="attributes" style="min-width: 350px; max-width:350px;">
                 <h4 class="list-group-item-heading" data-ng-bind="portfolio.name"></h4>
 				Posted on
 				<span data-ng-bind="portfolio.created | date:'medium'"></span>
 				by
 				<span data-ng-bind="portfolio.user.displayName"></span><hr style="margin-top:2px; margin-bottom:2px;">
 				<p class="list-group=item-heading" data-ng-bind="portfolio.descriptionShort" style="padding-top: 2px;"></p>
-			</small>
+			</a>
         </div>
-        </a>
+        </li>
     </div>
 		<a class="btn btn-primary pull-right" href="/#!/settings/edit">
 			Edit Profile
 			<i class="glyphicon glyphicon-edit"></i> 
 		</a>
-		<a class="btn btn-secondary pull-right" style="margin-right:5px;">
+		<a class="btn btn-secondary pull-right" style="margin-right:5px;" ng-show="!checkEditPortfolio()" ng-click="toggleEditPortfolio()">
 			Edit Portfolio
+			<i class="glyphicon glyphicon-edit"></i>
+		</a>
+		<a class="btn btn-primary pull-right" style="margin-right:5px;" ng-show="checkEditPortfolio()" ng-click="toggleEditPortfolio(); updateUserProfile(true);">
+			Finish Editing
 			<i class="glyphicon glyphicon-edit"></i>
 		</a>
 	</div>
