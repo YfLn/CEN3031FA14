@@ -4,7 +4,8 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 	function($scope, $http, $timeout, $location, Users, Authentication, Databases, $modal) {
 
 		$scope.user ={};
-		angular.copy(Authentication.user, $scope.user); //Deep copy so that changes can be reverted
+		angular.copy(Authentication.user, $scope.user); 
+		//Deep copy so that changes can be reverted
 
 		//Temporary message for modal
 		var text = 'Temporary message';
@@ -106,9 +107,55 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 			
 			for(var i = 0; i < $scope.user.portfolios.length; i++)
 			{
-				console.log($scope.user);
+				//console.log($scope.user);
 				$scope.user.portfolios[i] = Databases.get({databaseId: Authentication.user.portfolios[i]});
 			}
+		};
+
+
+		var editPortfolioBoolean = false;
+
+		$scope.toggleEditPortfolio = function () {
+			if(editPortfolioBoolean === false) {editPortfolioBoolean = true; console.log('toggled');}
+			else {editPortfolioBoolean = false;}
+		};
+
+		$scope.checkEditPortfolio = function () {
+			if(editPortfolioBoolean === false) {return false;}
+			if(editPortfolioBoolean === true) {return true;}
+		};
+
+		/*WIP code to check portfolio for bad/null entries and remove them
+		$scope.removeBadDatabaseFromPortfolio = function() {
+			$scope.databases = Databases.query();
+			for(var i in $scope.user.portfolios) {
+				var exists = false;
+				for(var j in $scope.databases) {
+					if($scope.user.portfolios[i]._id === $scope.databases[j]._id) {
+						exists = true;
+						break;
+					}
+					if(!exists) {
+						$scope.user.portfolios.splice(i,1);
+					}
+				}
+			}
+		};*/
+
+		$scope.removeDBfromP = function(portfolio_arg) {
+			$scope.user.portfolios.splice(portfolio_arg,1);
+			Authentication.user.portfolios.splice(portfolio_arg,1);
+		};
+
+		$scope.finishEditPortfolio = function() {
+			var user = new Users(Authentication.user);
+
+			user.$update(function(response) {
+				$scope.success = true;
+				Authentication.user = response;
+			}, function(response) {
+				$scope.error = response.data.message;
+			});
 		};
 
 	}
