@@ -15,7 +15,7 @@
 			<div data-ng-init="findAll()" class="list-group" style="min-width:450px !important; height: 300px !important; overflow-y:scroll; max-width:450px">
         <li data-ng-repeat="portfolio in user.portfolios" data-ng-href="#!/databases/{{portfolio._id}}" class="list-group-item">
             <div style="display:flex">
-            	<div class="pull-left;" style="min-width:50px; vertical-align:center; padding-top:3px;" ng-show="checkEditPortfolio()">
+            	<div class="pull-left" style="min-width:50px; vertical-align:center; padding-top:3px;" ng-show="checkEditPortfolio()" ng-animate-children>
                 	<button ng-show="!angular.element(document.getElementById('DatabasesController')).scope().checkForDatabaseInPortfolio(portfolio) && checkEditPortfolio()" data-ng-click="removeDBfromP($index)" class="btn removeDatabase"><i class="glyphicon glyphicon-minus"></i></button>
             	</div>
 			<a class="list-group-item-text" data-ng-href="#!/databases/{{portfolio._id}}" id="attributes" style="min-width: 350px; max-width:350px;">
@@ -37,7 +37,7 @@
 			Edit Portfolio
 			<i class="glyphicon glyphicon-edit"></i>
 		</a>
-		<a class="btn btn-primary pull-right" style="margin-right:5px;" ng-show="checkEditPortfolio()" ng-click="toggleEditPortfolio(); updateUserProfile(true);">
+		<a class="btn btn-primary pull-right" style="margin-right:5px;" ng-show="checkEditPortfolio()" ng-click="toggleEditPortfolio(); finishEditPortfolio()">
 			Finish Editing
 			<i class="glyphicon glyphicon-edit"></i>
 		</a>

@@ -144,6 +144,18 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 
 		$scope.removeDBfromP = function(portfolio_arg) {
 			$scope.user.portfolios.splice(portfolio_arg,1);
+			Authentication.user.portfolios.splice(portfolio_arg,1);
+		};
+
+		$scope.finishEditPortfolio = function() {
+			var user = new Users(Authentication.user);
+
+			user.$update(function(response) {
+				$scope.success = true;
+				Authentication.user = response;
+			}, function(response) {
+				$scope.error = response.data.message;
+			});
 		};
 
 	}
