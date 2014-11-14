@@ -121,6 +121,10 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
         	});
         };
 
+        $scope.findDBUsers = function(){
+        	$scope.dbUsers = Users.query();
+        };
+
 		//sort order for the list database page
 		$scope.sortorder = 'name';
 	}
