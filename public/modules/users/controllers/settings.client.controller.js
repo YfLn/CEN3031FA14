@@ -104,23 +104,26 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 
 		// Find existing Database in Porfolio
 		$scope.findAll = function() {		
+			//Must save initial count because we will be changing this array
 			var initPortCount = Authentication.user.portfolios.length;
 			for(var i = 0; i < initPortCount; i++)
 			{
+				//Call method to remove bad portfolios from )Authentication/$scope).user.portfolios
+				//Needed a separate method to preserve the current i value when the async request is made (Databases.get)
 				$scope.removeBadP(i);
 			}
 		};
 
 		$scope.removeBadP = function(i){
-			var index = i;
-			var success = false;
+			var index = i; 
+			//Execute asynce request to get db
 			var result = Databases.get({databaseId: Authentication.user.portfolios[index]}, function() {
-				console.log('success');
-				$scope.user.portfolios[index] = result;
+				//console.log('success');
+				$scope.user.portfolios[index] = result; //Update $scope.user.portfolios
 			}, function() {
 				console.log(index);
 				console.log('Dead database removed from portfolio. id:' + Authentication.user.portfolios[index]);
-				$scope.removeDBfromP(index);
+				$scope.removeDBfromP(index); //Remove the bad db
 			});		
 		}
 
