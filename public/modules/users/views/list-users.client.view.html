@@ -1,19 +1,21 @@
-<section data-ng-controller="SettingsController" data-ng-init="find()">
+<section data-ng-controller="UsersController" data-ng-init="find()">
 	<div class="page-header">
 		<h1>Users</h1>
 	</div>
-
-	<div class = "input-group" style="margin-bottom:10px">
-		Search: <input ng-model="query" class="form-control" placeholder = "Name or email address">
-	</div>
-
+	<div class="input-group" style="margin-bottom:10px">
+         Search: <input ng-model="query" class="form-control" placeholder = "Name or Email">
+    </div>
 	<div class="list-group">
-		<a data-ng-repeat="user in users | orderBy:sortorder | filter:query" class="list-group-item" data-ng-href="">
-			<small class="list-group-item-text">
-				<h4 class="list-group-item-heading" data-ng-bind="user.firstName"></h4>
-				<h4 class="list-group-item-heading" data-ng-bind="user.lastName"></h4>
-				<br><span data-ng-bind="user.username"></span>
-			</small>
-		</a>
+		<li class="list-group-item" style="height:35px; background-color:#4A6FB4; color:white; vertical-align:center;">
+			<h4 class="pull-left list-group-item-heading">Name</h4>
+			<h4 class="pull-right list-group-item-heading">Email</h4>
+		</li>
+		<li data-ng-repeat="user in users | orderBy:sortorder | filter:query" data-ng-href="#!/users/{{user._id}}" class="list-group-item" style="height:50px;">
+			<h4 class="pull-left list-group-item-heading">{{user.firstName}} {{user.lastName}}</h4>
+			<a class="pull-right list-group-item-text" data-ng-href="mailto:{{user.username}}">{{user.username}}</a>
+		</li>
+	</div>
+	<div class="alert alert-warning text-center" data-ng-if="users.$resolved && !users.length">
+		No users yet!
 	</div>
 </section>

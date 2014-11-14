@@ -107,8 +107,22 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 			
 			for(var i = 0; i < $scope.user.portfolios.length; i++)
 			{
-				//console.log($scope.user);
-				$scope.user.portfolios[i] = Databases.get({databaseId: Authentication.user.portfolios[i]});
+				/*//console.log($scope.user);
+				Databases.get({databaseId: Authentication.user.portfolios[i]}, function() {
+					console.log('Success');
+					$scope.user.portfolios[i] = Databases.get({databaseId: Authentication.user.portfolios[i]});
+				}, function() {
+					console.log('Failure to find DB');
+					$scope.user.portfolios.splice(i,1);
+					Authentication.user.portfolios.splice(i,1);
+				});*/
+				$scope.user.portfolios[i] = Databases.get({databaseId: Authentication.user.portfolios[i]}, function() {
+					console.log('success');
+				}, function() {
+					$scope.user.portfolios.splice(i,1);
+					Authentication.user.portfolios.splice(i,1);
+					console.log('DNE');
+				});
 			}
 		};
 
