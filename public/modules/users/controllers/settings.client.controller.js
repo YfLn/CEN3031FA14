@@ -104,19 +104,25 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 
 		// Find existing Database in Porfolio
 		$scope.findAll = function() {		
-			
-			for(var i = 0; i < $scope.user.portfolios.length; i++)
+			var initPortCount = Authentication.user.portfolios.length;
+			for(var i = 0; i < initPortCount; i++)
 			{
-				$scope.user.portfolios[i] = Databases.get({databaseId: Authentication.user.portfolios[i]}, function() {
-					console.log('success');
-				}, function() {
-					console.log('Dead database removed from portfolio. id:' + $scope.user.portfolios[i]);
-					$scope.removeDBfromP($scope.user.portfolios[i]);
-					$scope.finishEditPortfolio();
-				});
+				$scope.removeBadP(i);
 			}
 		};
 
+		$scope.removeBadP = function(i){
+			var index = i;
+			var success = false;
+			var result = Databases.get({databaseId: Authentication.user.portfolios[index]}, function() {
+				console.log('success');
+				$scope.user.portfolios[index] = result;
+			}, function() {
+				console.log(index);
+				console.log('Dead database removed from portfolio. id:' + Authentication.user.portfolios[index]);
+				$scope.removeDBfromP(index);
+			});		
+		}
 
 		var editPortfolioBoolean = false;
 
