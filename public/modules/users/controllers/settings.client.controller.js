@@ -107,21 +107,12 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 			
 			for(var i = 0; i < $scope.user.portfolios.length; i++)
 			{
-				/*//console.log($scope.user);
-				Databases.get({databaseId: Authentication.user.portfolios[i]}, function() {
-					console.log('Success');
-					$scope.user.portfolios[i] = Databases.get({databaseId: Authentication.user.portfolios[i]});
-				}, function() {
-					console.log('Failure to find DB');
-					$scope.user.portfolios.splice(i,1);
-					Authentication.user.portfolios.splice(i,1);
-				});*/
 				$scope.user.portfolios[i] = Databases.get({databaseId: Authentication.user.portfolios[i]}, function() {
 					console.log('success');
 				}, function() {
-					$scope.user.portfolios.splice(i,1);
-					Authentication.user.portfolios.splice(i,1);
-					console.log('DNE');
+					console.log('Dead database removed from portfolio. id:' + $scope.user.portfolios[i]);
+					$scope.removeDBfromP($scope.user.portfolios[i]);
+					$scope.finishEditPortfolio();
 				});
 			}
 		};
@@ -138,23 +129,6 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 			if(editPortfolioBoolean === false) {return false;}
 			if(editPortfolioBoolean === true) {return true;}
 		};
-
-		/*WIP code to check portfolio for bad/null entries and remove them
-		$scope.removeBadDatabaseFromPortfolio = function() {
-			$scope.databases = Databases.query();
-			for(var i in $scope.user.portfolios) {
-				var exists = false;
-				for(var j in $scope.databases) {
-					if($scope.user.portfolios[i]._id === $scope.databases[j]._id) {
-						exists = true;
-						break;
-					}
-					if(!exists) {
-						$scope.user.portfolios.splice(i,1);
-					}
-				}
-			}
-		};*/
 
 		$scope.removeDBfromP = function(portfolio_arg) {
 			$scope.user.portfolios.splice(portfolio_arg,1);
