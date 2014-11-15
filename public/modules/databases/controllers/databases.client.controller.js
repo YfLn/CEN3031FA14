@@ -64,11 +64,12 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 
 		// Find existing Database
 		$scope.findOne = function() {
+			//Note we had to use a local variable 'result' in order to be able to use it within the callback function
 			var result = Databases.get({ 
 				databaseId: $stateParams.databaseId
 			}, function(){
-				$scope.findDBUsers(result._id)
-				$scope.database = result;
+				$scope.findDBUsers(result._id);
+				$scope.database = result; //Set this scope's current database
 			});
 		};
 
@@ -124,6 +125,7 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
         	});
         };
 
+        //This function will find all users which have the provided database in their portfolio
         $scope.findDBUsers = function(database_id){
        		var allUsers = Users.query({}, function(){
 	       		for(var i=0; i < allUsers.length; i++)
