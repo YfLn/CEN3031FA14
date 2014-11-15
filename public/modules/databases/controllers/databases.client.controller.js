@@ -64,8 +64,11 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 
 		// Find existing Database
 		$scope.findOne = function() {
-			$scope.database = Databases.get({ 
+			var result = Databases.get({ 
 				databaseId: $stateParams.databaseId
+			}, function(){
+				$scope.findDBUsers(result._id)
+				$scope.database = result;
 			});
 		};
 
@@ -121,8 +124,21 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
         	});
         };
 
-        $scope.findDBUsers = function(){
-        	$scope.dbUsers = Users.query();
+        $scope.findDBUsers = function(database_id){
+       		var allUsers = Users.query({}, function(){
+	       		for(var i=0; i < allUsers.length; i++)
+	       		{
+	       			var currUser = allUsers[i];
+	       			//If we can't find the database in the user portfolio, splice from array
+	       			if(currUser.portfolios.indexOf(database_id) === -1)
+	       			{
+	       				//console.log(currUser.firstName + " " + currUser.lastName + " does not have this database!");
+	       				allUsers.splice(i, 1);
+	       				i--; // We need to decrement i because the right neighbor of the recently spliced element will shift left
+	       			}
+	       		}
+	        	$scope.dbUsers = allUsers;
+        	});
         };
 
 		//sort order for the list database page
