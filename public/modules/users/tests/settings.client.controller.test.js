@@ -121,6 +121,8 @@
 			expect(scope.success).toBeNull();
 		});
 
+		
+
 		/*it('$scope.open(size) should open modal and cancel option to delete account', function(){
 			$location.path('/settings/edit'); //Go to edit profile page
 			scope.open('sm');
