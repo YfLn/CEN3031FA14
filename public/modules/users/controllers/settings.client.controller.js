@@ -104,14 +104,28 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 
 		// Find existing Database in Porfolio
 		$scope.findAll = function() {		
-			
-			for(var i = 0; i < $scope.user.portfolios.length; i++)
+			//Must save initial count because we will be changing this array
+			var initPortCount = Authentication.user.portfolios.length;
+			for(var i = 0; i < initPortCount; i++)
 			{
-				//console.log($scope.user);
-				$scope.user.portfolios[i] = Databases.get({databaseId: Authentication.user.portfolios[i]});
+				//Call method to remove bad portfolios from )Authentication/$scope).user.portfolios
+				//Needed a separate method to preserve the current i value when the async request is made (Databases.get)
+				$scope.removeBadP(i);
 			}
 		};
 
+		$scope.removeBadP = function(i){
+			var index = i; 
+			//Execute asynce request to get db
+			var result = Databases.get({databaseId: Authentication.user.portfolios[index]}, function() {
+				//console.log('success');
+				$scope.user.portfolios[index] = result; //Update $scope.user.portfolios
+			}, function() {
+				console.log(index);
+				console.log('Dead database removed from portfolio. id:' + Authentication.user.portfolios[index]);
+				$scope.removeDBfromP(index); //Remove the bad db
+			});		
+		}
 
 		var editPortfolioBoolean = false;
 
@@ -124,23 +138,6 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 			if(editPortfolioBoolean === false) {return false;}
 			if(editPortfolioBoolean === true) {return true;}
 		};
-
-		/*WIP code to check portfolio for bad/null entries and remove them
-		$scope.removeBadDatabaseFromPortfolio = function() {
-			$scope.databases = Databases.query();
-			for(var i in $scope.user.portfolios) {
-				var exists = false;
-				for(var j in $scope.databases) {
-					if($scope.user.portfolios[i]._id === $scope.databases[j]._id) {
-						exists = true;
-						break;
-					}
-					if(!exists) {
-						$scope.user.portfolios.splice(i,1);
-					}
-				}
-			}
-		};*/
 
 		$scope.removeDBfromP = function(portfolio_arg) {
 			$scope.user.portfolios.splice(portfolio_arg,1);
