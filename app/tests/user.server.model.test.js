@@ -23,7 +23,8 @@ describe('User Model Unit Tests:', function() {
 			username: 'user@ufl.edu',
 			researchinterests: 'generic research interests',
 			password: 'password',
-			provider: 'local'
+			provider: 'local',
+			portfolio: ['525a8422f6d0f87f0e407a33']
 		});
 		user2 = new User({
 			firstName: 'Firsty',
@@ -31,7 +32,8 @@ describe('User Model Unit Tests:', function() {
 			username: 'user@ufl.edu',
 			researchinterests: 'generic research interests',
 			password: 'password',
-			provider: 'local'
+			provider: 'local',
+			portfolio: ['525a8422f6d0f87f0e407a33']
 		});
 
 		done();

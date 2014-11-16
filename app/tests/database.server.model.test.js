@@ -22,7 +22,8 @@ describe('Database Model Unit Tests:', function() {
 			firstName: 'Full',
 			lastName: 'Name',
 			username: 'test@ufl.edu',
-			password: 'password'
+			password: 'password',
+			portfolio: ['525a8422f6d0f87f0e407a33']
 		});
 
 		user.save(function() { 
