@@ -122,7 +122,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 				console.log('Dead database removed from portfolio. id:' + Authentication.user.portfolios[index]);
 				$scope.removeDBfromP(index);
 			});		
-		}
+		};
 
 		var editPortfolioBoolean = false;
 

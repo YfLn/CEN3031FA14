@@ -71,3 +71,10 @@ exports.list = function(req, res) {
 		}
 	});
 };
+
+/**
+ * Show the current User
+ */
+exports.read = function(req, res) {
+	res.jsonp(req.user);
+};
