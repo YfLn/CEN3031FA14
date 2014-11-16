@@ -3,7 +3,8 @@
 angular.module('users').controller('UsersController', ['$scope', '$stateParams', '$location', 'Users', 'Authentication',
 	function($scope, $stateParams, $location, Users, Authentication) {
 		$scope.authentication = Authentication;
-
+		$scope.user = {};
+		//angular.copy(Authentication.user, $scope.user);
 		$scope.users = Users.query();
 
 		$scope.find = function(){
@@ -12,9 +13,11 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 
 		$scope.findOne = function() {
 			$scope.user = Users.get({userId: $stateParams.userId});
+			//console.log($stateParams.userId);
+			//console.log($scope.user);
 		};
 
-		var sortorder = '';
-
+		//Sort order variable for users list
+		$scope.sortorder = 'displayname';
 	} 
 ]);

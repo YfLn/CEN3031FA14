@@ -6,7 +6,7 @@
          Search: <input ng-model="query" class="form-control" placeholder = "Title or Short Description">
     </div>
     <div class="list-group">
-        <li data-ng-repeat="database in databases | orderBy:lastName | filter:query" data-ng-href="#!/databases/{{database._id}}" class="list-group-item">
+        <li data-ng-repeat="database in databases | orderBy:sortorder | filter:query" data-ng-href="#!/databases/{{database._id}}" class="list-group-item">
             <div style="display:flex">
             <div class="pull-left;" style="min-width:50px; vertical-align:center; padding-top:3px;">
                 <button ng-show="checkForDatabaseInPortfolio({{database}})" data-ng-click="addDatabaseToPortfolio({{database}})" class="btn addDatabases"><i class="glyphicon glyphicon-plus"></i></button> 

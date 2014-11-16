@@ -115,6 +115,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 		};
 
 		$scope.removeBadP = function(i){
+
 			var databaseID =  Authentication.user.portfolios[i];
 			//Execute async request to get db
 			var result = Databases.get({databaseId: databaseID}, 
