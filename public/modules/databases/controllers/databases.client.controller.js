@@ -3,6 +3,9 @@
 // Databases controller
 angular.module('databases').controller('DatabasesController', ['$scope', '$stateParams', '$location', 'Users', 'Authentication', 'Databases',
 	function($scope, $stateParams, $location, Users, Authentication, Databases) {
+		$scope.user = {};
+		angular.copy(Authentication.user, $scope.user);
+		$scope.authentication = Authentication;
 
 		// Create new Database
 		$scope.create = function() {
@@ -61,8 +64,12 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 
 		// Find existing Database
 		$scope.findOne = function() {
-			$scope.database = Databases.get({ 
+			//Note we had to use a local variable 'result' in order to be able to use it within the callback function
+			var result = Databases.get({ 
 				databaseId: $stateParams.databaseId
+			}, function(){
+				$scope.findDBUsers(result._id);
+				$scope.database = result; //Set this scope's current database
 			});
 		};
 
@@ -87,6 +94,7 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
             }
         };
 
+        //Checks for database in user's portfolio. Returns TRUE if database is NOT in portfolio.
         $scope.checkForDatabaseInPortfolio = function(arg_database) {
         	$scope.success = $scope.error = null;
         	var user = new Users(Authentication.user);
@@ -114,6 +122,24 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
         		$scope.user = response;
         	}, function(response) {
         		$scope.error = response.data.message;
+        	});
+        };
+
+        //This function will find all users which have the provided database in their portfolio
+        $scope.findDBUsers = function(database_id){
+       		var allUsers = Users.query({}, function(){
+	       		for(var i=0; i < allUsers.length; i++)
+	       		{
+	       			var currUser = allUsers[i];
+	       			//If we can't find the database in the user portfolio, splice from array
+	       			if(currUser.portfolios.indexOf(database_id) === -1)
+	       			{
+	       				//console.log(currUser.firstName + " " + currUser.lastName + " does not have this database!");
+	       				allUsers.splice(i, 1);
+	       				i--; // We need to decrement i because the right neighbor of the recently spliced element will shift left
+	       			}
+	       		}
+	        	$scope.dbUsers = allUsers;
         	});
         };
 

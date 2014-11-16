@@ -54,3 +54,20 @@ exports.update = function(req, res) {
 exports.me = function(req, res) {
 	res.jsonp(req.user || null);
 };
+
+/**
+* List Users
+*/
+exports.list = function(req, res) {
+	console.log('listing users');
+	User.find().sort('-displayName').populate('user','displayName').exec(function(err, users) {
+		if(err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			console.log(users.length);
+			res.jsonp(users);
+		}
+	});
+};
