@@ -3,11 +3,9 @@
 angular.module('users').controller('SettingsController', ['$scope', '$http', '$timeout','$location', 'Users', 'Authentication',  'Databases', '$modal',
 	function($scope, $http, $timeout, $location, Users, Authentication, Databases, $modal) {
 
+		$scope.accountResult = false;
 		$scope.user ={};
 		angular.copy(Authentication.user, $scope.user); //Deep copy so that changes can be reverted
-
-		//Temporary message for modal
-		var text = "Temporary message";
 
 		$scope.originalUser = {}; //Keep the original copy of the user
 		angular.copy($scope.user, $scope.originalUser);
@@ -92,13 +90,9 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 
 			var modalInstance = $modal.open({
 		      templateUrl: 'delete-modal.client.view.html',
-		      controller: 'SettingsController',
+		      controller: 'ModalController',
 		      size: size
 		    });
-		};
-
-		$scope.ok = function () {
-			$modalInstance.dismiss('okay');
 		};
 
 		// Find existing Database in Porfolio
@@ -110,7 +104,29 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 				$scope.user.portfolios[i] = Databases.get({databaseId: Authentication.user.portfolios[i]});
 			}
 		};
+	}
+]);
 
+angular.module('users').controller('ModalController', ['$scope', '$modalInstance', '$http', '$timeout', '$location', 'Users', 'Authentication',
+	function($scope, $http, Users, $timeout, $location,$modalInstance, Authentication) {
+
+		$scope.user ={};
+		angular.copy(Authentication.user, $scope.user); //Deep copy so that changes can be reverted
+
+		$scope.originalUser = {}; //Keep the original copy of the user
+		angular.copy($scope.user, $scope.originalUser);
+
+		$scope.ok = function(){
+			$http.post('/users/password', $scope.passwordDetails).success(function(response) {
+				
+				$scope.Authentication.user = response;
+
+				
+				$location.path('/');
+			}).error(function(response) {
+				$scope.error = response.message;
+			});
+		};
 	}
 ]);
 
