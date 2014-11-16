@@ -108,24 +108,32 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 			var initPortCount = Authentication.user.portfolios.length;
 			for(var i = 0; i < initPortCount; i++)
 			{
-				//Call method to remove bad portfolios from )Authentication/$scope).user.portfolios
+				//Call method to remove bad portfolios from (Authentication/$scope).user.portfolios
 				//Needed a separate method to preserve the current i value when the async request is made (Databases.get)
 				$scope.removeBadP(i);
 			}
 		};
 
 		$scope.removeBadP = function(i){
-			var index = i; 
-			//Execute asynce request to get db
-			var result = Databases.get({databaseId: Authentication.user.portfolios[index]}, function() {
-				//console.log('success');
-				$scope.user.portfolios[index] = result; //Update $scope.user.portfolios
-			}, function() {
-				console.log(index);
-				console.log('Dead database removed from portfolio. id:' + Authentication.user.portfolios[index]);
-				$scope.removeDBfromP(index); //Remove the bad db
-			});		
-		};
+
+			var databaseID =  Authentication.user.portfolios[i];
+			//Execute async request to get db
+			var result = Databases.get({databaseId: databaseID}, 
+				function() {
+					//console.log('success');
+					var index = $scope.user.portfolios.indexOf(databaseID);
+					$scope.user.portfolios[index] = result; //Update $scope.user.portfolios
+					$scope.finishEditPortfolio();
+				}, 
+				function() {
+					var index = $scope.user.portfolios.indexOf(databaseID);
+					console.log('Dead database removed from portfolio. id:' + $scope.user.portfolios[index]);
+					if(index !== -1)
+						$scope.removeDBfromP(index); //Remove the bad db
+					$scope.finishEditPortfolio(); 
+			});	
+			//It appears as if each time finishEditPf is called, it will fail if there is already another async request being processed.	
+		}
 
 		var editPortfolioBoolean = false;
 
