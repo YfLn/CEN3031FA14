@@ -60,7 +60,7 @@ exports.me = function(req, res) {
 */
 exports.list = function(req, res) {
 	console.log('listing users');
-	User.find().sort('-displayName').populate('user','displayName').exec(function(err, users) {
+	User.find().sort('lastName').exec(function(err, users) {
 		if(err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
