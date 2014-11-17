@@ -87,24 +87,26 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 
 		//Modal settings and functions
 		$scope.open = function (size) {
-
 			  $scope.modalInstance = $modal.open({
 		      templateUrl: 'delete-modal.client.view.html',
 		      controller: 'SettingsController',
-		      size: size
-		    });
+		      size: size,
+		      scope: $scope
+		   	 });
 		};
 
 		$scope.ok = function(){
-			$http.post('/users/password', $scope.passwordDetails).success(function(response) {
-				
-				$scope.Authentication.user = response;
-
-				
-				$location.path('/');
-			}).error(function(response) {
-				$scope.error = response.message;
-			});
+			$scope.modalInstance.dismiss('delete');
+			console.log($scope);
+			console.log($scope.modalPassword);
+			if($scope.user.password === $scope.modalPassword)
+			{
+				console.log('password equal');
+			}
+			else
+			{
+				console.log('password not equal');
+			}
 		};
 
 		// Find existing Database in Porfolio
