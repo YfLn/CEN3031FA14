@@ -88,33 +88,12 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 		//Modal settings and functions
 		$scope.open = function (size) {
 
-			var modalInstance = $modal.open({
+			  $scope.modalInstance = $modal.open({
 		      templateUrl: 'delete-modal.client.view.html',
-		      controller: 'ModalController',
+		      controller: 'SettingsController',
 		      size: size
 		    });
 		};
-
-		// Find existing Database in Porfolio
-		$scope.findAll = function() {		
-			
-			for(var i = 0; i < $scope.user.portfolios.length; i++)
-			{
-				console.log($scope.user);
-				$scope.user.portfolios[i] = Databases.get({databaseId: Authentication.user.portfolios[i]});
-			}
-		};
-	}
-]);
-
-angular.module('users').controller('ModalController', ['$scope', '$modalInstance', '$http', '$timeout', '$location', 'Users', 'Authentication',
-	function($scope, $http, Users, $timeout, $location,$modalInstance, Authentication) {
-
-		$scope.user ={};
-		angular.copy(Authentication.user, $scope.user); //Deep copy so that changes can be reverted
-
-		$scope.originalUser = {}; //Keep the original copy of the user
-		angular.copy($scope.user, $scope.originalUser);
 
 		$scope.ok = function(){
 			$http.post('/users/password', $scope.passwordDetails).success(function(response) {
@@ -127,7 +106,20 @@ angular.module('users').controller('ModalController', ['$scope', '$modalInstance
 				$scope.error = response.message;
 			});
 		};
+
+		// Find existing Database in Porfolio
+		$scope.findAll = function() {		
+			
+			for(var i = 0; i < $scope.user.portfolios.length; i++)
+			{
+				console.log($scope.user);
+				$scope.user.portfolios[i] = Databases.get({databaseId: Authentication.user.portfolios[i]});
+			}
+		};
+
 	}
 ]);
+
+
 
 
