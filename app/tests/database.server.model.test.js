@@ -1,21 +1,28 @@
 'use strict';
 
-/**
+/*
  * Module dependencies.
  */
+
 var should = require('should'),
 	mongoose = require('mongoose'),
 	User = mongoose.model('User'),
 	Database = mongoose.model('Database');
 
-/**
+/*
  * Globals
  */
+
 var user, database;
 
-/**
+/*
  * Unit tests
+ *
+ * dl = descriptionLong
+ * ds = descriptionShort
+ *
  */
+
 describe('Database Model Unit Tests:', function() {
 	beforeEach(function(done) {
 		user = new User({
@@ -40,7 +47,14 @@ describe('Database Model Unit Tests:', function() {
 	});
 
 	describe('Method Save', function() {
+
+// -------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------- Single Variable Tests -------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------
+
 		it('should be able to save without problems when url begins with http://', function(done) {
+			database.url = 'http://url.com';
+
 			return database.save(function(err) {
 				should.not.exist(err);
 				done();
@@ -55,6 +69,24 @@ describe('Database Model Unit Tests:', function() {
 				done();
 			});
 		});		
+
+		it('should be able to save without error as a free database', function(done) {
+			database.isFree = true;
+
+			return database.save(function(err) {
+				should.not.exist(err);
+				done();
+			});
+		});
+
+		it('should be able to save without error as a paid database', function(done) {
+			database.isFree = false;
+
+			return database.save(function(err) {
+				should.not.exist(err);
+				done();
+			});
+		});
 
 		it('should be able to show an error when try to save without name', function(done) { 
 			database.name = '';
@@ -109,6 +141,10 @@ describe('Database Model Unit Tests:', function() {
 				done();
 			});
 		});
+
+// -------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------ End of Tests -----------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------
 
 	});
 
