@@ -1,103 +1,108 @@
 <section data-ng-controller="DatabasesController" data-ng-init="findOne();">
-    <div class="pull-left">
-        <!-- Name Here -->
-        <div class="page-header">
-            <h1 data-ng-bind="database.name"></h1>
-            <!--add Databases into Porfolio-->          
-            <button ng-show="checkForDatabaseInPortfolio()" data-ng-click="addDatabaseToPortfolio()" class="btn addDatabases">
-            Add Database To Your Portfolio <i class="glyphicon glyphicon-plus"></i></button> 
-            <button ng-show="!checkForDatabaseInPortfolio()" data-ng-click="removeDatabaseFromPortfolio()" class="btn removeDatabase"> Remove Database From Portfolio <i class="glyphicon glyphicon-minus"></i></button>
-        </div>
-        <!-- Short Description Here, should this be visibile in view DB or just in the list of DBs? -->
-        <div class="page-header">
-            <h3>Brief Description</h3>
-            <p data-ng-bind="database.descriptionShort"></p>
-        </div>
-        <!-- Long Description Here -->
-        <div class="page-header">
-            <h3>Full Description</h3>
-            <p data-ng-bind="database.descriptionLong"></p>
-        </div>
-        <!-- URL is here -->
-        <div class="page-header">
-            <h3>Where to Access</h3>
-            <a data-ng-bind="database.url" ng-href="{{database.url}}"></a>
-        </div>
-        <!-- isFree Here, desperately needs formatting -->
-        <div class="page-header" data-ng-show="database.isFree">
-            <h3>Free to Access</h3>
-            <p>This database is free to access.</p>
-        </div>
-        <!-- Buttons for Delete / Edit -->
-        <div class="" data-ng-show="authentication.user._id == database.user._id">
-            <a class="btn btn-primary" href="/#!/databases/{{database._id}}/edit">
-                <i class="glyphicon glyphicon-edit"></i>
-            </a>
-            <a class="btn btn-primary" data-ng-click="remove();">
-                <i class="glyphicon glyphicon-trash"></i>
-            </a>
-        </div>
 
-        <small>
-            <em class="text-muted">
-                Added on
-                <span data-ng-bind="database.created | date:'mediumDate'"></span>
-                by
-                <span data-ng-bind="database.user.displayName"></span>
-            </em>
-        </small> 
+    <!--Buttons to add/remove database in portfolio-->
+    <button ng-show="checkForDatabaseInPortfolio()" data-ng-click="addDatabaseToPortfolio()" class="btn addDatabases pull-right">
+    Add Database To Your Portfolio <i class="glyphicon glyphicon-plus"></i></button> 
+    <button ng-show="!checkForDatabaseInPortfolio()" data-ng-click="removeDatabaseFromPortfolio()" class="btn removeDatabase pull-right"> Remove Database From Portfolio <i class="glyphicon glyphicon-minus"></i></button>
+
+    <!-- Name Here -->
+    <div class="page-header" style="margin-bottom:3px;">
+        <h1 data-ng-bind="database.name" style="margin-bottom:3px"></h1>
     </div>
 
+    <div class="row">
+        <div class="col-xs-12 col-sm-6 col-md-8" style="max-width:400px;">
+            <small style="margin-top:0px;">
+                <em class="text-muted">
+                    Added on
+                    <span data-ng-bind="database.created | date:'mediumDate'"></span>
+                    by
+                    <span data-ng-bind="database.user.displayName"></span>
+                </em>
+            </small>  
+        
+        <!-- Short Description Here, should this be visibile in view DB or just in the list of DBs? -->
+            <div class="page-header">
+                <h3>Brief Description</h3>
+                <p data-ng-bind="database.descriptionShort"></p>
+            </div>
+        
+        <!-- Long Description Here -->
+            <div class="page-header">
+                <h3>Full Description</h3>
+                <p data-ng-bind="database.descriptionLong"></p>
+            </div>
+       
+        <!-- URL is here -->
+            <div class="page-header">
+                <h3>Where to Access</h3>
+                <a data-ng-bind="database.url" ng-href="{{database.url}}"></a>
+            </div>
+        
+        <!-- isFree Here, desperately needs formatting -->
+            <div class="page-header" data-ng-show="database.isFree">
+                <h3>Free to Access</h3>
+                <p>This database is free to access.</p>
+            </div>
+        
+        <!-- Buttons for Delete / Edit -->
+            <div class="" data-ng-show="authentication.user._id == database.user._id">
+                <a class="btn btn-primary" href="/#!/databases/{{database._id}}/edit">
+                    <i class="glyphicon glyphicon-edit"></i>
+                </a>
+                <a class="btn btn-primary" data-ng-click="remove();">
+                 <i class="glyphicon glyphicon-trash"></i>
+                </a>
+           </div>
+        </div>
+
     <!-- Users who have added-->
-    <div class="pull-right">
-        <div class="page-header">
-            <h1>Database Users</h1>
+        <div class="col-xs-6 col-md-4" style="max-width:300px;float:right">
+            <div class="page-header">
+                <h3>Database Users</h3>
+            </div>
+            <li data-ng-repeat="user in dbUsers" class="list-group-item">
+                <div style="display:flex">
+                    <a class="list-group-item-text" data-ng-href="#!/users/{{user._id}}" id="attributes" style="min-width: 350px;">
+                        <span class="list-group-item-heading" data-ng-bind="user.firstName"></span>
+                        <span class="list-group-item-heading" data-ng-bind="user.lastName"></span>
+                    </a>
+                </div>
+            </li>
         </div>
-        <li data-ng-repeat="user in dbUsers" class="list-group-item">
-            <div style="display:flex">
-            <a class="list-group-item-text" id="attributes" style="min-width: 350px;">
-                <span class="list-group-item-heading" data-ng-bind="user.firstName"></span>
-                <span class="list-group-item-heading" data-ng-bind="user.lastName"></span>
-            </a>
-        </div>
-        </li>
     </div>
 
     <!--Comments Area-->
-    <div class="col-md-12"><!--data-ng-init="findComments()"-->
-        <div class="page-header">
-            <h1>Comments</h1>
-        </div>
-        <div class="list-group">
-            <a data-ng-repeat="comment in comments" class="list-group-item">
-                <small class="list-group-item-text">
-                    Posted on
-                    <span data-ng-bind="comment.created | date:'medium'"></span>
-                    by
-                    <span data-ng-bind="comment.user.displayName"></span>
-                </small>
-                <h4 class="list-group-item-heading" data-ng-bind="comment.reviews"></h4>
-            </a>
-        </div>
-        <div class="alert alert-warning text-center" data-ng-hide="!comments.$resolved || comments.length">
-            No Comments yet, why don't you create one</a>?
-        </div>
-        <form class="form-horizontal" novalidate><!--data-ng-submit="createComments()"-->
-            <fieldset>
-                <div class="form-group">
-                    <label class="control-label" for="reviews">Reviews</label>
-                    <div class="controls">
-                        <input type="text" data-ng-model="reviews" id="reviews" class="form-control" placeholder="Reviews" required>
-                    </div>
-                </div>
-                <div class="form-group">
-                    <input type="submit" class="btn btn-default">
-                </div>
-                <div data-ng-show="error" class="text-danger">
-                    <strong data-ng-bind="error"></strong>
-                </div>
-            </fieldset>
-        </form>
+    <div class="page-header">
+        <h2>Comments</h2>
+    </div>
+    <div class="list-group">
+        <li data-ng-controller="CommentsController" data-ng-repeat="comment in dbComments" class="list-group-item">
+            <b><a data-ng-href="#!/users/{{comment.user._id}}" data-ng-bind="comment.user.displayName"></a></b>
+            <small class="list-group-item-test"> on <span data-ng-bind="comment.created | date:'medium'"></span>
+            <i class="glyphicon glyphicon-remove" ng-show="authentication.user._id === comment.user._id" style="color:red; cursor: pointer" ng-click="remove(comment)"></i>                
+            <h5 class="list-group-item-heading" data-ng-bind="comment.reviews" style="padding-top:4px"></h5>
+        </li>
     </div>
 
+    <div class="alert alert-warning text-center" ng-show="dbComments.length === 0">
+        No comments yet.
+    </div>
+
+    <form class="form-horizontal" data-ng-controller="CommentsController" novalidate data-ng-submit="create(database._id)">
+        <fieldset>
+            <div class="form-group">
+                <label class="control-label" for="reviews" style="padding-left:10px">Add Comment</label>
+                <div class="controls">
+                    <textarea type="text" data-ng-model="reviews" id="reviews" class="form-control" style="margin-left:10px; max-width:700px;" placeholder="Enter your comment here" required></textarea>
+                </div>            
+            </div>
+            <div class="form-group">
+                <input type="submit" class="btn btn-default" style="margin-left:10px;">
+            </div>    
+            <div data-ng-show="error" class="text-danger">
+                <strong data-ng-bind="error"></strong>
+            </div>
+        </fieldset>
+    </form>
 </section>

@@ -1,26 +1,29 @@
 'use strict';
 
 // Comments controller
-angular.module('comments').controller('CommentsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Comments',
-	function($scope, $stateParams, $location, Authentication, Comments ) {
+angular.module('comments').controller('CommentsController', ['$scope', '$stateParams', '$location', '$window', 'Authentication', 'Comments',
+	function($scope, $stateParams, $location, $window, Authentication, Comments ) {
 		$scope.authentication = Authentication;
 
 		// Create new Comment
-		$scope.create = function() {
+		$scope.create = function(databaseId) {
 			// Create new Comment object
 			var comment = new Comments ({
-				reviews: this.reviews
+				reviews: this.reviews,
+				databaseId: databaseId
+
 			});
 
 			// Redirect after save
 			comment.$save(function(response) {
-				$location.path('comments/' + response._id);
+				$window.location.reload();
 
 				// Clear form fields
 				$scope.name = '';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
+
 		};
 
 		// Remove existing Comment
@@ -32,6 +35,7 @@ angular.module('comments').controller('CommentsController', ['$scope', '$statePa
 						$scope.comments.splice(i, 1);
 					}
 				}
+				$window.location.reload();
 			} else {
 				$scope.comment.$remove(function() {
 					$location.path('comments');
