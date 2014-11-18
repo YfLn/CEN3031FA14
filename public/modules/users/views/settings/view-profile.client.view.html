@@ -35,7 +35,7 @@
         </tr>
 
         <tr data-ng-repeat="portfolio in user.portfolios | orderBy: predicate : reverse | filter:query"> 
-        	<td><button ng-show="!angular.element(document.getElementById('DatabasesController')).scope().checkForDatabaseInPortfolio(portfolio) && checkEditPortfolio()" data-ng-click="removeDBfromP($index)" class="btn removeDatabase"><i class="glyphicon glyphicon-minus"></i></button><a data-ng-href="#!/databases/{{portfolio._id}}" class="list-group-item"> {{portfolio.name}}</td>
+        	<td><button ng-show="!angular.element(document.getElementById('DatabasesController')).scope().checkForDatabaseInPortfolio(portfolio) && checkEditPortfolio()" data-ng-click="removeElementfromPortfolio($index)" class="btn removeDatabase"><i class="glyphicon glyphicon-minus"></i></button><a data-ng-href="#!/databases/{{portfolio._id}}" class="list-group-item"> {{portfolio.name}}</td>
         	<td>{{portfolio.descriptionShort}}</td>
         	<td>{{portfolio.user.displayName}}</td>
 

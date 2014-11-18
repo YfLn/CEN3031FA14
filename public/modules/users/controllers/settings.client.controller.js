@@ -125,7 +125,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 				$scope.removeBadPortofolioEntries(i);
 			}
 		};
-
+		
 		$scope.removeBadPortofolioEntries = function(i){
 			var databaseID =  Authentication.user.portfolios[i];
 			//Execute async request to get db
