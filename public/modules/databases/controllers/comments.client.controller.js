@@ -2,7 +2,7 @@
 
 // Comments controller
 angular.module('comments').controller('CommentsController', ['$scope', '$stateParams', '$location', '$window', 'Authentication', 'Comments',
-	function($scope, $stateParams, $location, $window, Authentication, Comments ) {
+	function($scope, $stateParams, $location, Authentication, Comments ) {
 		$scope.authentication = Authentication;
 
 		// Create new Comment
@@ -62,5 +62,10 @@ angular.module('comments').controller('CommentsController', ['$scope', '$statePa
 				commentId: $stateParams.commentId
 			});
 		};
+
+		//Reset comment field
+		$scope.resetCommentField = function(){
+			$scope.reviews = null;
+		}
 	}
 ]);
