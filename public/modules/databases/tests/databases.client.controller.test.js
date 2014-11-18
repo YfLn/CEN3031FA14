@@ -6,6 +6,8 @@
 		// Initialize global variables
 		var DatabasesController,
 		scope,
+		Authentication,
+		Auth,
 		$httpBackend,
 		$stateParams,
 		$location;
@@ -35,7 +37,7 @@
 		// The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
 		// This allows us to inject a service but then attach it to a variable
 		// with the same name as the service.
-		beforeEach(inject(function($controller, $rootScope, _$location_, _$stateParams_, _$httpBackend_) {
+		beforeEach(inject(function($controller, $rootScope, _$location_, _$stateParams_, _$httpBackend_, _Authentication_) {
 			// Set a new global scope
 			scope = $rootScope.$new();
 
@@ -43,10 +45,12 @@
 			$stateParams = _$stateParams_;
 			$httpBackend = _$httpBackend_;
 			$location = _$location_;
+			Auth = _Authentication_;
 
 			// Initialize the Databases controller.
 			DatabasesController = $controller('DatabasesController', {
-				$scope: scope
+				$scope: scope,
+				Authentication: Auth
 			});
 		}));
 
@@ -73,15 +77,23 @@
 		it('$scope.findOne() should create an array with one Database object fetched from XHR using a databaseId URL parameter', inject(function(Databases) {
 			// Define a sample Database object
 			var sampleDatabase = new Databases({
-				name: 'New Database'
+				name: 'New Database',
+				id: 'id'
 			});
+
+			// Define a sample portfolio
+			var samplePortfolio = ['id', 'di', '525a8422f6d0f87f0e407a33'];
+
+			// Define a sample user
+			var sampleUser = {firstName: 'Joe', portfolios: samplePortfolio};
 
 			// Set the URL parameter
 			$stateParams.databaseId = '525a8422f6d0f87f0e407a33';
 
 			// Set GET response
-			$httpBackend.expectGET(/databases\/([0-9a-fA-F]{24})$/).respond(sampleDatabase);
-
+			$httpBackend.expectGET(/databases\/([0-9a-fA-F]{24})$/).respond(200, sampleDatabase);
+			//GET Response for when $scope.findDBUsers is called
+			$httpBackend.expectGET('users').respond(200, [sampleUser]);
 			// Run controller functionality
 			scope.findOne();
 			$httpBackend.flush();
@@ -148,7 +160,7 @@
 
 			// Create new Databases array and include the Database
 			scope.databases = [sampleDatabase];
-
+			
 			// Set expected DELETE response
 			$httpBackend.expectDELETE(/databases\/([0-9a-fA-F]{24})$/).respond(204);
 
@@ -159,5 +171,53 @@
 			// Test array after successful delete
 			expect(scope.databases.length).toBe(0);
 		}));
+
+		it('$scope.addDatabaseToPortfolio() should correctly add database to Authentication.user', function(){
+			$httpBackend.expectPUT('users').respond(200, 
+					{name:'Fred', researchinterests:'Food', portfolios:['0','1']});
+
+			Auth.user = {name:'Fred', researchinterests:'Food', portfolios:['0']};
+			scope.database = {_id: '1'};
+
+			scope.addDatabaseToPortfolio();
+			$httpBackend.flush();
+
+			expect(Auth.user.portfolios).toEqual(['0','1']);
+		});
+
+		it('$scope.removeDatabaseFromPortfolio() should correctly remove database from Authentication.user', function(){
+			$httpBackend.expectPUT('users').respond(200, 
+					{name:'Fred', researchinterests:'Food', portfolios:['0']});
+
+			Auth.user = {name:'Fred', researchinterests:'Food', portfolios:['0','1']};
+			scope.database = {_id: '1'};
+
+			scope.removeDatabaseFromPortfolio();
+			$httpBackend.flush();
+
+			expect(Auth.user.portfolios).toEqual(['0']);
+		});
+
+		it('$scope.findDBUsers should only find those users who have the DB in their portfolio', function(){
+			//Define initial variables
+			var s_User1 = {firstName: 'Joe', portfolios: ['3aA', '4bB']};
+			var s_User2 = {firstName: 'Fred', portfolios: ['5cC', '6dD']};
+
+			//Mock backend
+			$httpBackend.expectGET('users').respond(200, [s_User1, s_User2]);
+		
+			scope.findDBUsers('5cC');
+			$httpBackend.flush();
+
+			expect(scope.dbUsers[0].firstName).toEqual('Fred');
+
+			//Mock backend
+			$httpBackend.expectGET('users').respond(200, [s_User1, s_User2]);
+
+			scope.findDBUsers('3aA');
+			$httpBackend.flush();
+
+			expect(scope.dbUsers[0].firstName).toEqual('Joe');
+		});
 	});
 }());
