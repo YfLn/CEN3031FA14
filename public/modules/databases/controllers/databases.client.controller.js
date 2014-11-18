@@ -88,10 +88,9 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 					$scope.success = true;
 					Authentication.user = response;
 					$scope.user = response;
-					$window.location.reload();
 				}, function(response) {
 					$scope.error = response.data.message;
-				});        	
+				});      	
             }
         };
 
@@ -121,7 +120,6 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
         		$scope.success = true;
         		Authentication.user = response;
         		$scope.user = response;
-        		$window.location.reload();
         	}, function(response) {
         		$scope.error = response.data.message;
         	});
