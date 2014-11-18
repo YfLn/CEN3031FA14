@@ -1,16 +1,20 @@
 'use strict';
 
-/*
+/**
  * Module dependencies.
  */
 var mongoose = require('mongoose'),
 	Schema = mongoose.Schema;
 
-/*
+/**
  * Comment Schema
  */
 var CommentSchema = new Schema({
-	reviews: [String],
+	reviews: {
+		type: String,
+		default: '',
+		trim: true
+	},
 	created: {
 		type: Date,
 		default: Date.now

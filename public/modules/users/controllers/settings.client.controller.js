@@ -3,12 +3,11 @@
 angular.module('users').controller('SettingsController', ['$scope', '$http', '$timeout','$location', 'Users', 'Authentication',  'Databases', '$modal',
 	function($scope, $http, $timeout, $location, Users, Authentication, Databases, $modal) {
 
+		$scope.accountResult = false;
 		$scope.user ={};
 		angular.copy(Authentication.user, $scope.user); 
 		//Deep copy so that changes can be reverted
 
-		//Temporary message for modal
-		var text = 'Temporary message';
 
 		$scope.originalUser = {}; //Keep the original copy of the user
 		angular.copy($scope.user, $scope.originalUser);
@@ -90,16 +89,29 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 
 		//Modal settings and functions
 		$scope.open = function (size) {
-
-			var modalInstance = $modal.open({
+			  $scope.modalInstance = $modal.open({
 		      templateUrl: 'delete-modal.client.view.html',
 		      controller: 'SettingsController',
-		      size: size
-		    });
+		      size: size,
+		      backdrop: 'static',
+		      scope: $scope
+		   	 });
 		};
 
-		$scope.ok = function () {
-			$modalInstance.dismiss('okay');
+		$scope.deleteAccount = function(){
+			//Need backend function to verify password
+			$http.post('/auth/signin', $scope.credentials).success(function(response) {
+				
+				$scope.authentication.user = response;
+				$scope.modalInstance.dismiss('delete');
+				// Redirect to the sign in page
+				$location.path('/');
+
+				//Need to pass value that tells backend user has deleted account
+				//Sign user out..?
+			}).error(function(response) {
+				$scope.error = 'Please enter the correct password';
+			});
 		};
 
 		// Find existing Database in Porfolio
@@ -110,12 +122,11 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 			{
 				//Call method to remove bad portfolios from (Authentication/$scope).user.portfolios
 				//Needed a separate method to preserve the current i value when the async request is made (Databases.get)
-				$scope.removeBadP(i);
+				$scope.removeBadPortofolioEntries(i);
 			}
 		};
-
-		$scope.removeBadP = function(i){
-
+		
+		$scope.removeBadPortofolioEntries = function(i){
 			var databaseID =  Authentication.user.portfolios[i];
 			//Execute async request to get db
 			var result = Databases.get({databaseId: databaseID}, 
@@ -129,25 +140,29 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 					var index = $scope.user.portfolios.indexOf(databaseID);
 					console.log('Dead database removed from portfolio. id:' + $scope.user.portfolios[index]);
 					if(index !== -1)
-						$scope.removeDBfromP(index); //Remove the bad db
+						$scope.removeElementfromPortfolio(index); //Remove the bad db
 					$scope.finishEditPortfolio(); 
 			});	
 			//It appears as if each time finishEditPf is called, it will fail if there is already another async request being processed.	
 		}
 
-		var editPortfolioBoolean = false;
+		$scope.editPortfolioBoolean = false;
 
 		$scope.toggleEditPortfolio = function () {
-			if(editPortfolioBoolean === false) {editPortfolioBoolean = true; console.log('toggled');}
-			else {editPortfolioBoolean = false;}
+			if($scope.editPortfolioBoolean === false) 
+			{
+				$scope.editPortfolioBoolean = true; 
+				//console.log('toggled');
+			}
+			else {$scope.editPortfolioBoolean = false;}
 		};
 
 		$scope.checkEditPortfolio = function () {
-			if(editPortfolioBoolean === false) {return false;}
-			if(editPortfolioBoolean === true) {return true;}
+			if($scope.editPortfolioBoolean === false) {return false;}
+			if($scope.editPortfolioBoolean === true) {return true;}
 		};
 
-		$scope.removeDBfromP = function(portfolio_arg) {
+		$scope.removeElementfromPortfolio = function(portfolio_arg) {
 			$scope.user.portfolios.splice(portfolio_arg,1);
 			Authentication.user.portfolios.splice(portfolio_arg,1);
 		};
@@ -165,5 +180,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 
 	}
 ]);
+
+
 
 
