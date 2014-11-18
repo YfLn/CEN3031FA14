@@ -110,11 +110,11 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 			{
 				//Call method to remove bad portfolios from (Authentication/$scope).user.portfolios
 				//Needed a separate method to preserve the current i value when the async request is made (Databases.get)
-				$scope.removeBadP(i);
+				$scope.removeBadPortofolioEntries(i);
 			}
 		};
 
-		$scope.removeBadP = function(i){
+		$scope.removeBadPortofolioEntries = function(i){
 			var databaseID =  Authentication.user.portfolios[i];
 			//Execute async request to get db
 			var result = Databases.get({databaseId: databaseID}, 
@@ -128,7 +128,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 					var index = $scope.user.portfolios.indexOf(databaseID);
 					console.log('Dead database removed from portfolio. id:' + $scope.user.portfolios[index]);
 					if(index !== -1)
-						$scope.removeDBfromP(index); //Remove the bad db
+						$scope.removeElementfromPortfolio(index); //Remove the bad db
 					$scope.finishEditPortfolio(); 
 			});	
 			//It appears as if each time finishEditPf is called, it will fail if there is already another async request being processed.	
@@ -150,7 +150,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 			if($scope.editPortfolioBoolean === true) {return true;}
 		};
 
-		$scope.removeDBfromP = function(portfolio_arg) {
+		$scope.removeElementfromPortfolio = function(portfolio_arg) {
 			$scope.user.portfolios.splice(portfolio_arg,1);
 			Authentication.user.portfolios.splice(portfolio_arg,1);
 		};
