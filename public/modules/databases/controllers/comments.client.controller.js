@@ -16,8 +16,6 @@ angular.module('comments').controller('CommentsController', ['$scope', '$statePa
 
 			// Redirect after save
 			comment.$save(function(response) {
-				$window.location.reload();
-
 				// Clear form fields
 				$scope.name = '';
 			}, function(errorResponse) {
@@ -35,7 +33,6 @@ angular.module('comments').controller('CommentsController', ['$scope', '$statePa
 						$scope.comments.splice(i, 1);
 					}
 				}
-				$window.location.reload();
 			} else {
 				$scope.comment.$remove(function() {
 					$location.path('comments');
