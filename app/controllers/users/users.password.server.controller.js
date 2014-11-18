@@ -246,3 +246,35 @@ exports.changePassword = function(req, res, next) {
 		});
 	}
 };
+
+/**
+ * Change Password
+ */
+exports.verifyPassword = function(req, res, next) {
+	// Init Variables
+	var passwordModal = req.body;
+	var message = null;
+
+	if (req.user) {
+		User.findById(req.user.id, function(err, user) {
+			if (!err && user) {
+				if (user.authenticate(passwordModal.currentPassword)) {
+						req.logout();
+						res.redirect('/');
+				} else {
+						res.status(400).send({
+						message: 'Please enter the correct password'
+						});
+				}
+			} else {
+					res.status(400).send({
+					message: 'User is not found'
+					});
+			}
+		});
+	} else {
+		res.status(400).send({
+		message: 'User is not signed in'
+		});
+	}
+};

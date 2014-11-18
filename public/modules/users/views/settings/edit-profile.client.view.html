@@ -14,7 +14,7 @@
             	<form name="deleteForm">
 	            	<div class="form-group">
 						<label for="password">Verify Password</label>
-						<input type="password" id="password" name="password" class="form-control" data-ng-model="modalPassword" placeholder="Verify Password" required />
+						<input type="password" id="password" name="password" class="form-control" data-ng-model="passwordModal.password" placeholder="Verify Password" required />
 					</div>
 					<div data-ng-show="error" class="text-center text-danger"> 
 						<strong data-ng-bind="error"></strong>
@@ -22,7 +22,7 @@
 				</form>
         	</div>
         	<div class="modal-footer">
-            	<button type="submit" class="btn btn-primary" ng-disabled="deleteForm.$invalid" ng-click="deleteAccount()">Delete Account</button>
+            	<button class="btn btn-primary" ng-disabled="deleteForm.$invalid" data-ng-click="deleteAccount()">Delete Account</button>
             	<button class="btn" ng-click="$dismiss()">Cancel</button>
         	</div>
     	</script>

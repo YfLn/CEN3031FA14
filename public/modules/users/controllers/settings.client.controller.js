@@ -13,6 +13,8 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 		// If user is not signed in then redirect back home
 		if (!$scope.user) $location.path('/');
 
+		$scope.authentication = Authentication;
+
 		// Check if there are additional accounts 
 		$scope.hasConnectedAdditionalSocialAccounts = function(provider) {
 			for (var i in $scope.user.additionalProvidersData) {
@@ -95,11 +97,13 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 		   	 });
 		};
 
-		$scope.deleteAccount = function(){
+		$scope.deleteAccount = function(passwordModal){
 			//Need backend function to verify password
-			$http.post('/auth/signin', $scope.credentials).success(function(response) {
+			$scope.success = $scope.error = null;
+			$http.post('/users/verify', $scope.passwordModal).success(function(response) {
 				
-				$scope.authentication.user = response;
+				//console.log($scope.authentication.user);
+				Authentication.user = response;
 				$scope.modalInstance.dismiss('delete');
 				// Redirect to the sign in page
 				$location.path('/');
@@ -107,7 +111,9 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 				//Need to pass value that tells backend user has deleted account
 				//Sign user out..?
 			}).error(function(response) {
-				$scope.error = 'Please enter the correct password';
+				//console.log($scope.credentials);
+				//console.log($scope.authentication.user);
+				$scope.error = 'Please enter the correcttt password';
 			});
 		};
 
