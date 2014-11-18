@@ -100,7 +100,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 		   	 });
 		};
 
-		$scope.deleteAccount = function(passwordModal){
+		$scope.deleteAccount = function(){
 			//Need backend function to verify password
 			$scope.success = $scope.error = null;
 			$http.post('/users/verify', $scope.passwordModal).success(function(response) {
