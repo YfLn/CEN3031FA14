@@ -129,11 +129,18 @@
 			expect($modal.templateURL).toEqual('delete-modal.client.view.html');
 		});*/
 
-		/*it('$scope.toggleEditPortfolio() should correctly toggle the boolean value in the scope', function(){
+		it('$scope.toggleEditPortfolio() should correctly toggle the boolean value in the scope', function(){
 			scope.editPortfolioBoolean = false;
 
 			scope.toggleEditPortfolio();
 			expect(scope.editPortfolioBoolean).toEqual(true);
-		});*/
+		});
+
+		it('$scope.checkEditPortfolio() should correctly check the boolean value in the scope', function(){
+			scope.editPortfolioBoolean = false;
+
+			var result = scope.checkEditPortfolio();
+			expect(result).toEqual(false);
+		});
 	});
 }());
