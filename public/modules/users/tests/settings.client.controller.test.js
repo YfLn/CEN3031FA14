@@ -10,6 +10,7 @@
 			$httpBackend,
 			$stateParams,
 			$location,
+			$modal,
 			$timeout;
 
 		beforeEach(function() {
@@ -32,7 +33,7 @@
 		// The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
 		// This allows us to inject a service but then attach it to a variable
 		// with the same name as the service.
-		beforeEach(inject(function($controller, $rootScope, _$location_, _$stateParams_, _$httpBackend_, _$timeout_,_Authentication_) {
+		beforeEach(inject(function($controller, $rootScope, _$location_, _$stateParams_, _$httpBackend_, _$timeout_,_Authentication_, _$modal_) {
 			// Set a new global scope
 			scope = $rootScope.$new();
 
@@ -40,6 +41,7 @@
 			$stateParams = _$stateParams_;
 			$httpBackend = _$httpBackend_;
 			$location = _$location_;
+			$modal = _$modal_;
 			$timeout = _$timeout_;
 			Authentication = _Authentication_; //Manually import Authentication service because signin() method is not in this scope.
 
@@ -61,7 +63,6 @@
 		});
 
 		it('$scope.cancelChanges() should revert the changes to user model', function(){
-			Authentication.user = 'Fred'; 
 
 			//Go to edit profile page
 			$location.path('/settings/edit'); 
@@ -76,7 +77,6 @@
 			//Backend simulate updating user
 			$httpBackend.expectPUT('users').respond(200, {name:'Fred', researchinterests:'Food'});
 
-			Authentication.user = [{name:'Joe'}, {researchinterests:'Drills'}]; //Previous value of Authentication.user
 			scope.user = [{name:'Fred'},{researchinterests:'Food'}]; //The newly defined user
 
 			scope.updateUserProfile(true); //Try to update user profile with the values in scope
@@ -86,5 +86,45 @@
 			expect(Authentication.user.name).toEqual('Fred');
 			expect(Authentication.user.researchinterests).toEqual('Food');
 		});
+
+		it('$scope.updateUserProfile() should just display error message if backend responds with an error', function(){
+			$httpBackend.expectPUT('users').respond(400, {message:'Failed to update user'});
+
+			scope.user = [{name:'Fred'},{researchinterests:'Food'}]; //The newly defined user
+
+			scope.updateUserProfile(true);
+			$httpBackend.flush();
+
+			//Expect scope.error to equal error response
+			expect(scope.error).toEqual('Failed to update user');
+			//The Authentication.user should not be defined if the update failed.
+			expect(Authentication.user).toBeUndefined(); 
+		});
+
+		it('$scope.changeUserPassword() should clear the form when the password is successfully change', function(){
+			$httpBackend.expect('POST', '/users/password').respond(200, 'Password Changed Successfully');
+
+			scope.changeUserPassword();
+			$httpBackend.flush();
+
+			expect(scope.success).toEqual(true);
+			expect(scope.passwordDetails).toEqual(null);
+		});
+
+		it('$scope.changeUserPassword() should display error message if password change was unsuccessful', function(){
+			$httpBackend.expect('POST', '/users/password').respond(400, {message:'Password Change Failed'});
+
+			scope.changeUserPassword();
+			$httpBackend.flush();
+
+			expect(scope.error).toEqual('Password Change Failed');
+			expect(scope.success).toBeNull();
+		});
+
+		/*it('$scope.open(size) should open modal and cancel option to delete account', function(){
+			$location.path('/settings/edit'); //Go to edit profile page
+			scope.open('sm');
+			expect($modal.templateURL).toEqual('delete-modal.client.view.html');
+		});*/
 	});
 }());

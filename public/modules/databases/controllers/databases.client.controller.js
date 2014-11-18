@@ -1,9 +1,11 @@
 'use strict';
 
 // Databases controller
-angular.module('databases').controller('DatabasesController', ['$scope', '$stateParams', '$location', 'Authentication', 'Databases',
-	function($scope, $stateParams, $location, Authentication, Databases) {
-		$scope.authentication = Authentication;
+angular.module('databases').controller('DatabasesController', ['$scope', '$stateParams', '$location', 'Users', 'Authentication', 'Databases',
+	function($scope, $stateParams, $location, Users, Authentication, Databases) {
+		$scope.user = {};
+		angular.copy(Authentication.user, $scope.user);
+
 		// Create new Database
 		$scope.create = function() {
 			// Create new Database object
@@ -65,6 +67,58 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 				databaseId: $stateParams.databaseId
 			});
 		};
+
+		// Add databases into portfolio
+		$scope.addDatabaseToPortfolio = function(arg_database) {
+            $scope.success = $scope.error = null;
+            var user = new Users($scope.user);
+            var database = new Databases($scope.database);
+            if(arg_database) {database = arg_database;}
+
+            //Check if database is in portfolio. If not, add to portfolio.
+            if (user.portfolios.indexOf(database._id) === -1) {
+            	user.portfolios.push(database._id);
+            	
+                user.$update(function(response) {
+					$scope.success = true;
+					Authentication.user = response;
+					$scope.user = response;
+				}, function(response) {
+					$scope.error = response.data.message;
+				});        	
+            }
+        };
+
+        $scope.checkForDatabaseInPortfolio = function(arg_database) {
+        	$scope.success = $scope.error = null;
+        	var user = new Users($scope.user);
+        	var database = new Databases($scope.database);
+        	if(arg_database) {database = arg_database;}
+
+        	if(user.portfolios.indexOf(database._id) === -1) {
+        		return true;
+        	}
+
+        	return false;
+        };
+
+        $scope.removeDatabaseFromPortfolio = function(arg_database) {
+        	$scope.success = $scope.error = null;
+        	var user = new Users($scope.user);
+        	var database = new Databases($scope.database);
+        	if(arg_database) {database = arg_database;}
+
+        	user.portfolios.splice(user.portfolios.indexOf(database._id), 1);
+
+        	user.$update(function(response) {
+        		$scope.success = true;
+        		Authentication.user = response;
+        		$scope.user = response;
+        	}, function(response) {
+        		$scope.error = response.data.message;
+        	});
+        };
+
 		//sort order for the list database page
 		$scope.sortorder = 'name';
 	}

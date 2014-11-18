@@ -3,23 +3,27 @@
         <h1>Databases</h1>
     </div>
     <div class="input-group" style="margin-bottom:10px">
-         Search: <input ng-model="query" class="form-control" placeholder = "Title or Poster Name">
+         Search: <input ng-model="query" class="form-control" placeholder = "Title or Short Description">
     </div>
     <div class="list-group">
-        <a data-ng-repeat="database in databases | orderBy:sortorder | filter:query" data-ng-href="#!/databases/{{database._id}}" class="list-group-item">
+        <li data-ng-repeat="database in databases | orderBy:sortorder | filter:query" data-ng-href="#!/databases/{{database._id}}" class="list-group-item">
             <div style="display:flex">
-			<small class="list-group-item-text" id="attributes" style="min-width: 350px;">
+            <div class="pull-left;" style="min-width:50px; vertical-align:center; padding-top:3px;">
+                <button ng-show="checkForDatabaseInPortfolio({{database}})" data-ng-click="addDatabaseToPortfolio({{database}})" class="btn addDatabases"><i class="glyphicon glyphicon-plus"></i></button> 
+                <button ng-show="!checkForDatabaseInPortfolio({{database}})" data-ng-click="removeDatabaseFromPortfolio({{database}})" class="btn removeDatabase"><i class="glyphicon glyphicon-minus"></i></button>
+            </div>
+			<a class="list-group-item-text" id="attributes" style="min-width: 350px;" data-ng-href="#!/databases/{{database._id}}">
                 <h4 class="list-group-item-heading" data-ng-bind="database.name"></h4>
 				Posted on
 				<span data-ng-bind="database.created | date:'medium'"></span>
 				by
 				<span data-ng-bind="database.user.displayName"></span>
-			</small>
+			</a>
             <span class="pull-right" id="desc" style="padding-left:10px; border-left:1px solid #cccccc;">
                 <p class="list-group-item-heading" data-ng-bind="database.descriptionShort"></p>
             </span>
         </div>
-        </a>
+        </li>  
     </div>
     <div class="alert alert-warning text-center" data-ng-hide="!databases.$resolved || databases.length">
     	No Databases yet, why don't you <a href="/#!/databases/create">create one</a>?

@@ -1,7 +1,9 @@
 'use strict';
 
-angular.module('users').controller('SettingsController', ['$scope', '$http', '$timeout','$location', 'Users', 'Authentication',
-	function($scope, $http, $timeout, $location, Users, Authentication) {
+angular.module('users').controller('SettingsController', ['$scope', '$http', '$timeout','$location', 'Users', 'Authentication',  'Databases', '$modal',
+	function($scope, $http, $timeout, $location, Users, Authentication, Databases, $modal) {
+
+		$scope.accountResult = false;
 		$scope.user ={};
 		angular.copy(Authentication.user, $scope.user); //Deep copy so that changes can be reverted
 
@@ -82,5 +84,47 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 				$scope.error = response.message;
 			});
 		};
+
+		//Modal settings and functions
+		$scope.open = function (size) {
+			  $scope.modalInstance = $modal.open({
+		      templateUrl: 'delete-modal.client.view.html',
+		      controller: 'SettingsController',
+		      size: size,
+		      backdrop: 'static',
+		      scope: $scope
+		   	 });
+		};
+
+		$scope.deleteAccount = function(){
+			//Need backend function to verify password
+			$http.post('/auth/signin', $scope.credentials).success(function(response) {
+				
+				$scope.authentication.user = response;
+				$scope.modalInstance.dismiss('delete');
+				// Redirect to the sign in page
+				$location.path('/');
+
+				//Need to pass value that tells backend user has deleted account
+				//Sign user out..?
+			}).error(function(response) {
+				$scope.error = 'Please enter the correct password';
+			});
+		};
+
+		// Find existing Database in Porfolio
+		$scope.findAll = function() {		
+			
+			for(var i = 0; i < $scope.user.portfolios.length; i++)
+			{
+				console.log($scope.user);
+				$scope.user.portfolios[i] = Databases.get({databaseId: Authentication.user.portfolios[i]});
+			}
+		};
+
 	}
 ]);
+
+
+
+

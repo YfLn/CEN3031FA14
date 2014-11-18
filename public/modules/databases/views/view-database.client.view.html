@@ -1,39 +1,49 @@
 <section data-ng-controller="DatabasesController" data-ng-init="findOne()">
-	<!-- Name Here -->
-	<div class="page-header">
-		<h1 data-ng-bind="database.name"></h1>
-	</div>
-	<!-- Short Description Here, should this be visibile in view DB or just in the list of DBs? -->
-	<div class="page-header">
-		<p data-ng-bind="database.descriptionShort"></p>
-	</div>
-	<!-- Long Description Here -->
-	<div class="page-header">
-		<p data-ng-bind="database.descriptionLong"></p>
-	</div>
-	<!-- URL is here -->
-	<div class="page-header">
-		<a data-ng-bind="database.url" ng-href="{{database.url}}"></a>
-	</div>
-	<!-- isFree Here, desperately needs formatting -->
-	<div class="page-header" data-ng-show="database.isFree">
-		<p>This database is free</p>
-	</div>
-	<!-- Buttons for Delete / Edit -->
-	<div class="" data-ng-show="authentication.user._id == database.user._id">
-		<a class="btn btn-primary" href="/#!/databases/{{database._id}}/edit">
-			<i class="glyphicon glyphicon-edit"></i>
-		</a>
-		<a class="btn btn-primary" data-ng-click="remove();">
-			<i class="glyphicon glyphicon-trash"></i>
-		</a>
-	</div>
-	<small>
-		<em class="text-muted">
-			Added on
-			<span data-ng-bind="database.created | date:'mediumDate'"></span>
-			by
-			<span data-ng-bind="database.user.displayName"></span>
-		</em>
-	</small>
+    <!-- Name Here -->
+    <div class="page-header">
+        <h1 data-ng-bind="database.name"></h1>
+        <!--add Databases into Porfolio-->          
+        <button ng-show="checkForDatabaseInPortfolio()" data-ng-click="addDatabaseToPortfolio()" class="btn addDatabases">
+        Add Database To Your Portfolio <i class="glyphicon glyphicon-plus"></i></button> 
+        <button ng-show="!checkForDatabaseInPortfolio()" data-ng-click="removeDatabaseFromPortfolio()" class="btn removeDatabase"> Remove Database From Portfolio <i class="glyphicon glyphicon-minus"></i></button>
+    </div>
+    <!-- Short Description Here, should this be visibile in view DB or just in the list of DBs? -->
+    <div class="page-header">
+        <h3>Brief Description</h3>
+        <p data-ng-bind="database.descriptionShort"></p>
+    </div>
+    <!-- Long Description Here -->
+    <div class="page-header">
+        <h3>Full Description</h3>
+        <p data-ng-bind="database.descriptionLong"></p>
+    </div>
+    <!-- URL is here -->
+    <div class="page-header">
+        <h3>Where to Access</h3>
+        <a data-ng-bind="database.url" ng-href="{{database.url}}"></a>
+    </div>
+    <!-- isFree Here, desperately needs formatting -->
+    <div class="page-header" data-ng-show="database.isFree">
+        <h3>Free to Access</h3>
+        <p>This database is free to access.</p>
+    </div>
+    <!-- Buttons for Delete / Edit -->
+    <div class="" data-ng-show="authentication.user._id == database.user._id">
+        <a class="btn btn-primary" href="/#!/databases/{{database._id}}/edit">
+            <i class="glyphicon glyphicon-edit"></i>
+        </a>
+        <a class="btn btn-primary" data-ng-click="remove();">
+            <i class="glyphicon glyphicon-trash"></i>
+        </a>
+    </div>
+
+    <small>
+        <em class="text-muted">
+            Added on
+            <span data-ng-bind="database.created | date:'mediumDate'"></span>
+            by
+            <span data-ng-bind="database.user.displayName"></span>
+        </em>
+    </small> 
+
 </section>
