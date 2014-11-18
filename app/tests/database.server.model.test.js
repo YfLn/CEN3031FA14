@@ -49,6 +49,30 @@ describe('Database Model Unit Tests:', function() {
 	describe('Method Save', function() {
 
 // -------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------ User / Save Tests ------------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------
+
+		it('should begin with no databases', function(done) {
+			User.find({}, function(err, databases) {
+				databases.should.have.length(0);
+				done();
+			});
+		});
+
+		it('should be able to save without problems', function(done) {
+			database.save(done);
+		});
+
+		it('should show a database in the database after one is saved', function(done) {
+			database.save();
+
+			database.find({}, function(err, databases) {
+				databases.should.have.length(1);
+				done();
+			});
+		});
+
+// -------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------- Single Variable Tests -------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------------
 

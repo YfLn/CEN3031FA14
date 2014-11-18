@@ -99,6 +99,10 @@ var UserSchema = new Schema({
 	},
   	resetPasswordExpires: {
   		type: Date
+  	},
+  	/* Idea is to make verified a unique string that matches to each user that is set to a blank string on verification. */
+  	verified: { 
+  		type: String
   	}
 });
 
