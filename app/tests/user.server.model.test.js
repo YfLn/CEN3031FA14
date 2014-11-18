@@ -140,6 +140,14 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 	*/
+		it('should be able to show an error when there is not an ObjectID provided in portfolio array', function(done) {
+			user.portfolios = [''];
+
+			return user.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
 
 // -------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------ Double Variable Tests --------------------------------------------------
