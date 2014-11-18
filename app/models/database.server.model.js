@@ -39,6 +39,11 @@ var DatabaseSchema = new Schema({
 		trim: true,
 		match: [/^https?:\/\/?([\da-z\.-]+)\.([a-z\.]{2,6})([\/\w \.-]*)*\/?$/, 'Please enter a valid URL. URL must begin with \'http://\' or \'https://\' and end with a TLD (e.g. \'.com\', \'.net\').']
 	},
+	//comments goes here
+	comments: [{ 
+		type: Schema.ObjectId, 
+		ref: 'Comment' 
+	}],
 	created: {
 		type: Date,
 		default: Date.now
