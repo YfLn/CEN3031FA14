@@ -100,7 +100,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 			//Need backend function to verify password
 			$http.post('/auth/signin', $scope.credentials).success(function(response) {
 				
-				$scope.authentication.user = response;
+				$scope.Authentication.user = response;
 				$scope.modalInstance.dismiss('delete');
 				// Redirect to the sign in page
 				$location.path('/');
@@ -122,6 +122,53 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 			}
 		};
 
+		$scope.removeBadP = function(i){
+			var databaseID =  Authentication.user.portfolios[i];
+			//Execute async request to get db
+			var result = Databases.get({databaseId: databaseID}, 
+				function() {
+					//console.log('success');
+					var index = $scope.user.portfolios.indexOf(databaseID);
+					$scope.user.portfolios[index] = result; //Update $scope.user.portfolios
+					$scope.finishEditPortfolio();
+				}, 
+				function() {
+					var index = $scope.user.portfolios.indexOf(databaseID);
+					console.log('Dead database removed from portfolio. id:' + $scope.user.portfolios[index]);
+					if(index !== -1)
+						$scope.removeDBfromP(index); //Remove the bad db
+					$scope.finishEditPortfolio(); 
+			});	
+			//It appears as if each time finishEditPf is called, it will fail if there is already another async request being processed.	
+		};
+
+		var editPortfolioBoolean = false;
+
+		$scope.toggleEditPortfolio = function () {
+			if(editPortfolioBoolean === false) {editPortfolioBoolean = true; console.log('toggled');}
+			else {editPortfolioBoolean = false;}
+		};
+
+		$scope.checkEditPortfolio = function () {
+			if(editPortfolioBoolean === false) {return false;}
+			if(editPortfolioBoolean === true) {return true;}
+		};
+
+		$scope.removeDBfromP = function(portfolio_arg) {
+			$scope.user.portfolios.splice(portfolio_arg,1);
+			Authentication.user.portfolios.splice(portfolio_arg,1);
+		};
+
+		$scope.finishEditPortfolio = function() {
+			var user = new Users(Authentication.user);
+
+			user.$update(function(response) {
+				$scope.success = true;
+				Authentication.user = response;
+			}, function(response) {
+				$scope.error = response.data.message;
+			});
+		};
 	}
 ]);
 
