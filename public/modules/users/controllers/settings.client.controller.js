@@ -91,6 +91,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 		      templateUrl: 'delete-modal.client.view.html',
 		      controller: 'SettingsController',
 		      size: size,
+		      backdrop: 'static',
 		      scope: $scope
 		   	 });
 		};
