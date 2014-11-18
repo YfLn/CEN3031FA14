@@ -3,14 +3,19 @@
 		<h2>My Profile</h2>
 	</div>
 
+
 	<!--Modal display and controller call-->
 	<div>
     	<script type="text/ng-template" id="delete-modal.client.view.html">
+
     		<div class="modal-header">
+    			<button type="button" class="close" ng-click="$dismiss()">&times;</button>
     			<h3 class="modal-title"> Delete Account </h3>
     		</div>
+
     		<div class="modal-body">
-            	<p>Are you sure you want to delete your account?</p>
+            	<p>Are you sure you want to delete your account?</p> 
+            	<p class=text-danger>This cannot change cannot be reverted!<br></p>
             	<form name="deleteForm">
 	            	<div class="form-group">
 						<label for="password">Verify Password</label>
@@ -21,19 +26,23 @@
 					</div>
 				</form>
         	</div>
+
         	<div class="modal-footer">
             	<button class="btn btn-primary" ng-disabled="deleteForm.$invalid" data-ng-click="deleteAccount()">Delete Account</button>
             	<button class="btn" ng-click="$dismiss()">Cancel</button>
         	</div>
+
     	</script>
     </div>
 
+
     <!--Opens modal service for account deletion-->
 	<div class="text-right">
-			<!--http://plnkr.co/edit/Wd9hxToFDKM7lU5yBDno?p=preview-->
-			<button ng-click="open('sm')" class="btn btn-large btn-danger">Delete Profile</button>
+			<a ng-click="open('sm')" class="btn btn-large btn-danger">Delete Profile</a>
 	</div>
 
+
+	<!--Edit profile form-->
 	<div class="col-md-6 text-left">
 		<form name="userForm" class="signin form-horizontal" autocomplete="off">
 			<fieldset>
@@ -68,5 +77,3 @@
 		</form>
 	</div>
 </section>
-<!--class="col-xs-offset-2 col-xs-8 col-md-offset-5 col-md-2"
-class="col-md-8 text-left"-->
