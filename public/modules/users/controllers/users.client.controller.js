@@ -5,6 +5,7 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 		$scope.authentication = Authentication;
 		$scope.user = {};
 		$scope.users = Users.query();
+		//var user;
 
 		//retrieve a list of users in the website
 		$scope.find = function(){
@@ -13,15 +14,15 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 
 		//Retrieve a specific user from the back end
 		$scope.findOne = function() {
-			$scope.user = Users.get({userId: $stateParams.userId});
-			var user = $scope.user; //this variable is needed to access portfolios length in findAll()
-
+			$scope.user = Users.get({userId: $stateParams.userId}, function() {
+				$scope.findAll();
+			});
 		};
 
 		//Retrieve user's portfolio
 		$scope.findAll = function() {		
 			//Must save initial count because we will be changing this array
-			var initPortCount = user.portfolios.length;
+			var initPortCount = $scope.user.portfolios.length;
 			for(var i = 0; i < initPortCount; i++)
 			{
 				//Call method to remove bad portfolios from (Authentication/$scope).user.portfolios
@@ -33,7 +34,7 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 		//Clean up bad/dead database entries in user's portfolio
 		$scope.removeBadP = function(i){
 
-			var databaseID =  user.portfolios[i];
+			var databaseID =  $scope.user.portfolios[i];
 			//Execute async request to get db
 			var result = Databases.get({databaseId: databaseID}, 
 				function() {
