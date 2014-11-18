@@ -89,7 +89,7 @@
         No comments yet.
     </div>
 
-    <form class="form-horizontal" data-ng-controller="CommentsController" novalidate data-ng-submit="create(database._id); getComments(database._id)">
+    <form class="form-horizontal" data-ng-controller="CommentsController" novalidate data-ng-submit="create(database._id); getComments(database._id); resetCommentField()">
         <fieldset>
             <div class="form-group">
                 <label class="control-label" for="reviews" style="padding-left:10px">Add Comment</label>
