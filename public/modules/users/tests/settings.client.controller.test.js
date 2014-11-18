@@ -128,5 +128,12 @@
 			scope.open('sm');
 			expect($modal.templateURL).toEqual('delete-modal.client.view.html');
 		});*/
+
+		/*it('$scope.toggleEditPortfolio() should correctly toggle the boolean value in the scope', function(){
+			scope.editPortfolioBoolean = false;
+
+			scope.toggleEditPortfolio();
+			expect(scope.editPortfolioBoolean).toEqual(true);
+		});*/
 	});
 }());

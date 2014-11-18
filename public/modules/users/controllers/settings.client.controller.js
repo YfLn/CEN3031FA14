@@ -134,16 +134,20 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 			//It appears as if each time finishEditPf is called, it will fail if there is already another async request being processed.	
 		}
 
-		var editPortfolioBoolean = false;
+		$scope.editPortfolioBoolean = false;
 
 		$scope.toggleEditPortfolio = function () {
-			if(editPortfolioBoolean === false) {editPortfolioBoolean = true; console.log('toggled');}
-			else {editPortfolioBoolean = false;}
+			if($scope.editPortfolioBoolean === false) 
+			{
+				$scope.editPortfolioBoolean = true; 
+				//console.log('toggled');
+			}
+			else {$scope.editPortfolioBoolean = false;}
 		};
 
 		$scope.checkEditPortfolio = function () {
-			if(editPortfolioBoolean === false) {return false;}
-			if(editPortfolioBoolean === true) {return true;}
+			if($scope.editPortfolioBoolean === false) {return false;}
+			if($scope.editPortfolioBoolean === true) {return true;}
 		};
 
 		$scope.removeDBfromP = function(portfolio_arg) {
