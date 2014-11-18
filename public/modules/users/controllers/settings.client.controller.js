@@ -95,18 +95,20 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 		   	 });
 		};
 
-		$scope.ok = function(){
-			$scope.modalInstance.dismiss('delete');
-			console.log($scope);
-			console.log($scope.modalPassword);
-			if($scope.user.password === $scope.modalPassword)
-			{
-				console.log('password equal');
-			}
-			else
-			{
-				console.log('password not equal');
-			}
+		$scope.deleteAccount = function(){
+			//Need backend function to verify password
+			$http.post('/auth/signin', $scope.credentials).success(function(response) {
+				
+				$scope.authentication.user = response;
+				$scope.modalInstance.dismiss('delete');
+				// Redirect to the sign in page
+				$location.path('/');
+
+				//Need to pass value that tells backend user has deleted account
+				//Sign user out..?
+			}).error(function(response) {
+				$scope.error = 'Please enter the correct password';
+			});
 		};
 
 		// Find existing Database in Porfolio
