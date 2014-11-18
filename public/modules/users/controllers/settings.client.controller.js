@@ -122,11 +122,11 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 			{
 				//Call method to remove bad portfolios from (Authentication/$scope).user.portfolios
 				//Needed a separate method to preserve the current i value when the async request is made (Databases.get)
-				$scope.removeBadPortofolioEntries(i);
+				$scope.removeBadPortfolioEntries(i);
 			}
 		};
 		
-		$scope.removeBadPortofolioEntries = function(i){
+		$scope.removeBadPortfolioEntries = function(i){
 			var databaseID =  Authentication.user.portfolios[i];
 			//Execute async request to get db
 			var result = Databases.get({databaseId: databaseID}, 
@@ -142,8 +142,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 					if(index !== -1)
 						$scope.removeElementfromPortfolio(index); //Remove the bad db
 					$scope.finishEditPortfolio(); 
-			});	
-			//It appears as if each time finishEditPf is called, it will fail if there is already another async request being processed.	
+			});		
 		}
 
 		$scope.editPortfolioBoolean = false;
