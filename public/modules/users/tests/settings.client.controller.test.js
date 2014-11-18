@@ -121,12 +121,60 @@
 			expect(scope.success).toBeNull();
 		});
 
-		
+		it('$scope.toggleEditPortfolio() should correctly toggle the boolean value in the scope', function(){
+			scope.editPortfolioBoolean = false;
+
+			scope.toggleEditPortfolio();
+			expect(scope.editPortfolioBoolean).toEqual(true);
+		});
+
+		it('$scope.checkEditPortfolio() should correctly check the boolean value in the scope', function(){
+			scope.editPortfolioBoolean = false;
+
+			var result = scope.checkEditPortfolio();
+			expect(result).toEqual(false);
+		});
+
+		it('$scope.removeElementfromPortfolio() should remove the correct portfolio from $scope.user.portfolios', function(){
+			// Define a sample portfolio
+			var samplePortfolio = ['3aA', '4bB', '525a8422f6d0f87f0e407a33'];
+
+			// Define a sample user
+			var sampleUser = {firstName: 'Joe', portfolios: samplePortfolio};
+
+			scope.user = sampleUser;
+			Authentication.user = sampleUser;
+
+			//Remove the last element
+			scope.removeElementfromPortfolio(2);
+			expect(scope.user.portfolios).toEqual(['3aA', '4bB']);
+
+		});
+
+		it('$scope.removeElementfromPortfolio() should remove the correct portfolio from Authentication.user.portfolios', function(){
+			// Define a sample portfolio
+			var samplePortfolio = ['3aA', '4bB', '525a8422f6d0f87f0e407a33'];
+
+			// Define a sample user
+			var sampleUser = {firstName: 'Joe', portfolios: samplePortfolio};
+
+			scope.user = sampleUser;
+			Authentication.user = sampleUser;
+
+			//Remove the last element
+			scope.removeElementfromPortfolio(2);
+			expect(Authentication.user.portfolios).toEqual(['3aA', '4bB']);
+
+		});
+
 
 		/*it('$scope.open(size) should open modal and cancel option to delete account', function(){
 			$location.path('/settings/edit'); //Go to edit profile page
 			scope.open('sm');
 			expect($modal.templateURL).toEqual('delete-modal.client.view.html');
 		});*/
+
+		
+
 	});
 }());

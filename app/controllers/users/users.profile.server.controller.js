@@ -60,7 +60,7 @@ exports.me = function(req, res) {
 */
 exports.list = function(req, res) {
 	console.log('listing users');
-	User.find().sort('-displayName').populate('user','displayName').exec(function(err, users) {
+	User.find().sort('lastName').exec(function(err, users) {
 		if(err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -68,6 +68,41 @@ exports.list = function(req, res) {
 		} else {
 			console.log(users.length);
 			res.jsonp(users);
+		}
+	});
+};
+
+/**
+ * Show the current User
+ */
+exports.read = function(req, res) {
+	res.jsonp(req.user);
+};
+
+/**
+ * Find userByID
+ */
+exports.userByID = function(req, res, next, id) { User.findById(id).exec(function(err, user) {
+		if (err) return next(err);
+		if (! user) return next(new Error('Failed to find user ' + id));
+		req.user = user ;
+		next();
+	});
+};
+
+/**
+ * Delete a user
+ */
+exports.delete = function(req, res) {
+	var user = req.user ;
+
+	user.remove(function(err) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(user);
 		}
 	});
 };
