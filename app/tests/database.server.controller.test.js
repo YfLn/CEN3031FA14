@@ -101,7 +101,7 @@ describe('Database Contoller Unit Tests:', function() {
 
     	it('should fail to create a database without descriptionLong.', function(done) {
 			database.descriptionLong = '';
-		 	req.body = courseEvaluation;
+		 	req.body = database;
 		 	controller.create(req,res, function() {
 		 		var code = JSON.parse(res._getStatusCode());
 		 		code.should.equal(400);
@@ -111,7 +111,7 @@ describe('Database Contoller Unit Tests:', function() {
 
    		it('should fail to create a database without descriptionShort', function(done) {
 			database.descriptionShort = '';
-		 	req.body = courseEvaluation;
+		 	req.body = database;
 		 	controller.create(req,res, function() {
 		 		var code = JSON.parse(res._getStatusCode());
 		 		code.should.equal(400);
@@ -121,7 +121,7 @@ describe('Database Contoller Unit Tests:', function() {
 
     	it('should fail to create a database without url.', function(done) {
 			database.url = '';
-		 	req.body = courseEvaluation;
+		 	req.body = database;
 		 	controller.create(req,res, function() {
 		 		var code = JSON.parse(res._getStatusCode());
 		 		code.should.equal(400);
@@ -131,7 +131,9 @@ describe('Database Contoller Unit Tests:', function() {
 	});	
 
 	afterEach(function(done) {
-		CourseCommittee.remove().exec();
-		CourseModel.remove().exec();
+		database.remove().exec();
+		user.remove().exec();
 		done();
 	});
+
+});

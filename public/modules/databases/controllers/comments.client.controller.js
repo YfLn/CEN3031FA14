@@ -6,7 +6,7 @@ angular.module('comments').controller('CommentsController', ['$scope', '$statePa
 		$scope.authentication = Authentication;
 
 		// Create new Comment
-		$scope.createComments = function() {
+		$scope.create = function() {
 			// Create new Comment object
 			var comment = new Comments ({
 				reviews: this.reviews
@@ -24,7 +24,7 @@ angular.module('comments').controller('CommentsController', ['$scope', '$statePa
 		};
 
 		// Remove existing Comment
-		$scope.removeComments = function( comment ) {
+		$scope.remove = function( comment ) {
 			if ( comment ) { comment.$remove();
 
 				for (var i in $scope.comments ) {
@@ -40,7 +40,7 @@ angular.module('comments').controller('CommentsController', ['$scope', '$statePa
 		};
 
 		// Update existing Comment
-		$scope.updateComments = function() {
+		$scope.update = function() {
 			var comment = $scope.comment ;
 
 			comment.$update(function() {
@@ -51,12 +51,12 @@ angular.module('comments').controller('CommentsController', ['$scope', '$statePa
 		};
 
 		// Find a list of Comments
-		$scope.findComments = function() {
+		$scope.find = function() {
 			$scope.comments = Comments.query();
 		};
 
 		// Find existing Comment
-		$scope.findOneComment = function() {
+		$scope.findOne = function() {
 			$scope.comment = Comments.get({ 
 				commentId: $stateParams.commentId
 			});

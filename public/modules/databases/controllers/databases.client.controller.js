@@ -1,8 +1,8 @@
 'use strict';
 
 // Databases controller
-angular.module('databases').controller('DatabasesController', ['$scope', '$stateParams', '$location', 'Users', 'Authentication', 'Databases',
-	function($scope, $stateParams, $location, Users, Authentication, Databases) {
+angular.module('databases').controller('DatabasesController', ['$scope', '$stateParams', '$location', '$window', 'Users', 'Authentication', 'Databases', 
+	function($scope, $stateParams, $location, $window, Users, Authentication, Databases) {
 		$scope.user = {};
 		angular.copy(Authentication.user, $scope.user);
 		$scope.authentication = Authentication;
@@ -88,6 +88,7 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 					$scope.success = true;
 					Authentication.user = response;
 					$scope.user = response;
+					$window.location.reload();
 				}, function(response) {
 					$scope.error = response.data.message;
 				});        	
@@ -120,6 +121,7 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
         		$scope.success = true;
         		Authentication.user = response;
         		$scope.user = response;
+        		$window.location.reload();
         	}, function(response) {
         		$scope.error = response.data.message;
         	});
