@@ -23,6 +23,7 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 		$scope.findAll = function() {		
 			//Must save initial count because we will be changing this array
 			var initPortCount = $scope.user.portfolios.length;
+
 			for(var i = 0; i < initPortCount; i++)
 			{
 				//Call method to remove bad portfolios from (Authentication/$scope).user.portfolios
@@ -35,6 +36,7 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 		$scope.removeBadP = function(i){
 
 			var databaseID =  $scope.user.portfolios[i];
+
 			//Execute async request to get db
 			var result = Databases.get({databaseId: databaseID}, 
 				function() {
