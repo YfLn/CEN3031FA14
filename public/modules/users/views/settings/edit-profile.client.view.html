@@ -35,15 +35,15 @@
 				<div class="form-group">
 					<label for="username">UF Email Address</label>
 					<p id="username" name="username" data-ng-model="user.username">{{user.username}}</p>
-					<input type="checkbox" ng-model="user.privateProfile"> Hide my email in user directory
+					<input type="checkbox" ng-model="user.privateProfile"> Hide my information in user directory
 				</div>
 				<div class="form-group">
 					<label for="firstName">First Name</label>
-					<input type="text" id="firstName" name="firstName" class="form-control" data-ng-model="user.firstName" placeholder="First Name"readonly>
+					<p data-ng-bind="user.firstName"></p>
 				</div>
 				<div class="form-group">
 					<label for="lastName">Last Name</label>
-					<input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="user.lastName" placeholder="Last Name" readonly>
+					<p data-ng-bind="user.lastName"></p>
 				</div>
 				<div class="form-group">
 					<label for="researchinterests">Research Interests</label>
