@@ -82,7 +82,7 @@
 			});
 
 			//Set GET response
-			$httpBackend.expectGET(/users\/([0-9a-fA-F]{24})$/).respond(200, sampleUser);
+			$httpBackend.expectGET('users/id').respond(200, sampleUser);
 
 			//Set the URL parameter
 			$stateParams.userId = 'id';
