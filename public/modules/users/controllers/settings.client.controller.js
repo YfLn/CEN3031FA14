@@ -91,29 +91,26 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 
 		//Modal settings and functions
 		$scope.open = function (size) {
-			  $scope.modalInstance = $modal.open({
-		      templateUrl: 'delete-modal.client.view.html',
+			var modalInstance = $modal.open({
+		      templateUrl: 'deleteAccountModal',
 		      controller: 'SettingsController',
 		      size: size,
 		      backdrop: 'static',
 		      scope: $scope
-		   	 });
+		   	});
 		};
 
-		$scope.deleteAccount = function(){
-			//Need backend function to verify password
+		$scope.deleteAccount = function(passwordModal){
+		
 			$scope.success = $scope.error = null;
+			$scope.passwordModal = passwordModal;
 			console.log($scope.passwordModal);
 			$http.post('/users/verify', $scope.passwordModal).success(function(response) {				
 
 				Authentication.user = response;
 
 				$scope.modalInstance.dismiss('delete');
-				// Redirect to the sign in page
-				//$location.path('/');
 
-				//Need to pass value that tells backend user has deleted account
-				//Sign user out..?
 			}).error(function(response) {
 				$scope.error = 'Please enter the correct password';
 			});
@@ -181,6 +178,37 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 	}
 ]);
 
+/*angular.module('users').controller('ModalController', ['$scope', '$http', '$timeout','$location', 'Users', 'Authentication',  'Databases', '$modalInstance',
+	function($scope, $http, $timeout, $location, Users, Authentication, Databases, $modalInstance) {
 
+		$scope.accountResult = false;
+		$scope.user ={};
+		angular.copy(Authentication.user, $scope.user); 
+		//Deep copy so that changes can be reverted
+
+
+		$scope.originalUser = {}; //Keep the original copy of the user
+		angular.copy($scope.user, $scope.originalUser);
+		
+		// If user is not signed in then redirect back home
+		if (!$scope.user) $location.path('/');
+
+		$scope.authentication = Authentication;
+
+		$scope.deleteAccount = function(){
+		
+			$scope.success = $scope.error = null;
+			$http.post('/users/verify', $scope.passwordModal).success(function(response) {				
+
+				Authentication.user = response;
+
+				$scope.modalInstance.dismiss('delete');
+
+			}).error(function(response) {
+				$scope.error = 'Please enter the correct password';
+			});
+		};
+	}
+]);*/
 
 
