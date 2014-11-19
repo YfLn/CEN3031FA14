@@ -58,7 +58,6 @@ var UserSchema = new Schema({
 		trim: false,
 		default: ''
 	},
-
 	//portfolios goes here
 	portfolios: [{ 
 		type: Schema.ObjectId, 
@@ -100,15 +99,13 @@ var UserSchema = new Schema({
   	resetPasswordExpires: {
   		type: Date
   	},
-<<<<<<< HEAD
   	/* Idea is to make verified a unique string that matches to each user that is set to a blank string on verification. */
   	verified: { 
   		type: String
-=======
+  	},
   	privateProfile: {
   		type: Boolean,
   		default: false
->>>>>>> 6bab49c6033e54a56cbaf3f8a655638a42faefb9
   	}
 });
 

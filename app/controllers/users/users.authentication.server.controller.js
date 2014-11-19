@@ -9,7 +9,9 @@ var _ = require('lodash'),
 	passport = require('passport'),
 	User = mongoose.model('User'),
 	Database = mongoose.model('Database'),
-	async = require('async');
+	async = require('async'),
+	nodemailer = require('nodemailer'),
+	crypto = require('crypto');
 
 /**
  * Signup
@@ -21,10 +23,18 @@ exports.signup = function(req, res) {
 	// Init Variables
 	var user = new User(req.body);
 	var message = null;
+	var smtpTransport = nodemailer.createTransport({
+		service: 'Yahoo',
+		auth: {
+			user: 'ufdatabasestest@yahoo.com',
+			pass: 'Aighb123'
+		}
+	});
 
 	// Add missing user fields
 	user.provider = 'local';
 	user.displayName = user.firstName + ' ' + user.lastName;
+	// user.verified = Need to create safe / secure tokens for this;
 
 	// Then save the user 
 	user.save(function(err) {
@@ -46,6 +56,22 @@ exports.signup = function(req, res) {
 			});
 		}
 	});
+
+	// Verification
+	// Fill out template
+	res.render('templates/users-signup-verificaion-email', { 
+		name: user.firstName + ' ' + user.lastName, 
+		appName: config.app.title,
+		// url: Need to Create Route
+	};
+	// Send the Email
+	smtpTransport.sendMail({
+		to: user.username,
+		from: 'UF Database Collaboration Project <ufdatabasestest@yahoo.com>',
+		subject: 'Account Email Verification',
+		html: 
+	});
+			
 };
 
 //var lookupPortfolios = function(user, callback){
