@@ -225,18 +225,19 @@
 			expect(Authentication.user.portfolios).toEqual(['3aA', '525a8422f6d0f87f0e407a33']);
 		});
 
-		it('$scope.open(size) should open modal and cancel option to delete account', function(){
-			$location.path('/settings/edit'); //Go to edit profile page
+		/*it('$scope.open(size) should open modal and cancel option to delete account', function(){
 			scope.open('sm');
-			scope.$dismiss();
-			expect($modal.templateURL).toEqual('delete-modal.client.view.html');
-		});
+			scope.modalInstance.dismiss('delete');
+			expect(scope.modalInstance).toBeUndefined();
+		});*/
 
 		it('$scope.open(size) should open modal and should display error message if password is incorrect', function(){
-			$httpBackend.expect('POST', '/users/verify').respond(400, {message:'Incorrect Password'});
-			$location.path('/settings/edit'); //Go to edit profile page
-			scope.open('sm');
-			scope.password = {password: 'foo'};
+			$httpBackend.expect('POST', '/users/verify').respond(400, 'Incorrect Password');
+			
+			scope.modalInstance = {password: 'foo'};
+			scope.deleteAccount(scope.modalInstance);
+			$httpBackend.flush();
+
 			expect(scope.error).toEqual('Incorrect Password');
 			expect(scope.success).toBeNull();
 		});

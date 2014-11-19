@@ -94,6 +94,7 @@
 			$httpBackend.expectGET(/databases\/([0-9a-fA-F]{24})$/).respond(200, sampleDatabase);
 			//GET Response for when $scope.findDBUsers is called
 			$httpBackend.expectGET('users').respond(200, [sampleUser]);
+			$httpBackend.expectGET('comments').respond(200, ['You suck!']);
 			// Run controller functionality
 			scope.findOne();
 			$httpBackend.flush();
