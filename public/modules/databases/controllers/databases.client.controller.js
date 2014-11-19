@@ -1,8 +1,8 @@
 'use strict';
 
 // Databases controller
-angular.module('databases').controller('DatabasesController', ['$scope', '$stateParams', '$location', '$window', 'Users', 'Authentication', 'Databases', 'Comments', 
-	function($scope, $stateParams, $location, $window, Users, Authentication, Databases, Comments) {
+angular.module('databases').controller('DatabasesController', ['$scope', '$stateParams', '$location', 'Users', 'Authentication', 'Databases', 'Comments', 
+	function($scope, $stateParams, $location, Users, Authentication, Databases, Comments) {
 		$scope.user = {};
 		angular.copy(Authentication.user, $scope.user);
 		$scope.authentication = Authentication;
