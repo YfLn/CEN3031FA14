@@ -12,7 +12,7 @@
 			$location,
 			$timeout;
 
-		beforeEach(function() 		beforeEach(function() {
+		beforeEach(function() {
 			jasmine.addMatchers({
 				toEqualData: function(util, customEqualityTesters) {
 					return {
@@ -40,12 +40,11 @@
 			$stateParams = _$stateParams_;
 			$httpBackend = _$httpBackend_;
 			$location = _$location_;
-			$modal = _$modal_;
 			$timeout = _$timeout_;
 			Authentication = _Authentication_; //Manually import Authentication service because signin() method is not in this scope.
 
 			// Initialize the Settings controller
-			SettingsController = $controller('SettingsController', {
+			UsersController = $controller('UsersController', {
 				$scope: scope
 			});
 		}));
@@ -92,7 +91,7 @@
 			$httpBackend.flush();
 
 			//Test scope value
-			expect(scope.user).toEqualData(sampleDatabase);
+			expect(scope.user).toEqualData(sampleUser);
 		}));
 
 		it('$scope.findAll() should remove a bad database entry from portfolio', inject(function(Users) {

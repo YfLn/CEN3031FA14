@@ -1,7 +1,7 @@
 'use strict';
 
 // Comments controller
-angular.module('comments').controller('CommentsController', ['$scope', '$stateParams', '$location', '$window', 'Authentication', 'Comments',
+angular.module('comments').controller('CommentsController', ['$scope', '$stateParams', '$location', 'Authentication', 'Comments',
 	function($scope, $stateParams, $location, Authentication, Comments ) {
 		$scope.authentication = Authentication;
 
@@ -11,7 +11,6 @@ angular.module('comments').controller('CommentsController', ['$scope', '$statePa
 			var comment = new Comments ({
 				reviews: this.reviews,
 				databaseId: databaseId
-
 			});
 
 			// Redirect after save
@@ -66,6 +65,6 @@ angular.module('comments').controller('CommentsController', ['$scope', '$statePa
 		//Reset comment field
 		$scope.resetCommentField = function(){
 			$scope.reviews = null;
-		}
+		};
 	}
 ]);
