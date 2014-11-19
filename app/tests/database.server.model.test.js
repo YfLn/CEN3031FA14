@@ -187,7 +187,7 @@ describe('Database Model Unit Tests:', function() {
 
 		it('should be able to show an error if descriptionLong and url does not contain http:// or https://', function(done) {
 			database.descriptionLong = '';
-			database.url = 'url.com';;
+			database.url = 'url.com';
 
 			return database.save(function(err) {
 				should.exist(err);
@@ -237,7 +237,7 @@ describe('Database Model Unit Tests:', function() {
 		});
 
 		it('should be able to show an error if url is empty or url does not contain http:// or http://', function(done) {
-			database.url = 'url.com'
+			database.url = 'url.com';
 			database.url = '';
 
 			return database.save(function(err) {
@@ -247,8 +247,8 @@ describe('Database Model Unit Tests:', function() {
 		});
 
 		it('should be able to show an error if does not end in TLD or url does not contain http:// or http://', function(done) {
-			database.url = 'url.com'
-			database.url = 'http://incompleteURL'
+			database.url = 'url.com';
+			database.url = 'http://incompleteURL';
 
 			return database.save(function(err) {
 				should.exist(err);
@@ -257,7 +257,7 @@ describe('Database Model Unit Tests:', function() {
 		});
 
 		it('should be able to show an error if url is empty or does not end in TLD', function(done) {
-			database.url = 'http://incompleteURL'
+			database.url = 'http://incompleteURL';
 			database.url = '';
 
 			return database.save(function(err) {
@@ -306,7 +306,7 @@ describe('Database Model Unit Tests:', function() {
 		it('should be able to show an error if name and descriptionLong are empty and should show an error when the URL does not contain ending TLD', function(done) {
 			database.name = '';
 			database.descriptionLong = '';
-			database.url = 'http://incompleteURL'
+			database.url = 'http://incompleteURL';
 
 			return database.save(function(err) {
 				should.exist(err);
@@ -337,7 +337,7 @@ describe('Database Model Unit Tests:', function() {
 		it('should be able to show an error if descritionLong and descriptionShort are empty and when the URL does not contain ending TLD', function(done) {
 			database.descriptionLong = '';
 			database.descriptionShort = '';
-			database.url = 'http://incompleteURL'
+			database.url = 'http://incompleteURL';
 			return database.save(function(err) {
 				should.exist(err);
 				done();
@@ -368,7 +368,7 @@ describe('Database Model Unit Tests:', function() {
 		it('should be able to show an error url is empty, when the URL does not contain ending TLD, and when the URL does not contain ending TLD', function(done) {
 			database.url = '';
 			database.url = 'url.com';
-			database.url = 'http://incompleteURL'
+			database.url = 'http://incompleteURL';
 			return database.save(function(err) {
 				should.exist(err);
 				done();
