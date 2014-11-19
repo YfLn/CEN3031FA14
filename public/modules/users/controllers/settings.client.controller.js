@@ -79,7 +79,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 		// Change user password
 		$scope.changeUserPassword = function() {
 			$scope.success = $scope.error = null;
-
+			//console.log($scope.passwordDetails);
 			$http.post('/users/password', $scope.passwordDetails).success(function(response) {
 				// If successful show success message and clear form
 				$scope.success = true;
@@ -104,12 +104,12 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 		
 			$scope.success = $scope.error = null;
 			$scope.passwordModal = passwordModal;
-			console.log($scope.passwordModal);
+			//console.log($scope.passwordModal);
 			$http.post('/users/verify', $scope.passwordModal).success(function(response) {				
 
-				Authentication.user = response;
-
-				$scope.modalInstance.dismiss('delete');
+				//Authentication.user = response;
+				$location.path('/');
+				//$scope.modalInstance.dismiss('delete');
 
 			}).error(function(response) {
 				$scope.error = 'Please enter the correct password';
