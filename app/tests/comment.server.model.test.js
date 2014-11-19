@@ -45,11 +45,11 @@ describe('Comment Model Unit Tests:', function() {
 			});
 		});
 
-		it('should be able to save without reviews', function(done) { 
+		it('should be able to show an error when try to save without reviews', function(done) { 
 			comment.reviews = '';
 
 			return comment.save(function(err) {
-				should.not.exist(err);
+				should.exist(err);
 				done();
 			});
 		});
