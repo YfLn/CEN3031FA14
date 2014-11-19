@@ -15,6 +15,8 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 		// If user is not signed in then redirect back home
 		if (!$scope.user) $location.path('/');
 
+		$scope.authentication = Authentication;
+
 		// Check if there are additional accounts 
 		$scope.hasConnectedAdditionalSocialAccounts = function(provider) {
 			for (var i in $scope.user.additionalProvidersData) {
@@ -77,7 +79,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 		// Change user password
 		$scope.changeUserPassword = function() {
 			$scope.success = $scope.error = null;
-
+			//console.log($scope.passwordDetails);
 			$http.post('/users/password', $scope.passwordDetails).success(function(response) {
 				// If successful show success message and clear form
 				$scope.success = true;
@@ -89,26 +91,28 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 
 		//Modal settings and functions
 		$scope.open = function (size) {
-			  $scope.modalInstance = $modal.open({
-		      templateUrl: 'delete-modal.client.view.html',
+			$scope.modalInstance = $modal.open({
+		      templateUrl: 'deleteAccountModal',
 		      controller: 'SettingsController',
 		      size: size,
 		      backdrop: 'static',
 		      scope: $scope
-		   	 });
+		   	});
 		};
 
-		$scope.deleteAccount = function(){
-			//Need backend function to verify password
-			$http.post('/auth/signin', $scope.credentials).success(function(response) {
-				
-				$scope.authentication.user = response;
-				$scope.modalInstance.dismiss('delete');
-				// Redirect to the sign in page
-				$location.path('/');
+		//Deactivate user account
+		$scope.deleteAccount = function(passwordModal){
+		
+			$scope.success = $scope.error = null;
+			$scope.passwordModal = passwordModal;
+			
+			$http.post('/users/verify', $scope.passwordModal).success(function(response) {				
 
-				//Need to pass value that tells backend user has deleted account
-				//Sign user out..?
+				$scope.success = true;
+				$location.path('/auth/signout');
+				Authentication.user = null;
+				$scope.modalInstance.dismiss('delete');
+
 			}).error(function(response) {
 				$scope.error = 'Please enter the correct password';
 			});
@@ -143,8 +147,8 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 						$scope.removeDBfromP(index); //Remove the bad db
 					$scope.finishEditPortfolio(); 
 			});	
-			//It appears as if each time finishEditPf is called, it will fail if there is already another async request being processed.	
-		}
+			//It appears as if each time finishEditPf is called, it will fail if there is already another async request being processed.
+		};
 
 		var editPortfolioBoolean = false;
 
@@ -173,10 +177,40 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 				$scope.error = response.data.message;
 			});
 		};
-
 	}
 ]);
 
+/*angular.module('users').controller('ModalController', ['$scope', '$http', '$timeout','$location', 'Users', 'Authentication',  'Databases', '$modalInstance',
+	function($scope, $http, $timeout, $location, Users, Authentication, Databases, $modalInstance) {
 
+		$scope.accountResult = false;
+		$scope.user ={};
+		angular.copy(Authentication.user, $scope.user); 
+		//Deep copy so that changes can be reverted
+
+
+		$scope.originalUser = {}; //Keep the original copy of the user
+		angular.copy($scope.user, $scope.originalUser);
+		
+		// If user is not signed in then redirect back home
+		if (!$scope.user) $location.path('/');
+
+		$scope.authentication = Authentication;
+
+		$scope.deleteAccount = function(){
+		
+			$scope.success = $scope.error = null;
+			$http.post('/users/verify', $scope.passwordModal).success(function(response) {				
+
+				Authentication.user = response;
+
+				$scope.modalInstance.dismiss('delete');
+
+			}).error(function(response) {
+				$scope.error = 'Please enter the correct password';
+			});
+		};
+	}
+]);*/
 
 

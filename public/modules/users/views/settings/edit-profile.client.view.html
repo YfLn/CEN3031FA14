@@ -3,46 +3,40 @@
 		<h2>My Profile</h2>
 	</div>
 
-
 	<!--Modal display and controller call-->
 	<div>
-    	<script type="text/ng-template" id="delete-modal.client.view.html">
-
+    	<script type="text/ng-template" id="deleteAccountModal">
     		<div class="modal-header">
     			<button type="button" class="close" ng-click="$dismiss()">&times;</button>
     			<h3 class="modal-title"> Delete Account </h3>
     		</div>
-
     		<div class="modal-body">
-            	<p>Are you sure you want to delete your account?</p> 
-            	<p class=text-danger>This cannot change cannot be reverted!<br></p>
+            	<p>Are you sure you want to delete your account?</p>
+            	<p class="text-danger">This cannot change cannot be reverted!</p><br>
+            	
             	<form name="deleteForm">
 	            	<div class="form-group">
 						<label for="password">Verify Password</label>
-						<input type="password" id="password" name="password" class="form-control" data-ng-model="modalPassword" placeholder="Verify Password" required />
+						<input type="password" id="password" name="password" class="form-control" data-ng-model="passwordModal.password" placeholder="Verify Password" required/>
 					</div>
 					<div data-ng-show="error" class="text-center text-danger"> 
 						<strong data-ng-bind="error"></strong>
 					</div>
+					<div class="modal-footer">
+	            		<button type="submit" class="btn btn-primary" ng-disabled="deleteForm.$invalid" data-ng-click="deleteAccount(passwordModal)">Delete Account</button>
+	            		<button class="btn" ng-click="$dismiss()">Cancel</button>
+	        		</div>
 				</form>
         	</div>
-
-        	<div class="modal-footer">
-            	<button type="submit" class="btn btn-primary" ng-disabled="deleteForm.$invalid" ng-click="deleteAccount()">Delete Account</button>
-            	<button class="btn" ng-click="$dismiss()">Cancel</button>
-        	</div>
-
     	</script>
     </div>
 
-
     <!--Opens modal service for account deletion-->
 	<div class="text-right">
-			<a ng-click="open('sm')" class="btn btn-large btn-danger">Delete Profile</a>
+		<!--http://plnkr.co/edit/Wd9hxToFDKM7lU5yBDno?p=preview-->
+		<button ng-click="open('sm')" class="btn btn-large btn-danger">Delete Profile</button>
 	</div>
 
-
-	<!--Edit profile form-->
 	<div class="col-md-6 text-left">
 		<form name="userForm" class="signin form-horizontal" autocomplete="off">
 			<fieldset>
@@ -77,3 +71,5 @@
 		</form>
 	</div>
 </section>
+<!--class="col-xs-offset-2 col-xs-8 col-md-offset-5 col-md-2"
+class="col-md-8 text-left"-->
