@@ -262,7 +262,7 @@ exports.changePassword = function(req, res, next) {
 };
 
 /**
- * Change Password
+ * Verify Password
  */
 exports.verifyPassword = function(req, res) {
 	// Init Variables

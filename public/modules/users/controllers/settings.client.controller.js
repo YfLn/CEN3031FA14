@@ -91,7 +91,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 
 		//Modal settings and functions
 		$scope.open = function (size) {
-			var modalInstance = $modal.open({
+			$scope.modalInstance = $modal.open({
 		      templateUrl: 'deleteAccountModal',
 		      controller: 'SettingsController',
 		      size: size,
@@ -100,16 +100,18 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 		   	});
 		};
 
+		//Deactivate user account
 		$scope.deleteAccount = function(passwordModal){
 		
 			$scope.success = $scope.error = null;
 			$scope.passwordModal = passwordModal;
-			//console.log($scope.passwordModal);
+			
 			$http.post('/users/verify', $scope.passwordModal).success(function(response) {				
 
-				//Authentication.user = response;
-				$location.path('/');
-				//$scope.modalInstance.dismiss('delete');
+				$scope.success = true;
+				$location.path('/auth/signout');
+				Authentication.user = null;
+				$scope.modalInstance.dismiss('delete');
 
 			}).error(function(response) {
 				$scope.error = 'Please enter the correct password';
