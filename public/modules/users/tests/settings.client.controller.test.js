@@ -121,12 +121,124 @@
 			expect(scope.success).toBeNull();
 		});
 
-		
+		it('$scope.toggleEditPortfolio() should correctly toggle the boolean value in the scope', function(){
+			scope.editPortfolioBoolean = false;
 
-		/*it('$scope.open(size) should open modal and cancel option to delete account', function(){
+			scope.toggleEditPortfolio();
+			expect(scope.editPortfolioBoolean).toEqual(true);
+		});
+
+		it('$scope.checkEditPortfolio() should correctly check the boolean value in the scope', function(){
+			scope.editPortfolioBoolean = false;
+
+			var result = scope.checkEditPortfolio();
+			expect(result).toEqual(false);
+		});
+
+		it('$scope.removeElementfromPortfolio() should remove the correct portfolio from $scope.user.portfolios', function(){
+			// Define a sample portfolio
+			var samplePortfolio = ['3aA', '4bB', '525a8422f6d0f87f0e407a33'];
+
+			// Define a sample user
+			var sampleUser = {firstName: 'Joe', portfolios: samplePortfolio};
+
+			//We must do angular copy or else the sampleUser would be passed by reference instead of by value
+			scope.user={};
+			Authentication.user = {};
+			angular.copy(sampleUser, scope.user);
+			angular.copy(sampleUser, Authentication.user);
+
+			//Remove the last element
+			scope.removeElementfromPortfolio(2);
+			expect(scope.user.portfolios).toEqual(['3aA', '4bB']);
+
+		});
+
+		it('$scope.removeElementfromPortfolio() should remove the correct portfolio from Authentication.user.portfolios', function(){
+			// Define a sample portfolio
+			var samplePortfolio = ['3aA', '4bB', '525a8422f6d0f87f0e407a33'];
+
+			// Define a sample user
+			var sampleUser = {firstName: 'Joe', portfolios: samplePortfolio};
+
+			//We must do angular copy or else the sampleUser would be passed by reference instead of by value
+			scope.user={};
+			Authentication.user = {};
+			angular.copy(sampleUser, scope.user);
+			angular.copy(sampleUser, Authentication.user);
+
+			//Remove the last element
+			scope.removeElementfromPortfolio(2);
+			expect(Authentication.user.portfolios).toEqual(['3aA', '4bB']);
+
+		});
+
+		it('$scope.removeBadPortfolioEntries() should correctly remove pf entries from $scope.user that no longer represent a valid DB', function(){
+			// Define a sample portfolio
+			var samplePortfolio = ['3aA', '4bB', '525a8422f6d0f87f0e407a33'];
+
+			// Define a sample user
+			var sampleUser = {firstName: 'Joe', portfolios: samplePortfolio};
+
+			//We must do angular copy or else the sampleUser would be passed by reference instead of by value
+			scope.user={};
+			Authentication.user = {};
+			angular.copy(sampleUser, scope.user);
+			angular.copy(sampleUser, Authentication.user);
+
+			//Define user after removing bad pf entry
+			var newUser = {firstName: 'Joe', portfolios: ['3aA', '525a8422f6d0f87f0e407a33']};
+
+			//Simulate backend response if no DB is found matching the id '4bB'
+			$httpBackend.expectGET('databases/4bB').respond(400, 'No DB exists');
+			$httpBackend.expectPUT('users').respond(200, newUser);
+
+			scope.removeBadPortfolioEntries(1); //Use 1 as argument because it is index of '4bB'
+			$httpBackend.flush();
+
+			expect(scope.user.portfolios).toEqual(['3aA', '525a8422f6d0f87f0e407a33']);
+		});
+
+		it('$scope.removeBadPortfolioEntries() should correctly remove pf entries from Authentication.user that no longer represent a valid DB', function(){
+			// Define a sample portfolio
+			var samplePortfolio = ['3aA', '4bB', '525a8422f6d0f87f0e407a33'];
+
+			// Define a sample user
+			var sampleUser = {firstName: 'Joe', portfolios: samplePortfolio};
+
+			//We must do angular copy or else the sampleUser would be passed by reference instead of by value
+			scope.user={};
+			Authentication.user = {};
+			angular.copy(sampleUser, scope.user);
+			angular.copy(sampleUser, Authentication.user);
+
+			//Define user after removing bad pf entry
+			var newUser = {firstName: 'Joe', portfolios: ['3aA', '525a8422f6d0f87f0e407a33']};
+
+			//Simulate backend response if no DB is found matching the id '4bB'
+			$httpBackend.expectGET('databases/4bB').respond(400, 'No DB exists');
+			$httpBackend.expectPUT('users').respond(200, newUser);
+
+			scope.removeBadPortfolioEntries(1); //Use 1 as argument because it is index of '4bB'
+			$httpBackend.flush();
+
+			expect(Authentication.user.portfolios).toEqual(['3aA', '525a8422f6d0f87f0e407a33']);
+		});
+
+		it('$scope.open(size) should open modal and cancel option to delete account', function(){
 			$location.path('/settings/edit'); //Go to edit profile page
 			scope.open('sm');
+			scope.$dismiss();
 			expect($modal.templateURL).toEqual('delete-modal.client.view.html');
-		});*/
+		});
+
+		it('$scope.open(size) should open modal and should display error message if password is incorrect', function(){
+			$httpBackend.expect('POST', '/users/verify').respond(400, {message:'Incorrect Password'});
+			$location.path('/settings/edit'); //Go to edit profile page
+			scope.open('sm');
+			scope.password = {password: 'foo'};
+			expect(scope.error).toEqual('Incorrect Password');
+			expect(scope.success).toBeNull();
+		});
 	});
 }());

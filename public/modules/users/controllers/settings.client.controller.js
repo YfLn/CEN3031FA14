@@ -3,18 +3,19 @@
 angular.module('users').controller('SettingsController', ['$scope', '$http', '$timeout','$location', 'Users', 'Authentication',  'Databases', '$modal',
 	function($scope, $http, $timeout, $location, Users, Authentication, Databases, $modal) {
 
+		$scope.accountResult = false;
 		$scope.user ={};
 		angular.copy(Authentication.user, $scope.user); 
 		//Deep copy so that changes can be reverted
 
-		//Temporary message for modal
-		var text = 'Temporary message';
 
 		$scope.originalUser = {}; //Keep the original copy of the user
 		angular.copy($scope.user, $scope.originalUser);
 		
 		// If user is not signed in then redirect back home
 		if (!$scope.user) $location.path('/');
+
+		$scope.authentication = Authentication;
 
 		// Check if there are additional accounts 
 		$scope.hasConnectedAdditionalSocialAccounts = function(provider) {
@@ -78,7 +79,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 		// Change user password
 		$scope.changeUserPassword = function() {
 			$scope.success = $scope.error = null;
-
+			//console.log($scope.passwordDetails);
 			$http.post('/users/password', $scope.passwordDetails).success(function(response) {
 				// If successful show success message and clear form
 				$scope.success = true;
@@ -90,16 +91,31 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 
 		//Modal settings and functions
 		$scope.open = function (size) {
-
-			var modalInstance = $modal.open({
-		      templateUrl: 'delete-modal.client.view.html',
+			$scope.modalInstance = $modal.open({
+		      templateUrl: 'deleteAccountModal',
 		      controller: 'SettingsController',
-		      size: size
-		    });
+		      size: size,
+		      backdrop: 'static',
+		      scope: $scope
+		   	});
 		};
 
-		$scope.ok = function () {
-			$modalInstance.dismiss('okay');
+		//Deactivate user account
+		$scope.deleteAccount = function(passwordModal){
+		
+			$scope.success = $scope.error = null;
+			$scope.passwordModal = passwordModal;
+			
+			$http.post('/users/verify', $scope.passwordModal).success(function(response) {				
+
+				$scope.success = true;
+				$location.path('/auth/signout');
+				Authentication.user = null;
+				$scope.modalInstance.dismiss('delete');
+
+			}).error(function(response) {
+				$scope.error = 'Please enter the correct password';
+			});
 		};
 
 		// Find existing Database in Porfolio
@@ -110,11 +126,11 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 			{
 				//Call method to remove bad portfolios from (Authentication/$scope).user.portfolios
 				//Needed a separate method to preserve the current i value when the async request is made (Databases.get)
-				$scope.removeBadP(i);
+				$scope.removeBadPortfolioEntries(i);
 			}
 		};
-
-		$scope.removeBadP = function(i){
+		
+		$scope.removeBadPortfolioEntries = function(i){
 			var databaseID =  Authentication.user.portfolios[i];
 			//Execute async request to get db
 			var result = Databases.get({databaseId: databaseID}, 
@@ -128,25 +144,28 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 					var index = $scope.user.portfolios.indexOf(databaseID);
 					console.log('Dead database removed from portfolio. id:' + $scope.user.portfolios[index]);
 					if(index !== -1)
-						$scope.removeDBfromP(index); //Remove the bad db
+						$scope.removeElementfromPortfolio(index); //Remove the bad db
 					$scope.finishEditPortfolio(); 
 			});	
-			//It appears as if each time finishEditPf is called, it will fail if there is already another async request being processed.	
-		}
+		};
 
-		var editPortfolioBoolean = false;
+		$scope.editPortfolioBoolean = false;
 
 		$scope.toggleEditPortfolio = function () {
-			if(editPortfolioBoolean === false) {editPortfolioBoolean = true; console.log('toggled');}
-			else {editPortfolioBoolean = false;}
+			if($scope.editPortfolioBoolean === false) 
+			{
+				$scope.editPortfolioBoolean = true; 
+				//console.log('toggled');
+			}
+			else {$scope.editPortfolioBoolean = false;}
 		};
 
 		$scope.checkEditPortfolio = function () {
-			if(editPortfolioBoolean === false) {return false;}
-			if(editPortfolioBoolean === true) {return true;}
+			if($scope.editPortfolioBoolean === false) {return false;}
+			if($scope.editPortfolioBoolean === true) {return true;}
 		};
 
-		$scope.removeDBfromP = function(portfolio_arg) {
+		$scope.removeElementfromPortfolio = function(portfolio_arg) {
 			$scope.user.portfolios.splice(portfolio_arg,1);
 			Authentication.user.portfolios.splice(portfolio_arg,1);
 		};
@@ -161,8 +180,5 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 				$scope.error = response.data.message;
 			});
 		};
-
 	}
 ]);
-
-

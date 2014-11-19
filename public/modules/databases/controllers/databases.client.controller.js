@@ -1,8 +1,8 @@
 'use strict';
 
 // Databases controller
-angular.module('databases').controller('DatabasesController', ['$scope', '$stateParams', '$location', 'Users', 'Authentication', 'Databases',
-	function($scope, $stateParams, $location, Users, Authentication, Databases) {
+angular.module('databases').controller('DatabasesController', ['$scope', '$stateParams', '$location', '$window', 'Users', 'Authentication', 'Databases', 'Comments', 
+	function($scope, $stateParams, $location, $window, Users, Authentication, Databases, Comments) {
 		$scope.user = {};
 		angular.copy(Authentication.user, $scope.user);
 		$scope.authentication = Authentication;
@@ -69,6 +69,7 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 				databaseId: $stateParams.databaseId
 			}, function(){
 				$scope.findDBUsers(result._id);
+				$scope.getComments(result._id);
 				$scope.database = result; //Set this scope's current database
 			});
 		};
@@ -90,7 +91,7 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 					$scope.user = response;
 				}, function(response) {
 					$scope.error = response.data.message;
-				});        	
+				});      	
             }
         };
 
@@ -142,6 +143,22 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 	        	$scope.dbUsers = allUsers;
         	});
         };
+
+        //Find all comments associated with the current database
+		$scope.getComments = function(database_id) {
+			var allComments = Comments.query({}, function(){
+				for(var i = 0; i < allComments.length; i++)
+				{
+					console.log(allComments);
+					var currentComment = allComments[i];
+					if(currentComment.databaseId !== database_id) {
+						allComments.splice(i,1);
+						i--;
+					}
+				}
+				$scope.dbComments = allComments;
+			});
+		};
 
 		//sort order for the list database page
 		$scope.sortorder = 'name';

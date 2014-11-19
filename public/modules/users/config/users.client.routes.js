@@ -41,7 +41,7 @@ angular.module('users').config(['$stateProvider',
 			url: '/password/forgot',
 			templateUrl: 'modules/users/views/password/forgot-password.client.view.html'
 		}).
-		state('reset-invlaid', {
+		state('reset-invalid', {
 			url: '/password/reset/invalid',
 			templateUrl: 'modules/users/views/password/reset-password-invalid.client.view.html'
 		}).
@@ -49,6 +49,10 @@ angular.module('users').config(['$stateProvider',
 			url: '/password/reset/success',
 			templateUrl: 'modules/users/views/password/reset-password-success.client.view.html'
 		}).
+		state('viewUser', {
+			url: '/users/:userId',
+			templateUrl: 'modules/users/views/view-user.client.view.html'
+		}).		
 		state('reset', {
 			url: '/password/reset/:token',
 			templateUrl: 'modules/users/views/password/reset-password.client.view.html'

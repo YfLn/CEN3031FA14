@@ -4,29 +4,37 @@
 	</div>
 
 	<!--Modal display and controller call-->
-	<div data-ng-controller="SettingsController">
-    	<script type="text/ng-template" id="delete-modal.client.view.html">
+	<div>
+    	<script type="text/ng-template" id="deleteAccountModal">
     		<div class="modal-header">
+    			<button type="button" class="close" ng-click="$dismiss()">&times;</button>
     			<h3 class="modal-title"> Delete Account </h3>
     		</div>
     		<div class="modal-body">
             	<p>Are you sure you want to delete your account?</p>
-            	<div class="form-group">
-					<label for="password">Verify Password</label>
-					<input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="Verify Password">
-				</div>
-        	</div>
-        	<div class="modal-footer">
-            	<button class="btn btn-primary" ng-click="ok()">Okay</button>
-            	<button class="btn" ng-click="$dismiss()">Cancel</button>
+            	<p class="text-danger">This cannot change cannot be reverted!</p><br>
+            	
+            	<form name="deleteForm">
+	            	<div class="form-group">
+						<label for="password">Verify Password</label>
+						<input type="password" id="password" name="password" class="form-control" data-ng-model="passwordModal.password" placeholder="Verify Password" required/>
+					</div>
+					<div data-ng-show="error" class="text-center text-danger"> 
+						<strong data-ng-bind="error"></strong>
+					</div>
+					<div class="modal-footer">
+	            		<button type="submit" class="btn btn-primary" ng-disabled="deleteForm.$invalid" data-ng-click="deleteAccount(passwordModal)">Delete Account</button>
+	            		<button class="btn" ng-click="$dismiss()">Cancel</button>
+	        		</div>
+				</form>
         	</div>
     	</script>
     </div>
 
+    <!--Opens modal service for account deletion-->
 	<div class="text-right">
-			<!--Must ask backend about this and also routing and pop up message to verify 
-			http://plnkr.co/edit/Wd9hxToFDKM7lU5yBDno?p=preview-->
-			<button ng-click="open('sm')" type="delete" class="btn btn-large btn-danger">Delete Profile</button>
+		<!--http://plnkr.co/edit/Wd9hxToFDKM7lU5yBDno?p=preview-->
+		<button ng-click="open('sm')" class="btn btn-large btn-danger">Delete Profile</button>
 	</div>
 
 	<div class="col-md-6 text-left">
@@ -35,14 +43,15 @@
 				<div class="form-group">
 					<label for="username">UF Email Address</label>
 					<p id="username" name="username" data-ng-model="user.username">{{user.username}}</p>
+					<input type="checkbox" ng-model="user.privateProfile"> Hide my information in user directory
 				</div>
 				<div class="form-group">
 					<label for="firstName">First Name</label>
-					<input type="text" id="firstName" name="firstName" class="form-control" data-ng-model="user.firstName" placeholder="First Name"readonly>
+					<p data-ng-bind="user.firstName"></p>
 				</div>
 				<div class="form-group">
 					<label for="lastName">Last Name</label>
-					<input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="user.lastName" placeholder="Last Name" readonly>
+					<p data-ng-bind="user.lastName"></p>
 				</div>
 				<div class="form-group">
 					<label for="researchinterests">Research Interests</label>
@@ -63,5 +72,4 @@
 		</form>
 	</div>
 </section>
-<!--class="col-xs-offset-2 col-xs-8 col-md-offset-5 col-md-2"
-class="col-md-8 text-left"-->
+
