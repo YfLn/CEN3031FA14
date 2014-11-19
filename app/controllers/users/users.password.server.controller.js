@@ -206,6 +206,7 @@ exports.changePassword = function(req, res, next) {
 	// Init Variables
 	var passwordDetails = req.body;
 	var message = null;
+	console.log(passwordDetails);
 
 	if (req.user) {
 		if (passwordDetails.newPassword) {
@@ -258,4 +259,32 @@ exports.changePassword = function(req, res, next) {
 			message: 'User is not signed in'
 		});
 	}
+};
+
+/**
+ * Verify Password
+ */
+exports.verifyPassword = function(req, res) {
+	// Init Variables
+	var passwordModal = req.body;
+	var message = null;
+	//console.log(passwordModal);
+
+	User.findById(req.user.id, function(err, user) {
+		if (!err && user) {
+			if (user.authenticate(passwordModal.password)) {
+					req.logout();
+					res.redirect('/');
+			} else {
+				res.status(400).send({
+				message: 'Please enter the correcttt password'
+				});
+			}
+		} else {
+			console.log(passwordModal);
+			res.status(400).send({
+			message: 'User is not found'
+			});
+		}
+	});
 };
