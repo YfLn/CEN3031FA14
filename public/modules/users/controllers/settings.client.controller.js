@@ -5,13 +5,17 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 
 		$scope.accountResult = false;
 		$scope.user ={};
-		angular.copy(Authentication.user, $scope.user); //Deep copy so that changes can be reverted
+		angular.copy(Authentication.user, $scope.user); 
+		//Deep copy so that changes can be reverted
+
 
 		$scope.originalUser = {}; //Keep the original copy of the user
 		angular.copy($scope.user, $scope.originalUser);
 		
 		// If user is not signed in then redirect back home
 		if (!$scope.user) $location.path('/');
+
+		$scope.authentication = Authentication;
 
 		// Check if there are additional accounts 
 		$scope.hasConnectedAdditionalSocialAccounts = function(provider) {
@@ -98,12 +102,15 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 
 		$scope.deleteAccount = function(){
 			//Need backend function to verify password
-			$http.post('/auth/signin', $scope.credentials).success(function(response) {
-				
-				$scope.Authentication.user = response;
+			$scope.success = $scope.error = null;
+			console.log($scope.passwordModal);
+			$http.post('/users/verify', $scope.passwordModal).success(function(response) {				
+
+				Authentication.user = response;
+
 				$scope.modalInstance.dismiss('delete');
 				// Redirect to the sign in page
-				$location.path('/');
+				//$location.path('/');
 
 				//Need to pass value that tells backend user has deleted account
 				//Sign user out..?
@@ -114,11 +121,13 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 
 		// Find existing Database in Porfolio
 		$scope.findAll = function() {		
-			
-			for(var i = 0; i < $scope.user.portfolios.length; i++)
+			//Must save initial count because we will be changing this array
+			var initPortCount = Authentication.user.portfolios.length;
+			for(var i = 0; i < initPortCount; i++)
 			{
-				console.log($scope.user);
-				$scope.user.portfolios[i] = Databases.get({databaseId: Authentication.user.portfolios[i]});
+				//Call method to remove bad portfolios from (Authentication/$scope).user.portfolios
+				//Needed a separate method to preserve the current i value when the async request is made (Databases.get)
+				$scope.removeBadP(i);
 			}
 		};
 
@@ -139,7 +148,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 						$scope.removeDBfromP(index); //Remove the bad db
 					$scope.finishEditPortfolio(); 
 			});	
-			//It appears as if each time finishEditPf is called, it will fail if there is already another async request being processed.	
+			//It appears as if each time finishEditPf is called, it will fail if there is already another async request being processed.
 		};
 
 		var editPortfolioBoolean = false;

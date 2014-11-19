@@ -57,7 +57,7 @@ exports.forgot = function(req, res, next) {
 		},
 		function(token, user, done) {
 			res.render('templates/reset-password-email', {
-				name: user.displayName,
+				name: user.firstName + user.lastName, 
 				appName: config.app.title,
 				url: 'http://' + req.headers.host + '/auth/reset/' + token
 			}, function(err, emailHTML) {
@@ -66,17 +66,24 @@ exports.forgot = function(req, res, next) {
 		},
 		// If valid email, send reset email using service
 		function(emailHTML, user, done) {
-			var smtpTransport = nodemailer.createTransport(config.mailer.options);
+			var smtpTransport = nodemailer.createTransport({
+				service: 'Yahoo',
+				auth: {
+					user: 'ufdatabasestest@yahoo.com', // temp email, need to talk w/ joost
+					pass: 'Aighb123'
+				}
+			});
 			var mailOptions = {
-				to: user.email,
-				from: config.mailer.from,
+				to: user.username, // reciever
+				from: 'UF Database Collaboration Project <ufdatabasestest@yahoo.com>', // sender, need to create real email in future
 				subject: 'Password Reset',
 				html: emailHTML
 			};
 			smtpTransport.sendMail(mailOptions, function(err) {
 				if (!err) {
 					res.send({
-						message: 'An email has been sent to ' + user.email + ' with further instructions.'
+						message: 'An email has been sent to with further instructions, this may take some time to arrive.'
+						// Currently takes around 4 minutes.
 					});
 				}
 
@@ -160,8 +167,8 @@ exports.reset = function(req, res, next) {
 			});
 		},
 		function(user, done) {
-			res.render('templates/reset-password-confirm-email', {
-				name: user.displayName,
+			res.render('templates/reset-password-confirm-email', { 
+				name: user.firstName + user.lastName,
 				appName: config.app.title
 			}, function(err, emailHTML) {
 				done(err, emailHTML, user);
@@ -169,10 +176,16 @@ exports.reset = function(req, res, next) {
 		},
 		// If valid email, send reset email using service
 		function(emailHTML, user, done) {
-			var smtpTransport = nodemailer.createTransport(config.mailer.options);
+			var smtpTransport = nodemailer.createTransport({
+				service: 'Yahoo',
+				auth: {
+					user: 'ufdatabasestest@yahoo.com', // temp email, need to talk w/ joost
+					pass: 'Aighb123'
+				}
+			});
 			var mailOptions = {
-				to: user.email,
-				from: config.mailer.from,
+				to: user.username, // reciever
+				from: 'UF Database Collaboration Project <ufdatabasestest@yahoo.com>', // sender
 				subject: 'Your password has been changed',
 				html: emailHTML
 			};
@@ -243,6 +256,38 @@ exports.changePassword = function(req, res, next) {
 	} else {
 		res.status(400).send({
 			message: 'User is not signed in'
+		});
+	}
+};
+
+/**
+ * Change Password
+ */
+exports.verifyPassword = function(req, res, next) {
+	// Init Variables
+	var passwordModal = req.body;
+	var message = null;
+
+	if (req.user) {
+		User.findById(req.user.id, function(err, user) {
+			if (!err && user) {
+				if (user.authenticate(passwordModal.currentPassword)) {
+						req.logout();
+						res.redirect('/');
+				} else {
+						res.status(400).send({
+						message: 'Please enter the correct password'
+						});
+				}
+			} else {
+					res.status(400).send({
+					message: 'User is not found'
+					});
+			}
+		});
+	} else {
+		res.status(400).send({
+		message: 'User is not signed in'
 		});
 	}
 };

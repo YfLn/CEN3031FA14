@@ -6,6 +6,7 @@
 var mongoose = require('mongoose'),
 	errorHandler = require('./errors'),
 	Database = mongoose.model('Database'),
+	User = mongoose.model('User'),
 	_ = require('lodash');
 
 /**
