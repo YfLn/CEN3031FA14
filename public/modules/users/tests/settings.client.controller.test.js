@@ -225,13 +225,20 @@
 			expect(Authentication.user.portfolios).toEqual(['3aA', '525a8422f6d0f87f0e407a33']);
 		});
 
-		/*it('$scope.open(size) should open modal and cancel option to delete account', function(){
+		it('$scope.open(size) should open modal and cancel option to delete account', function(){
 			$location.path('/settings/edit'); //Go to edit profile page
 			scope.open('sm');
+			scope.$dismiss();
 			expect($modal.templateURL).toEqual('delete-modal.client.view.html');
-		});*/
+		});
 
-		
-
+		it('$scope.open(size) should open modal and should display error message if password is incorrect', function(){
+			$httpBackend.expect('POST', '/users/verify').respond(400, {message:'Incorrect Password'});
+			$location.path('/settings/edit'); //Go to edit profile page
+			scope.open('sm');
+			scope.password = {password: 'foo'};
+			expect(scope.error).toEqual('Incorrect Password');
+			expect(scope.success).toBeNull();
+		});
 	});
 }());
