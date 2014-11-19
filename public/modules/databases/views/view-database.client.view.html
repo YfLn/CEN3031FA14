@@ -1,9 +1,9 @@
 <section data-ng-controller="DatabasesController" data-ng-init="findOne();">
 
     <!--Buttons to add/remove database in portfolio-->
-    <button ng-show="checkForDatabaseInPortfolio()" data-ng-click="addDatabaseToPortfolio()" class="btn addDatabases pull-right">
+    <button ng-show="checkForDatabaseInPortfolio()" data-ng-click="addDatabaseToPortfolio(); findDBUsers(database._id);" class="btn addDatabases pull-right">
     Add Database To Your Portfolio <i class="glyphicon glyphicon-plus"></i></button> 
-    <button ng-show="!checkForDatabaseInPortfolio()" data-ng-click="removeDatabaseFromPortfolio()" class="btn removeDatabase pull-right"> Remove Database From Portfolio <i class="glyphicon glyphicon-minus"></i></button>
+    <button ng-show="!checkForDatabaseInPortfolio()" data-ng-click="removeDatabaseFromPortfolio(); findDBUsers(database._id);" class="btn removeDatabase pull-right"> Remove Database From Portfolio <i class="glyphicon glyphicon-minus"></i></button>
 
     <!-- Name Here -->
     <div class="page-header" style="margin-bottom:3px;">
@@ -80,7 +80,7 @@
         <li data-ng-controller="CommentsController" data-ng-repeat="comment in dbComments" class="list-group-item">
             <b><a data-ng-href="#!/users/{{comment.user._id}}" data-ng-bind="comment.user.displayName"></a></b>
             <small class="list-group-item-test"> on <span data-ng-bind="comment.created | date:'medium'"></span>
-            <i class="glyphicon glyphicon-remove" ng-show="authentication.user._id === comment.user._id" style="color:red; cursor: pointer" ng-click="remove(comment); getComments(database._id)"></i>                
+            <i class="glyphicon glyphicon-remove" ng-show="authentication.user._id === comment.user._id" style="color:red; cursor: pointer" ng-click="remove(comment); getComments(database._id);"></i>                
             <h5 class="list-group-item-heading" data-ng-bind="comment.reviews" style="padding-top:4px"></h5>
         </li>
     </div>

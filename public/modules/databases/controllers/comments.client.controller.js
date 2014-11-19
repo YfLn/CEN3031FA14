@@ -11,7 +11,6 @@ angular.module('comments').controller('CommentsController', ['$scope', '$statePa
 			var comment = new Comments ({
 				reviews: this.reviews,
 				databaseId: databaseId
-
 			});
 
 			// Redirect after save
