@@ -84,6 +84,8 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 				// If successful show success message and clear form
 				$scope.success = true;
 				$scope.passwordDetails = null;
+				Authentication.user = response;
+				$scope.user = response;
 			}).error(function(response) {
 				$scope.error = response.message;
 			});
