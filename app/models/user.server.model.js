@@ -99,6 +99,10 @@ var UserSchema = new Schema({
 	},
   	resetPasswordExpires: {
   		type: Date
+  	},
+  	privateProfile: {
+  		type: Boolean,
+  		default: false
   	}
 });
 

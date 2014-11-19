@@ -126,11 +126,11 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 			{
 				//Call method to remove bad portfolios from (Authentication/$scope).user.portfolios
 				//Needed a separate method to preserve the current i value when the async request is made (Databases.get)
-				$scope.removeBadP(i);
+				$scope.removeBadPortfolioEntries(i);
 			}
 		};
-
-		$scope.removeBadP = function(i){
+		
+		$scope.removeBadPortfolioEntries = function(i){
 			var databaseID =  Authentication.user.portfolios[i];
 			//Execute async request to get db
 			var result = Databases.get({databaseId: databaseID}, 
@@ -144,25 +144,33 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 					var index = $scope.user.portfolios.indexOf(databaseID);
 					console.log('Dead database removed from portfolio. id:' + $scope.user.portfolios[index]);
 					if(index !== -1)
-						$scope.removeDBfromP(index); //Remove the bad db
+						$scope.removeElementfromPortfolio(index); //Remove the bad db
 					$scope.finishEditPortfolio(); 
 			});	
+<<<<<<< HEAD
 			//It appears as if each time finishEditPf is called, it will fail if there is already another async request being processed.
+=======
+			//It appears as if each time finishEditPf is called, it will fail if there is already another async request being processed.	
+>>>>>>> 46d1d2fe7cb6fbb9df22b9125c28c8d48d9706b2
 		};
 
-		var editPortfolioBoolean = false;
+		$scope.editPortfolioBoolean = false;
 
 		$scope.toggleEditPortfolio = function () {
-			if(editPortfolioBoolean === false) {editPortfolioBoolean = true; console.log('toggled');}
-			else {editPortfolioBoolean = false;}
+			if($scope.editPortfolioBoolean === false) 
+			{
+				$scope.editPortfolioBoolean = true; 
+				//console.log('toggled');
+			}
+			else {$scope.editPortfolioBoolean = false;}
 		};
 
 		$scope.checkEditPortfolio = function () {
-			if(editPortfolioBoolean === false) {return false;}
-			if(editPortfolioBoolean === true) {return true;}
+			if($scope.editPortfolioBoolean === false) {return false;}
+			if($scope.editPortfolioBoolean === true) {return true;}
 		};
 
-		$scope.removeDBfromP = function(portfolio_arg) {
+		$scope.removeElementfromPortfolio = function(portfolio_arg) {
 			$scope.user.portfolios.splice(portfolio_arg,1);
 			Authentication.user.portfolios.splice(portfolio_arg,1);
 		};

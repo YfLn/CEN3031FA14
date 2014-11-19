@@ -71,3 +71,39 @@ exports.list = function(req, res) {
 		}
 	});
 };
+
+/**
+ * Show the current User
+ */
+exports.read = function(req, res) {
+	res.jsonp(req.user);
+};
+
+/**
+ * Find userByID
+
+exports.userByID = function(req, res, next, id) { User.findById(id).exec(function(err, user) {
+		if (err) return next(err);
+		if (! user) return next(new Error('Failed to find user ' + id));
+		req.user = user ;
+		next();
+	});
+};
+
+/**
+ * Delete a user
+ 
+exports.delete = function(req, res) {
+	var user = req.user ;
+
+	user.remove(function(err) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			res.jsonp(user);
+		}
+	});
+};
+ */

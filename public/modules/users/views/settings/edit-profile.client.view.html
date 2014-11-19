@@ -43,14 +43,15 @@
 				<div class="form-group">
 					<label for="username">UF Email Address</label>
 					<p id="username" name="username" data-ng-model="user.username">{{user.username}}</p>
+					<input type="checkbox" ng-model="user.privateProfile"> Hide my information in user directory
 				</div>
 				<div class="form-group">
 					<label for="firstName">First Name</label>
-					<input type="text" id="firstName" name="firstName" class="form-control" data-ng-model="user.firstName" placeholder="First Name"readonly>
+					<p data-ng-bind="user.firstName"></p>
 				</div>
 				<div class="form-group">
 					<label for="lastName">Last Name</label>
-					<input type="text" id="lastName" name="lastName" class="form-control" data-ng-model="user.lastName" placeholder="Last Name" readonly>
+					<p data-ng-bind="user.lastName"></p>
 				</div>
 				<div class="form-group">
 					<label for="researchinterests">Research Interests</label>
@@ -71,5 +72,8 @@
 		</form>
 	</div>
 </section>
+<<<<<<< HEAD
 <!--class="col-xs-offset-2 col-xs-8 col-md-offset-5 col-md-2"
 class="col-md-8 text-left"-->
+=======
+>>>>>>> 46d1d2fe7cb6fbb9df22b9125c28c8d48d9706b2

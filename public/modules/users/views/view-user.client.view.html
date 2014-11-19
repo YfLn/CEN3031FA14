@@ -1,0 +1,47 @@
+<section data-ng-controller="UsersController" data-ng-init="findOne()">
+	<div class="page-header">
+		<h2> <span data-ng-bind-template= "{{user.firstName}} {{user.lastName}}"></span>'s Profile </h2>
+	</div>
+
+    <!--Information displayed for private user-->
+    <div ng-show="user.privateProfile" class="alert alert-warning text-center">
+		This user has chosen to hide their information.
+	</div>
+
+	<!-- User Profile. Show if profile is not set to private-->
+	<div class="pull-left" ng-show="!user.privateProfile" >
+		<h3>Research Interests</h3>
+		<p><span  data-ng-bind="user.researchinterests"></span></p>
+	
+		<h3>Contact Email</h3>
+		<p><span ng-show="!user.privateProfile" data-ng-bind="user.username">
+	</div>
+
+	<div ng-show="!user.privateProfile" class="pull-right">
+		<h3>Portfolio</h3>
+					<div class="list-group" style="min-width:450px !important; height: 300px !important; overflow-y:scroll; max-width:700px">
+
+		<table class = "table table-striped table-bordered table-hover table-condensed">
+        <col width = "250">
+        <col width = "600">
+        <col width = "100">
+
+		<tr> 
+            <th><a href="" ng-click="predicate = 'name'; reverse=!reverse">Name</th>
+            <th><a href="" ng-click="predicate = 'descriptionShort'; reverse=!reverse">Description</th>
+            <th><a href="" ng-click="predicate = 'user.displayName'; reverse=!reverse">Posted By</th>
+        </tr>
+
+        <tr data-ng-repeat="portfolio in user.portfolios | orderBy: predicate : reverse | filter:query"> 
+        	<td><a data-ng-href="#!/databases/{{portfolio._id}}" class="list-group-item"> {{portfolio.name}}</td>
+        	<td>{{portfolio.descriptionShort}}</td>
+        	<td>{{portfolio.user.displayName}}</td>
+
+
+        </table>
+
+    </div>
+    </div>
+
+
+</section>
