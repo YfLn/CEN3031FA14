@@ -23,7 +23,7 @@
 						<strong data-ng-bind="error"></strong>
 					</div>
 					<div class="modal-footer">
-	            		<button type="submit" class="btn btn-primary" ng-disabled="deleteForm.$invalid" data-ng-click="deleteAccount(passwordModal)">Delete Account</button>
+	            		<button type="submit" class="btn btn-danger" ng-disabled="deleteForm.$invalid" data-ng-click="deleteAccount(passwordModal)">Delete Account</button>
 	            		<button class="btn" ng-click="$dismiss()">Cancel</button>
 	        		</div>
 				</form>
@@ -31,19 +31,15 @@
     	</script>
     </div>
 
-    <!--Opens modal service for account deletion-->
-	<div class="text-right">
-		<!--http://plnkr.co/edit/Wd9hxToFDKM7lU5yBDno?p=preview-->
-		<button ng-click="open('sm')" class="btn btn-large btn-danger">Delete Profile</button>
-	</div>
+   
 
-	<div class="col-md-6 text-left">
+	<div class="col-md-6 pull-left">
+		<h3> Account Information </h3>
 		<form name="userForm" class="signin form-horizontal" autocomplete="off">
 			<fieldset>
 				<div class="form-group">
 					<label for="username">UF Email Address</label>
 					<p id="username" name="username" data-ng-model="user.username">{{user.username}}</p>
-					<input type="checkbox" ng-model="user.privateProfile"> Hide my information in user directory
 				</div>
 				<div class="form-group">
 					<label for="firstName">First Name</label>
@@ -59,8 +55,8 @@
 					<span>{{300 - user.researchinterests.length}} character(s) remaining</span>
 				</div>
 				<div class="text-center form-group">
-					<button type="submit" class="btn btn-large btn-primary" ng-click="updateUserProfile(userForm.$valid); redirectToViewProfile(1000);">Save Profile</button>
-					<button type="reset" class="btn btn-large btn-primary" ng-click="cancelChanges(); redirectToViewProfile(0);">Cancel</button>
+					<button type="submit" class="btn btn-large btn-success" ng-click="updateUserProfile(userForm.$valid); redirectToViewProfile(1000);">Save Profile</button>
+					<button type="reset" class="btn" ng-click="cancelChanges(); redirectToViewProfile(0);">Cancel</button>
 				</div>
 				<div data-ng-show="success" class="text-center text-success">
 					<strong>Profile Saved Successfully</strong>
@@ -71,9 +67,18 @@
 			</fieldset>
 		</form>
 	</div>
+
+	<div class="col-md-6 pull-right">
+		<h3> Account Settings </h3>
+		 <!--Opens modal service for account deletion-->
+		<div>
+			<label for="accountDeletion">Remove Account</label>
+			<!--http://plnkr.co/edit/Wd9hxToFDKM7lU5yBDno?p=preview-->
+			<p><button ng-click="open('sm')" class="btn btn-large btn-warning">Delete Account</button></p>
+		</div>
+		<div>
+			<label for="privacy">Account Privacy</label><br>
+			<p><input type="checkbox" ng-model="user.privateProfile"> Hide my information in user directory</p>
+		</div>
+	</div>
 </section>
-<<<<<<< HEAD
-<!--class="col-xs-offset-2 col-xs-8 col-md-offset-5 col-md-2"
-class="col-md-8 text-left"-->
-=======
->>>>>>> 46d1d2fe7cb6fbb9df22b9125c28c8d48d9706b2

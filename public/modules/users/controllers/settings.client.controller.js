@@ -147,11 +147,6 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 						$scope.removeElementfromPortfolio(index); //Remove the bad db
 					$scope.finishEditPortfolio(); 
 			});	
-<<<<<<< HEAD
-			//It appears as if each time finishEditPf is called, it will fail if there is already another async request being processed.
-=======
-			//It appears as if each time finishEditPf is called, it will fail if there is already another async request being processed.	
->>>>>>> 46d1d2fe7cb6fbb9df22b9125c28c8d48d9706b2
 		};
 
 		$scope.editPortfolioBoolean = false;
@@ -187,38 +182,3 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 		};
 	}
 ]);
-
-/*angular.module('users').controller('ModalController', ['$scope', '$http', '$timeout','$location', 'Users', 'Authentication',  'Databases', '$modalInstance',
-	function($scope, $http, $timeout, $location, Users, Authentication, Databases, $modalInstance) {
-
-		$scope.accountResult = false;
-		$scope.user ={};
-		angular.copy(Authentication.user, $scope.user); 
-		//Deep copy so that changes can be reverted
-
-
-		$scope.originalUser = {}; //Keep the original copy of the user
-		angular.copy($scope.user, $scope.originalUser);
-		
-		// If user is not signed in then redirect back home
-		if (!$scope.user) $location.path('/');
-
-		$scope.authentication = Authentication;
-
-		$scope.deleteAccount = function(){
-		
-			$scope.success = $scope.error = null;
-			$http.post('/users/verify', $scope.passwordModal).success(function(response) {				
-
-				Authentication.user = response;
-
-				$scope.modalInstance.dismiss('delete');
-
-			}).error(function(response) {
-				$scope.error = 'Please enter the correct password';
-			});
-		};
-	}
-]);*/
-
-
