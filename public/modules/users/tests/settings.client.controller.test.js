@@ -231,7 +231,7 @@
 			expect(scope.modalInstance).toBeUndefined();
 		});*/
 
-		it('$scope.open(size) should open modal and should display error message if password is incorrect', function(){
+		it('$scope.deleteAccount() should display error message if password is incorrect', function(){
 			$httpBackend.expect('POST', '/users/verify').respond(400, 'Incorrect Password');
 			
 			scope.modalInstance = {password: 'foo'};

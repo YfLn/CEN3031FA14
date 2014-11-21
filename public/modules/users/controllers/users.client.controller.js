@@ -4,9 +4,8 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 	function($scope, $stateParams, $location, Users, Databases, Authentication) {
 		$scope.authentication = Authentication;
 		$scope.user = {};
-		$scope.users = Users.query();
-		//var user;
-
+		$scope.users = {};
+		
 		//retrieve a list of users in the website
 		$scope.find = function(){
 			$scope.users = Users.query();
