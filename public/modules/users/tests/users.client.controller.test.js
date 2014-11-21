@@ -49,7 +49,7 @@
 			});
 		}));
 
-		it('$scope.find() should return an array with at least one User', function() {
+		it('$scope.findAllUsers() should return an array with at least one User', function() {
 			//Create sample User using Users service
 			var samplePortfolio = ['3aA', '4bB', '525a8422f6d0f87f0e407a33'];
 			var sampleUser = {
@@ -64,13 +64,13 @@
 			//Set GET response
 			$httpBackend.expectGET('users').respond(sampleUsers);
 
-			scope.find();
+			scope.findAllUsers();
 			$httpBackend.flush();
 
 			expect(scope.users).toEqualData(sampleUsers);
 		});
 
-		it('$scope.findOne() should create an array with one User fetched from XHR using a userID URL paramter', function() {
+		it('$scope.findOneUser() should return one user object fetched from XHR using a userID URL paramter', function() {
 			//Define a sample User object
 			var samplePortfolio = ['3aA'];
 			var sampleUser = {
@@ -88,14 +88,14 @@
 			//Set the URL parameter
 			$stateParams.userId = 'id';
 
-			scope.findOne();
+			scope.findOneUser();
 			$httpBackend.flush();
 
 			//Test scope value
 			expect(scope.user.id).toEqual('id');
 		});
 
-		it('$scope.findAll() should remove a bad database entry from portfolio', function() {
+		it('$scope.findUserPortfolio() should remove a bad database entry from portfolio', function() {
 			//Define a sample portfolio
 			var samplePortfolio = ['3aA'];
 			//Define a sample User
@@ -116,14 +116,12 @@
 			scope.user = sampleUser;
 
 			//Remove any bad elements
-			scope.findAll();
+			scope.findUserPortfolio();
 			$httpBackend.flush();
 
 			expect(scope.user.portfolios).toEqual([]);
 
 		});
-
-
-
-		});
+		
+	});
 }());

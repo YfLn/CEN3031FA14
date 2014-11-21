@@ -7,19 +7,19 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 		$scope.users = {};
 		
 		//retrieve a list of users in the website
-		$scope.find = function(){
+		$scope.findAllUsers = function(){
 			$scope.users = Users.query();
 		};
 
 		//Retrieve a specific user from the back end
-		$scope.findOne = function() {
+		$scope.findOneUser = function() {
 			$scope.user = Users.get({userId: $stateParams.userId}, function() {
-				$scope.findAll();
+				$scope.findUserPortfolio();
 			});
 		};
 
 		//Retrieve user's portfolio
-		$scope.findAll = function() {		
+		$scope.findUserPortfolio = function() {		
 			//Must save initial count because we will be changing this array
 			var initPortCount = $scope.user.portfolios.length;
 
@@ -27,12 +27,12 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 			{
 				//Call method to remove bad portfolios from (Authentication/$scope).user.portfolios
 				//Needed a separate method to preserve the current i value when the async request is made (Databases.get)
-				$scope.removeBadP(i);
+				$scope.removeBadPortfolioEntries(i);
 			}
 		};
 
 		//Clean up bad/dead database entries in user's portfolio
-		$scope.removeBadP = function(i){
+		$scope.removeBadPortfolioEntries = function(i){
 
 			var databaseID =  $scope.user.portfolios[i];
 
@@ -44,16 +44,10 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 				}, 
 				function() {
 					var index = $scope.user.portfolios.indexOf(databaseID);
-					console.log('Dead database removed from portfolio. id:' + $scope.user.portfolios[index]);
+					//console.log('Dead database removed from portfolio. id:' + $scope.user.portfolios[index]);
 					if(index !== -1)
 						$scope.user.portfolios.splice(index, 1); //Remove the bad db
 			});	
-		};
-
-		//Function to splice portfolios
-		$scope.removeDBfromP = function(portfolio_arg) {
-			$scope.user.portfolios.splice(portfolio_arg,1);
-
 		};
 
 		//Sort order variable for users list
