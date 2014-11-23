@@ -119,7 +119,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 		};
 
 		// Find existing Database in Porfolio
-		$scope.findAll = function() {		
+		$scope.findUserPortfolio = function() {		
 			//Must save initial count because we will be changing this array
 			var initPortCount = Authentication.user.portfolios.length;
 			for(var i = 0; i < initPortCount; i++)
@@ -142,7 +142,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 				}, 
 				function() {
 					var index = $scope.user.portfolios.indexOf(databaseID);
-					console.log('Dead database removed from portfolio. id:' + $scope.user.portfolios[index]);
+					//console.log('Dead database removed from portfolio. id:' + $scope.user.portfolios[index]);
 					if(index !== -1)
 						$scope.removeElementfromPortfolio(index); //Remove the bad db
 					$scope.finishEditPortfolio(); 

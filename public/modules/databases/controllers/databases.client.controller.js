@@ -149,7 +149,7 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 			var allComments = Comments.query({}, function(){
 				for(var i = 0; i < allComments.length; i++)
 				{
-					console.log(allComments);
+					//console.log(allComments);
 					var currentComment = allComments[i];
 					if(currentComment.databaseId !== database_id) {
 						allComments.splice(i,1);
