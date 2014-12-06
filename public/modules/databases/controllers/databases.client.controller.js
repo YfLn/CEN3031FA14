@@ -161,7 +161,7 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 		};
 
 		$scope.isAdmin = function() {
-			return angular.equals(Authentication.user.roles, ["admin"]);
+			return angular.equals(Authentication.user.roles, ['admin']);
 		};
 
 		//sort order for the list database page

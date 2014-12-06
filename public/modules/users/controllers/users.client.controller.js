@@ -54,7 +54,7 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 		$scope.sortorder = 'displayname';
 
 		$scope.isAdmin = function(){
-			return angular.equals(Authentication.user.roles, ["admin"]);
+			return angular.equals(Authentication.user.roles, ['admin']);
 		};
 	} 
 ]);
