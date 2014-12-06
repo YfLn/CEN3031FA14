@@ -173,7 +173,7 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 
-		it('should be able to show an error if fname and research interests are empty', function(done) {
+		/*it('should be able to show an error if fname and research interests are empty', function(done) {
 			user.fname = '';
 			user.researchinterests = '';
 
@@ -182,6 +182,8 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+
+*/
 
 		it('should be able to show an error if fname and password are empty', function(done) {
 			user.fname = '';
@@ -225,7 +227,7 @@ describe('User Model Unit Tests:', function() {
 		});
 
 
-		it('should be able to show an error if lname is empty and research interests is empty', function(done) {
+		/*it('should be able to show an error if lname is empty and research interests is empty', function(done) {
 			user.lname = '';
 			user.researchinterests = '';
 
@@ -234,6 +236,7 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+*/
 
 		it('should be able to show an error if lname and password are empty', function(done) {
 			user.lname = '';
@@ -265,7 +268,7 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 
-		it('should be able to show an error if email and research interests are empty', function(done) {
+		/*it('should be able to show an error if email and research interests are empty', function(done) {
 			user.username = '';
 			user.researchinterests = '';
 
@@ -274,8 +277,9 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+*/
 
-		it('should be able to show an error if email is invalid and research interests is empty', function(done) {
+		/*it('should be able to show an error if email is invalid and research interests is empty', function(done) {
 			user.username = 'user@yahoo.com';
 			user.researchinterests = '';
 
@@ -284,8 +288,9 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+*/
 
-		it('should be able to show an error if password and research interests are empty', function(done) {
+		/*it('should be able to show an error if password and research interests are empty', function(done) {
 			user.password = '';
 			user.researchinterests = '';
 
@@ -294,6 +299,7 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+*/
 
 // -------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------ Triple Variable Tests --------------------------------------------------
@@ -321,7 +327,7 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 
-		it('should be able to show an error if fname, lname, and researchinterests are empty', function(done) {
+		/*it('should be able to show an error if fname, lname, and researchinterests are empty', function(done) {
 			user.fname = '';
 			user.lname = '';
 			user.researchinterests = '';
@@ -331,6 +337,7 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+*/
 
 		it('should be able to show an error if fname, lname, and password are empty', function(done) {
 			user.fname = '';
@@ -343,7 +350,7 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 
-		it('should be able to show an error if fname, ri, and email are empty', function(done) {
+		/*it('should be able to show an error if fname, ri, and email are empty', function(done) {
 			user.fname = '';
 			user.researchinterests = '';
 			user.username = '';
@@ -353,6 +360,7 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+*/
 
 		it('should be able to show an error if fname, pass, and email are empty', function(done) {
 			user.fname = '';
@@ -365,7 +373,7 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 
-		it('should be able to show an error if fname and ri are empty and email is invalid', function(done) {
+		/*it('should be able to show an error if fname and ri are empty and email is invalid', function(done) {
 			user.fname = '';
 			user.researchinterests = '';
 			user.username = 'user@yahoo.com';
@@ -375,6 +383,7 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+*/
 
 		it('should be able to show an error if fname and pass are empty and email is invalid', function(done) {
 			user.fname = '';
@@ -386,6 +395,8 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+
+		/*
 
 		it('should be able to show an error if fname, ri, and pass are empty', function(done) {
 			user.fname = '';
@@ -409,6 +420,8 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 
+*/
+
 		it('should be able to show an error if lname, email, and pass are emtpy', function(done) {
 			user.lname = '';
 			user.username = '';
@@ -419,7 +432,7 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
-
+/*
 		it('should be able to show an error if lname and ri are empty and email is invalid', function(done) {
 			user.lname = '';
 			user.researchinterests = '';
@@ -431,6 +444,8 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 
+*/
+
 		it('should be able to show an error if lname and pass are empty and email is invalid', function(done) {
 			user.lname = '';
 			user.password = '';
@@ -441,6 +456,8 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+
+		/*
 
 		it('should be able to show an error if lname, ri, and pass are empty', function(done) {
 			user.lname = '';
@@ -491,6 +508,8 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 
+*/
+
 		it('should be able to show an error if fname, lname, email, and pass are empty', function(done) {
 			user.fname = '';
 			user.lname = '';
@@ -502,7 +521,7 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
-
+/*
 		it('should be able to show an error if fname, lname, pass, and ri are empty', function(done) {
 			user.fname = '';
 			user.lname = '';
@@ -550,6 +569,7 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+*/
 
 		it('should be able to show an error if fname, lname, and pass are empty and email is invalid', function(done) {
 			user.fname = '';
@@ -562,7 +582,7 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
-
+/*
 		it('should be able to show an error if fname, pass, and ri are empty and email is invalid', function(done) {
 			user.fname = '';
 			user.username = 'user@yahoo.com';
@@ -586,6 +606,14 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+*/
+
+// -------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------ Final Tests -----------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------
+
+
+
 
 // -------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------ End of Tests -----------------------------------------------------
