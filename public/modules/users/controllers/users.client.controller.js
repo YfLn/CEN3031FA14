@@ -52,5 +52,9 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 
 		//Sort order variable for users list
 		$scope.sortorder = 'displayname';
+
+		$scope.isAdmin = function(){
+			return angular.equals(Authentication.user.roles, ["admin"]);
+		};
 	} 
 ]);
