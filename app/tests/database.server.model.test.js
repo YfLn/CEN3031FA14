@@ -501,8 +501,47 @@ it('should be able to show an error if  descirpitonShort and url are empty, URL 
 
 
 
+// -------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------ Final Tests -----------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------
+it('should be able to show an error if name, descriptionLong, descirpitonShort are empty and save without url and without http', function(done) {
+			database.name = '';
+			database.descriptionLong = '';
+			database.descriptionShort='';
+			database.url = '';
+			database.url = 'url.com';
 
+			return database.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
 
+it('should be able to show an error if name, descriptionLong, descirpitonShort are empty and save without url and does not contain TLD', function(done) {
+			database.name = '';
+			database.descriptionLong = '';
+			database.descriptionShort='';
+			database.url = '';
+			database.url = 'http://incompleteURL';
+
+			return database.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+it('should be able to show an error if descriptionLong, descirpitonShort, and url are empty and does not contain TLD or http', function(done) {
+			database.url = 'http://incompleteURL';
+			database.descriptionLong = '';
+			database.descriptionShort='';
+			database.url = '';
+			database.url = 'url.com';
+
+			return database.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
 
 
 
