@@ -10,6 +10,7 @@ var _ = require('lodash'),
 	User = mongoose.model('User'),
 	Database = mongoose.model('Database'),
 	async = require('async'),
+	config = require('../../../config/config'),
 	nodemailer = require('nodemailer'),
 	crypto = require('crypto');
 
@@ -31,10 +32,19 @@ exports.signup = function(req, res) {
 		}
 	});
 
+	/*function tokengen() {
+		crypto.randomBytes(20, function(err, buffer) {
+			var token = buffer.toString('hex');
+		});
+	}*/
+
 	// Add missing user fields
 	user.provider = 'local';
 	user.displayName = user.firstName + ' ' + user.lastName;
-	// user.verified = Need to create safe / secure tokens for this;
+	user.verified = crypto.randomBytes(20, function(err, buffer) {
+						var token = buffer.toString('hex');
+						return token;
+					});
 
 	// Then save the user 
 	user.save(function(err) {
@@ -63,13 +73,14 @@ exports.signup = function(req, res) {
 		name: user.firstName + ' ' + user.lastName, 
 		appName: config.app.title,
 		// url: Need to Create Route
-	};
+	});
+
 	// Send the Email
 	smtpTransport.sendMail({
 		to: user.username,
 		from: 'UF Database Collaboration Project <ufdatabasestest@yahoo.com>',
 		subject: 'Account Email Verification',
-		html: 
+		// html: emailHTML
 	});
 			
 };
