@@ -29,7 +29,7 @@ describe('Comment Model Unit Tests:', function() {
 
 		user.save(function() { 
 			comment = new Comment({
-				name: 'Comment Name',
+				reviews: 'Comment body',
 				user: user
 			});
 
@@ -45,8 +45,8 @@ describe('Comment Model Unit Tests:', function() {
 			});
 		});
 
-		it('should be able to show an error when try to save without name', function(done) { 
-			comment.name = '';
+		it('should be able to show an error when try to save without reviews', function(done) { 
+			comment.reviews = '';
 
 			return comment.save(function(err) {
 				should.exist(err);

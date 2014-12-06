@@ -140,6 +140,14 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 	*/
+		it('should be able to show an error when there is not an ObjectID provided in portfolio array', function(done) {
+			user.portfolios = [''];
+
+			return user.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
 
 // -------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------ Double Variable Tests --------------------------------------------------
@@ -165,7 +173,7 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 
-		it('should be able to show an error if fname and research interests are empty', function(done) {
+		/*it('should be able to show an error if fname and research interests are empty', function(done) {
 			user.fname = '';
 			user.researchinterests = '';
 
@@ -174,6 +182,8 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+
+*/
 
 		it('should be able to show an error if fname and password are empty', function(done) {
 			user.fname = '';
@@ -217,7 +227,7 @@ describe('User Model Unit Tests:', function() {
 		});
 
 
-		it('should be able to show an error if lname is empty and research interests is empty', function(done) {
+		/*it('should be able to show an error if lname is empty and research interests is empty', function(done) {
 			user.lname = '';
 			user.researchinterests = '';
 
@@ -226,6 +236,7 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+*/
 
 		it('should be able to show an error if lname and password are empty', function(done) {
 			user.lname = '';
@@ -257,7 +268,7 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 
-		it('should be able to show an error if email and research interests are empty', function(done) {
+		/*it('should be able to show an error if email and research interests are empty', function(done) {
 			user.username = '';
 			user.researchinterests = '';
 
@@ -266,8 +277,9 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+*/
 
-		it('should be able to show an error if email is invalid and research interests is empty', function(done) {
+		/*it('should be able to show an error if email is invalid and research interests is empty', function(done) {
 			user.username = 'user@yahoo.com';
 			user.researchinterests = '';
 
@@ -276,8 +288,9 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+*/
 
-		it('should be able to show an error if password and research interests are empty', function(done) {
+		/*it('should be able to show an error if password and research interests are empty', function(done) {
 			user.password = '';
 			user.researchinterests = '';
 
@@ -286,6 +299,7 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+*/
 
 // -------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------ Triple Variable Tests --------------------------------------------------
@@ -313,10 +327,21 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 
-		it('should be able to show an error if fname, lname, and researchinterests are empty', function(done) {
+		/*it('should be able to show an error if fname, lname, and researchinterests are empty', function(done) {
 			user.fname = '';
 			user.lname = '';
 			user.researchinterests = '';
+
+			return user.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+*/
+		it('should be able to show an error if fname, lname, and not an ObjectID provided in portfolio array', function(done) {
+			user.fname = '';
+			user.lname = '';
+			user.portfolios = [''];
 
 			return user.save(function(err) {
 				should.exist(err);
@@ -335,7 +360,7 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 
-		it('should be able to show an error if fname, ri, and email are empty', function(done) {
+		/*it('should be able to show an error if fname, ri, and email are empty', function(done) {
 			user.fname = '';
 			user.researchinterests = '';
 			user.username = '';
@@ -345,6 +370,7 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+*/
 
 		it('should be able to show an error if fname, pass, and email are empty', function(done) {
 			user.fname = '';
@@ -357,7 +383,7 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 
-		it('should be able to show an error if fname and ri are empty and email is invalid', function(done) {
+		/*it('should be able to show an error if fname and ri are empty and email is invalid', function(done) {
 			user.fname = '';
 			user.researchinterests = '';
 			user.username = 'user@yahoo.com';
@@ -367,6 +393,7 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+*/
 
 		it('should be able to show an error if fname and pass are empty and email is invalid', function(done) {
 			user.fname = '';
@@ -378,6 +405,8 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+
+		/*
 
 		it('should be able to show an error if fname, ri, and pass are empty', function(done) {
 			user.fname = '';
@@ -401,6 +430,30 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 
+*/
+		it('should be able to show an error if fname and pass and username are empty', function(done) {
+			user.fname = '';
+			user.password = '';
+			user.username = '';
+
+			return user.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+		it('should be able to show an error if fname and pass are empty and no objectID in portfolio array', function(done) {
+			user.fname = '';
+			user.password = '';
+			user.portfolios = [''];
+
+			return user.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+
 		it('should be able to show an error if lname, email, and pass are emtpy', function(done) {
 			user.lname = '';
 			user.username = '';
@@ -411,7 +464,7 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
-
+/*
 		it('should be able to show an error if lname and ri are empty and email is invalid', function(done) {
 			user.lname = '';
 			user.researchinterests = '';
@@ -423,6 +476,8 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 
+*/
+
 		it('should be able to show an error if lname and pass are empty and email is invalid', function(done) {
 			user.lname = '';
 			user.password = '';
@@ -433,6 +488,21 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+
+		it('should be able to show an error if lname and pass are empty and no objectID in Portfolio array', function(done) {
+			user.lname = '';
+			user.password = '';
+			user.portfolios = [''];
+
+			return user.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+		
+
+		/*
 
 		it('should be able to show an error if lname, ri, and pass are empty', function(done) {
 			user.lname = '';
@@ -483,6 +553,8 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 
+*/
+
 		it('should be able to show an error if fname, lname, email, and pass are empty', function(done) {
 			user.fname = '';
 			user.lname = '';
@@ -494,7 +566,7 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
-
+/*
 		it('should be able to show an error if fname, lname, pass, and ri are empty', function(done) {
 			user.fname = '';
 			user.lname = '';
@@ -542,6 +614,7 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+*/
 
 		it('should be able to show an error if fname, lname, and pass are empty and email is invalid', function(done) {
 			user.fname = '';
@@ -555,6 +628,70 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 
+		it('should be able to show an error if fname, lname, and pass are empty and portfolio does not contain an ObjectID', function(done) {
+			user.fname = '';
+			user.lname = '';
+			user.portfolios = [''];
+			user.password = '';
+
+			return user.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+
+
+		it('should be able to show an error if lname ,pass, and username are empty and username not valid', function(done) {
+			user.lname = '';
+			user.password = '';
+			user.username = 'user@yahoo.com';
+			user.username = '';
+
+
+			return user.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+		it('should be able to show an error if lname ,pass are empty and username not valid and user portfolio does not contain ObjectID', function(done) {
+			user.lname = '';
+			user.password = '';
+			user.username = 'user@yahoo.com';
+			user.portfolios = [''];
+
+
+
+			return user.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+		it('should be able to show an error if pass and username are empty and username not valid and portfolio does not contain ObjectID', function(done) {
+			
+			user.password = '';
+			user.username = 'user@yahoo.com';
+			user.username = '';
+			user.portfolios = [''];
+
+
+
+			return user.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+
+
+
+
+
+
+
+/*
 		it('should be able to show an error if fname, pass, and ri are empty and email is invalid', function(done) {
 			user.fname = '';
 			user.username = 'user@yahoo.com';
@@ -578,6 +715,50 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+*/
+
+// -------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------ Final Tests -----------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------
+
+it('should be able to show an error if f name, lname, pass and username are empty and username not valid', function(done) {
+			user.firstName = '';
+			user.lastName = '';
+			user.password = '';
+			user.username = 'user@yahoo.com';
+			user.username = '';
+			
+
+
+
+			return user.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+
+it('should be able to show an error if  lname, pass and username are empty and username not valid and portfolio does not contain ObjectID', function(done) {
+			
+			user.lastName = '';
+			user.password = '';
+			user.username = 'user@yahoo.com';
+			user.username = '';
+			user.portfolios = [''];
+
+			
+
+
+
+			return user.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+
+
+
 
 // -------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------ End of Tests -----------------------------------------------------

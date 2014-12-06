@@ -125,7 +125,7 @@ exports.signin = function(req, res, next) {
 							res.status(400).send(err);
 						} else {
 							res.jsonp(user);					
-							console.log(user);
+							//console.log(user);
 						}
 					//});
 				//}

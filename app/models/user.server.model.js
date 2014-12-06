@@ -49,7 +49,7 @@ var UserSchema = new Schema({
 		trim: true,
 		default: '',
 		validate: [validateLocalStrategyProperty, 'Please fill in your UF email'],
-		match: [/^.*@ufl\.edu$/, 'Please fill in a valid @ufl.edu email address']
+		match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/, 'Please fill in a valid @ufl.edu email address']
 		// Previously matched to : "/.+\@.+\..+/"
 		// Still need to add some form of authentication to make sure its a real UF email.
 	},
@@ -81,7 +81,7 @@ var UserSchema = new Schema({
 	roles: {
 		type: [{
 			type: String,
-			enum: ['user', 'admin']
+			enum: ['user', 'admin', 'inactive']
 		}],
 		default: ['user']
 	},

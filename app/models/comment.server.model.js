@@ -13,7 +13,8 @@ var CommentSchema = new Schema({
 	reviews: {
 		type: String,
 		default: '',
-		trim: true
+		trim: true,
+		required: 'Please enter text'
 	},
 	created: {
 		type: Date,
@@ -22,6 +23,9 @@ var CommentSchema = new Schema({
 	user: {
 		type: Schema.ObjectId,
 		ref: 'User'
+	},
+	databaseId: {
+		type:String
 	}
 });
 

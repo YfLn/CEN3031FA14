@@ -142,8 +142,11 @@
 			// Define a sample user
 			var sampleUser = {firstName: 'Joe', portfolios: samplePortfolio};
 
-			scope.user = sampleUser;
-			Authentication.user = sampleUser;
+			//We must do angular copy or else the sampleUser would be passed by reference instead of by value
+			scope.user={};
+			Authentication.user = {};
+			angular.copy(sampleUser, scope.user);
+			angular.copy(sampleUser, Authentication.user);
 
 			//Remove the last element
 			scope.removeElementfromPortfolio(2);
@@ -158,8 +161,11 @@
 			// Define a sample user
 			var sampleUser = {firstName: 'Joe', portfolios: samplePortfolio};
 
-			scope.user = sampleUser;
-			Authentication.user = sampleUser;
+			//We must do angular copy or else the sampleUser would be passed by reference instead of by value
+			scope.user={};
+			Authentication.user = {};
+			angular.copy(sampleUser, scope.user);
+			angular.copy(sampleUser, Authentication.user);
 
 			//Remove the last element
 			scope.removeElementfromPortfolio(2);
@@ -167,14 +173,111 @@
 
 		});
 
+		it('$scope.removeBadPortfolioEntries() should correctly remove pf entries from $scope.user that no longer represent a valid DB', function(){
+			// Define a sample portfolio
+			var samplePortfolio = ['3aA', '4bB', '525a8422f6d0f87f0e407a33'];
+
+			// Define a sample user
+			var sampleUser = {firstName: 'Joe', portfolios: samplePortfolio};
+
+			//We must do angular copy or else the sampleUser would be passed by reference instead of by value
+			scope.user={};
+			Authentication.user = {};
+			angular.copy(sampleUser, scope.user);
+			angular.copy(sampleUser, Authentication.user);
+
+			//Define user after removing bad pf entry
+			var newUser = {firstName: 'Joe', portfolios: ['3aA', '525a8422f6d0f87f0e407a33']};
+
+			//Simulate backend response if no DB is found matching the id '4bB'
+			$httpBackend.expectGET('databases/4bB').respond(400, 'No DB exists');
+			$httpBackend.expectPUT('users').respond(200, newUser);
+
+			scope.removeBadPortfolioEntries(1); //Use 1 as argument because it is index of '4bB'
+			$httpBackend.flush();
+
+			expect(scope.user.portfolios).toEqual(['3aA', '525a8422f6d0f87f0e407a33']);
+		});
+
+		it('$scope.removeBadPortfolioEntries() should correctly remove pf entries from Authentication.user that no longer represent a valid DB', function(){
+			// Define a sample portfolio
+			var samplePortfolio = ['3aA', '4bB', '525a8422f6d0f87f0e407a33'];
+
+			// Define a sample user
+			var sampleUser = {firstName: 'Joe', portfolios: samplePortfolio};
+
+			//We must do angular copy or else the sampleUser would be passed by reference instead of by value
+			scope.user={};
+			Authentication.user = {};
+			angular.copy(sampleUser, scope.user);
+			angular.copy(sampleUser, Authentication.user);
+
+			//Define user after removing bad pf entry
+			var newUser = {firstName: 'Joe', portfolios: ['3aA', '525a8422f6d0f87f0e407a33']};
+
+			//Simulate backend response if no DB is found matching the id '4bB'
+			$httpBackend.expectGET('databases/4bB').respond(400, 'No DB exists');
+			$httpBackend.expectPUT('users').respond(200, newUser);
+
+			scope.removeBadPortfolioEntries(1); //Use 1 as argument because it is index of '4bB'
+			$httpBackend.flush();
+
+			expect(Authentication.user.portfolios).toEqual(['3aA', '525a8422f6d0f87f0e407a33']);
+		});
+
+		it('$scope.findUserPortfolio() should remove a bad database entry from portfolio', function() {
+			//Define a sample portfolio
+			var samplePortfolio = ['3aA'];
+			//Define a sample User
+			var sampleUser = {
+				firstName: 'Sample',
+				lastName: 'User',
+				portfolios: samplePortfolio,
+				username: 'testBoy@ufl.edu',
+				id: 'id'
+			};
+
+			var newUser = {
+				firstName: 'Sample',
+				lastName: 'User',
+				portfolios: [],
+				username: 'testBoy@ufl.edu',
+				id: 'id'
+			};
+
+			//Set GET response
+			$httpBackend.expectGET('databases/3aA').respond(400, 'DB does not exist');
+			$httpBackend.expectPUT('users').respond(200, newUser);
+			//Set URL parameter
+			$stateParams.userId = 'id';
+
+			scope.user = sampleUser;
+			Authentication.user = sampleUser;
+
+			//Remove any bad elements
+			scope.findUserPortfolio();
+			$httpBackend.flush();
+
+			expect(scope.user.portfolios).toEqual([]);
+			expect(Authentication.user.portfolios).toEqual([]);
+
+		});
 
 		/*it('$scope.open(size) should open modal and cancel option to delete account', function(){
-			$location.path('/settings/edit'); //Go to edit profile page
 			scope.open('sm');
-			expect($modal.templateURL).toEqual('delete-modal.client.view.html');
+			scope.modalInstance.dismiss('delete');
+			expect(scope.modalInstance).toBeUndefined();
 		});*/
 
-		
+		it('$scope.deleteAccount() should display error message if password is incorrect', function(){
+			$httpBackend.expect('POST', '/users/verify').respond(400, 'Incorrect Password');
+			
+			scope.modalInstance = {password: 'foo'};
+			scope.deleteAccount(scope.modalInstance);
+			$httpBackend.flush();
 
+			expect(scope.error).toEqual('Incorrect Password');
+			expect(scope.success).toBeNull();
+		});
 	});
 }());

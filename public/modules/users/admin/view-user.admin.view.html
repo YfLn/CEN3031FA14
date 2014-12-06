@@ -3,27 +3,8 @@
 		<h2> <span data-ng-bind-template= "{{user.firstName}} {{user.lastName}}"></span>'s Profile </h2>
 	</div>
 
-	<!--Deactivate/Reactivate Buttons-->
-    <div class="">
-        <a class="btn btn-primary" data-ng-show="isAdmin() && !userInactive()" ng-click="deactivateUser()">
-            Deactivate User
-        </a>
-        <a class="btn btn-primary" data-ng-show="isAdmin() && userInactive()" ng-click="reactivateUser()">
-           	Reactivate User
-        </a>
-    </div>	
 
-    <!--Information displayed for private user-->
-    <div ng-show="user.privateProfile && !isAdmin()" class="alert alert-warning text-center">
-		This user has chosen to hide their information.
-	</div>
-
-	<!--Information displayed for inactive user-->
-	<div ng-show="userInactive() && !isAdmin()" class="alert alert-warning text-center">
-		This user's account has been deactivated.
-	</div>
-
-	<!-- User Profile. Show if profile is not set to private-->
+	<!-- User Profile. Show if profile is not set to private. Admin can see everything-->
 	<div class="pull-left" ng-show="!user.privateProfile || isAdmin()" >
 		<h3>Research Interests</h3>
 		<p><span  data-ng-bind="user.researchinterests"></span></p>
@@ -51,12 +32,8 @@
         	<td><a data-ng-href="#!/databases/{{portfolio._id}}" class="list-group-item"> {{portfolio.name}}</td>
         	<td>{{portfolio.descriptionShort}}</td>
         	<td>{{portfolio.user.displayName}}</td>
-
-
         </table>
 
+    	</div>
     </div>
-    </div>
-
-
 </section>

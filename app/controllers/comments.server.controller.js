@@ -98,8 +98,10 @@ exports.commentByID = function(req, res, next, id) { Comment.findById(id).popula
  * Comment authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if (req.comment.user.id !== req.user.id) {
-		return res.status(403).send('User is not authorized');
-	}
+	if(req.user.roles.indexOf("admin") === -1) {
+		if (req.comment.user.id !== req.user.id) {
+			return res.status(403).send('User is not authorized');
+		}
+	}	
 	next();
 };

@@ -6,21 +6,21 @@ angular.module('comments').controller('CommentsController', ['$scope', '$statePa
 		$scope.authentication = Authentication;
 
 		// Create new Comment
-		$scope.create = function() {
+		$scope.create = function(databaseId) {
 			// Create new Comment object
 			var comment = new Comments ({
-				reviews: this.reviews
+				reviews: this.reviews,
+				databaseId: databaseId
 			});
 
 			// Redirect after save
 			comment.$save(function(response) {
-				$location.path('comments/' + response._id);
-
 				// Clear form fields
 				$scope.name = '';
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
+
 		};
 
 		// Remove existing Comment
@@ -61,5 +61,14 @@ angular.module('comments').controller('CommentsController', ['$scope', '$statePa
 				commentId: $stateParams.commentId
 			});
 		};
+
+		//Reset comment field
+		$scope.resetCommentField = function(){
+			$scope.reviews = null;
+		};
+
+		$scope.isAdmin = function() {
+			return (authentication.user.roles.indexOf('admin') !== -1);
+		};		
 	}
 ]);

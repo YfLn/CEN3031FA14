@@ -15,6 +15,8 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 		// If user is not signed in then redirect back home
 		if (!$scope.user) $location.path('/');
 
+		$scope.authentication = Authentication;
+
 		// Check if there are additional accounts 
 		$scope.hasConnectedAdditionalSocialAccounts = function(provider) {
 			for (var i in $scope.user.additionalProvidersData) {
@@ -77,7 +79,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 		// Change user password
 		$scope.changeUserPassword = function() {
 			$scope.success = $scope.error = null;
-
+			//console.log($scope.passwordDetails);
 			$http.post('/users/password', $scope.passwordDetails).success(function(response) {
 				// If successful show success message and clear form
 				$scope.success = true;
@@ -89,44 +91,46 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 
 		//Modal settings and functions
 		$scope.open = function (size) {
-			  $scope.modalInstance = $modal.open({
-		      templateUrl: 'delete-modal.client.view.html',
+			$scope.modalInstance = $modal.open({
+		      templateUrl: 'deleteAccountModal',
 		      controller: 'SettingsController',
 		      size: size,
 		      backdrop: 'static',
 		      scope: $scope
-		   	 });
+		   	});
 		};
 
-		$scope.deleteAccount = function(){
-			//Need backend function to verify password
-			$http.post('/auth/signin', $scope.credentials).success(function(response) {
-				
-				$scope.authentication.user = response;
-				$scope.modalInstance.dismiss('delete');
-				// Redirect to the sign in page
-				$location.path('/');
+		//Deactivate user account
+		$scope.deleteAccount = function(passwordModal){
+		
+			$scope.success = $scope.error = null;
+			$scope.passwordModal = passwordModal;
+			
+			$http.post('/users/verify', $scope.passwordModal).success(function(response) {				
 
-				//Need to pass value that tells backend user has deleted account
-				//Sign user out..?
+				$scope.success = true;
+				$location.path('/auth/signout');
+				Authentication.user = null;
+				$scope.modalInstance.dismiss('delete');
+
 			}).error(function(response) {
 				$scope.error = 'Please enter the correct password';
 			});
 		};
 
 		// Find existing Database in Porfolio
-		$scope.findAll = function() {		
+		$scope.findUserPortfolio = function() {		
 			//Must save initial count because we will be changing this array
 			var initPortCount = Authentication.user.portfolios.length;
 			for(var i = 0; i < initPortCount; i++)
 			{
 				//Call method to remove bad portfolios from (Authentication/$scope).user.portfolios
 				//Needed a separate method to preserve the current i value when the async request is made (Databases.get)
-				$scope.removeBadPortofolioEntries(i);
+				$scope.removeBadPortfolioEntries(i);
 			}
 		};
 		
-		$scope.removeBadPortofolioEntries = function(i){
+		$scope.removeBadPortfolioEntries = function(i){
 			var databaseID =  Authentication.user.portfolios[i];
 			//Execute async request to get db
 			var result = Databases.get({databaseId: databaseID}, 
@@ -138,7 +142,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 				}, 
 				function() {
 					var index = $scope.user.portfolios.indexOf(databaseID);
-					console.log('Dead database removed from portfolio. id:' + $scope.user.portfolios[index]);
+					//console.log('Dead database removed from portfolio. id:' + $scope.user.portfolios[index]);
 					if(index !== -1)
 						$scope.removeElementfromPortfolio(index); //Remove the bad db
 					$scope.finishEditPortfolio(); 
@@ -177,10 +181,5 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 				$scope.error = response.data.message;
 			});
 		};
-
 	}
 ]);
-
-
-
-

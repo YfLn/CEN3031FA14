@@ -44,7 +44,7 @@ exports.hasAuthorization = function(roles) {
 		_this.requiresLogin(req, res, function() {
 			if (_.intersection(req.user.roles, roles).length) {
 				return next();
-			} else {
+			} else if(req.user.roles.indexOf("admin") === -1){
 				return res.status(403).send({
 					message: 'User is not authorized'
 				});
