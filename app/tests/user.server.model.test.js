@@ -627,6 +627,70 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+
+		it('should be able to show an error if fname, lname, and pass are empty and portfolio does not contain an ObjectID', function(done) {
+			user.fname = '';
+			user.lname = '';
+			user.portfolios = [''];
+			user.password = '';
+
+			return user.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+
+
+		it('should be able to show an error if lname ,pass, and username are empty and username not valid', function(done) {
+			user.lname = '';
+			user.password = '';
+			user.username = 'user@yahoo.com';
+			user.username = '';
+
+
+			return user.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+		it('should be able to show an error if lname ,pass are empty and username not valid and user portfolio does not contain ObjectID', function(done) {
+			user.lname = '';
+			user.password = '';
+			user.username = 'user@yahoo.com';
+			user.portfolios = [''];
+
+
+
+			return user.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+		it('should be able to show an error if pass and username are empty and username not valid and portfolio does not contain ObjectID', function(done) {
+			
+			user.password = '';
+			user.username = 'user@yahoo.com';
+			user.username = '';
+			user.portfolios = [''];
+
+
+
+			return user.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+
+
+
+
+
+
+
 /*
 		it('should be able to show an error if fname, pass, and ri are empty and email is invalid', function(done) {
 			user.fname = '';
