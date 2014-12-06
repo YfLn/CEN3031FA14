@@ -46,7 +46,7 @@
             </div>
         
         <!-- Buttons for Delete / Edit -->
-            <div class="" data-ng-show="authentication.user._id == database.user._id">
+            <div class="" data-ng-show="authentication.user._id == database.user._id || isAdmin()">
                 <a class="btn btn-primary" href="/#!/databases/{{database._id}}/edit">
                     <i class="glyphicon glyphicon-edit"></i>
                 </a>
