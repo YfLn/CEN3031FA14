@@ -2,9 +2,9 @@
 	<div class="page-header">
 		<h2> <span data-ng-bind-template= "{{user.firstName}} {{user.lastName}}"></span>'s Profile </h2>
 	</div>
-	
 
-	<!-- User Profile. Show if profile is not set to private-->
+
+	<!-- User Profile. Show if profile is not set to private. Admin can see everything-->
 	<div class="pull-left" ng-show="!user.privateProfile || isAdmin()" >
 		<h3>Research Interests</h3>
 		<p><span  data-ng-bind="user.researchinterests"></span></p>
