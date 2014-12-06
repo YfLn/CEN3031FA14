@@ -338,6 +338,16 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 */
+		it('should be able to show an error if fname, lname, and not an ObjectID provided in portfolio array', function(done) {
+			user.fname = '';
+			user.lname = '';
+			user.portfolios = [''];
+
+			return user.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
 
 		it('should be able to show an error if fname, lname, and password are empty', function(done) {
 			user.fname = '';
@@ -421,6 +431,28 @@ describe('User Model Unit Tests:', function() {
 		});
 
 */
+		it('should be able to show an error if fname and pass and username are empty', function(done) {
+			user.fname = '';
+			user.password = '';
+			user.username = '';
+
+			return user.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+		it('should be able to show an error if fname and pass are empty and no objectID in portfolio array', function(done) {
+			user.fname = '';
+			user.password = '';
+			user.portfolios = [''];
+
+			return user.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
 
 		it('should be able to show an error if lname, email, and pass are emtpy', function(done) {
 			user.lname = '';
@@ -456,6 +488,19 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
+
+		it('should be able to show an error if lname and pass are empty and no objectID in Portfolio array', function(done) {
+			user.lname = '';
+			user.password = '';
+			user.portfolios = [''];
+
+			return user.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+		
 
 		/*
 
