@@ -54,7 +54,20 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 		$scope.sortorder = 'displayname';
 
 		$scope.isAdmin = function(){
-			return angular.equals(Authentication.user.roles, ['admin']);
+			return (Authentication.user.roles.indexOf('admin') !== -1);
+		};
+
+		$scope.userInactive = function() {
+			return ($scope.user.roles.indexOf('inactive') !== -1);
+		}
+
+		//Functions for Deactivation and Reactivation of users
+		$scope.deactivateUser = function() {
+			$scope.user.roles.push('inactive');
+		};
+
+		$scope.reactivateUser = function() {
+			$scope.user.roles.splice($scope.user.roles.indexOf('inactive'));
 		};
 	} 
 ]);

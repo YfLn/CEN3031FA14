@@ -277,7 +277,7 @@ exports.verifyPassword = function(req, res) {
 					res.redirect('/');
 			} else {
 				res.status(400).send({
-				message: 'Please enter the correcttt password'
+				message: 'Please enter the correct password'
 				});
 			}
 		} else {

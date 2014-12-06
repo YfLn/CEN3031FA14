@@ -4,19 +4,38 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 	function($scope, $http, $location, Authentication) {
 		$scope.authentication = Authentication;
 
-		// If user is signed in then redirect back home
-		if ($scope.authentication.user) $location.path('/databases');
+		// If user is signed in and not an administrator then redirect back home
+		if ($scope.authentication.user && $scope.authentication.user.roles.indexOf('admin') === -1) $location.path('/databases');
 
 		$scope.signup = function() {
-			$http.post('/auth/signup', $scope.credentials).success(function(response) {
-				// If successful we assign the response to the global user model
-				
-				$scope.authentication.user = response;
-				// And redirect to the index page
-				$location.path('/databases');
-			}).error(function(response) {
-				$scope.error = response.message;
-			});
+			//If user is not logged in or not an administrator, check if UFL email address
+			if(!$scope.authentication.user || $scope.authentication.user.roles.indexOf('admin') === -1) {
+				var match = $scope.credentials.username.match(/^.*@ufl\.edu$/);
+				if(match === null) {
+					$scope.error = 'You must use a valid UFL email address';
+				}
+				else {
+					//email address is valid, continue with signin
+					$http.post('/auth/signup', $scope.credentials).success(function(response) {
+						// If successful we assign the response to the global user model
+						
+						$scope.authentication.user = response;
+						// And redirect to the index page
+						$location.path('/databases');
+					}).error(function(response) {
+						$scope.error = response.message;
+					});
+				}
+			}
+			//user is an administrator
+			else {
+				$http.post('/auth/signup', $scope.credentials).success(function(response) {
+					// And redirect to the index page
+					$location.path('/databases');
+				}).error(function(response) {
+					$scope.error = response.message;
+				});				
+			}
 		};
 
 		$scope.signin = function() {
