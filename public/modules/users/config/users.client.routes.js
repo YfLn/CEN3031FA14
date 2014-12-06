@@ -9,10 +9,6 @@ angular.module('users').config(['$stateProvider',
 			url: '/settings/edit',
 			templateUrl: 'modules/users/views/settings/edit-profile.client.view.html'
 		}).
-		/*state('splash', {
-			url: '/splash',
-			templateUrl: 'modules/users/views/authentication/splash.client.view.html'
-		}).*/
 		state('profile', {
 			url: '/settings/profile',
 			templateUrl: 'modules/users/views/settings/view-profile.client.view.html'
