@@ -225,13 +225,51 @@
 			expect(Authentication.user.portfolios).toEqual(['3aA', '525a8422f6d0f87f0e407a33']);
 		});
 
+		it('$scope.findUserPortfolio() should remove a bad database entry from portfolio', function() {
+			//Define a sample portfolio
+			var samplePortfolio = ['3aA'];
+			//Define a sample User
+			var sampleUser = {
+				firstName: 'Sample',
+				lastName: 'User',
+				portfolios: samplePortfolio,
+				username: 'testBoy@ufl.edu',
+				id: 'id'
+			};
+
+			var newUser = {
+				firstName: 'Sample',
+				lastName: 'User',
+				portfolios: [],
+				username: 'testBoy@ufl.edu',
+				id: 'id'
+			};
+
+			//Set GET response
+			$httpBackend.expectGET('databases/3aA').respond(400, 'DB does not exist');
+			$httpBackend.expectPUT('users').respond(200, newUser);
+			//Set URL parameter
+			$stateParams.userId = 'id';
+
+			scope.user = sampleUser;
+			Authentication.user = sampleUser;
+
+			//Remove any bad elements
+			scope.findUserPortfolio();
+			$httpBackend.flush();
+
+			expect(scope.user.portfolios).toEqual([]);
+			expect(Authentication.user.portfolios).toEqual([]);
+
+		});
+
 		/*it('$scope.open(size) should open modal and cancel option to delete account', function(){
 			scope.open('sm');
 			scope.modalInstance.dismiss('delete');
 			expect(scope.modalInstance).toBeUndefined();
 		});*/
 
-		it('$scope.open(size) should open modal and should display error message if password is incorrect', function(){
+		it('$scope.deleteAccount() should display error message if password is incorrect', function(){
 			$httpBackend.expect('POST', '/users/verify').respond(400, 'Incorrect Password');
 			
 			scope.modalInstance = {password: 'foo'};

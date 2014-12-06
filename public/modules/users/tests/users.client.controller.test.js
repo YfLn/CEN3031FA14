@@ -49,65 +49,66 @@
 			});
 		}));
 
-		it('$scope.find() should return an array with at least one User', inject(function(Users) {
+		it('$scope.findAllUsers() should return an array with at least one User', function() {
 			//Create sample User using Users service
 			var samplePortfolio = ['3aA', '4bB', '525a8422f6d0f87f0e407a33'];
-			var sampleUser = new Users({
+			var sampleUser = {
 				firstName: 'Sample',
 				lastName: 'User',
 				portfolios: samplePortfolio,
 				username: 'testBoy@ufl.edu'
-			});
+			};
 
 			var sampleUsers = [sampleUser];
 
 			//Set GET response
 			$httpBackend.expectGET('users').respond(sampleUsers);
 
-			scope.find();
+			scope.findAllUsers();
 			$httpBackend.flush();
 
 			expect(scope.users).toEqualData(sampleUsers);
-		}));
+		});
 
-		it('$scope.findOne() should create an array with one User fetched from XHR using a userID URL paramter', inject(function(Users) {
+		it('$scope.findOneUser() should return one user object fetched from XHR using a userID URL paramter', function() {
 			//Define a sample User object
-			var samplePortfolio = ['3aA', '4bB', '525a8422f6d0f87f0e407a33'];
-			var sampleUser = new Users({
+			var samplePortfolio = ['3aA'];
+			var sampleUser = {
 				firstName: 'Sample',
 				lastName: 'User',
 				portfolios: samplePortfolio,
 				username: 'testBoy@ufl.edu',
 				id: 'id'
-			});
+			};
 
 			//Set GET response
 			$httpBackend.expectGET('users/id').respond(200, sampleUser);
+			$httpBackend.expectGET('databases/3aA').respond(200, {_id: '3aA'});
 
 			//Set the URL parameter
 			$stateParams.userId = 'id';
 
-			scope.findOne();
+			scope.findOneUser();
 			$httpBackend.flush();
 
 			//Test scope value
-			expect(scope.user).toEqualData(sampleUser);
-		}));
+			expect(scope.user.id).toEqual('id');
+		});
 
-		it('$scope.findAll() should remove a bad database entry from portfolio', inject(function(Users) {
+		it('$scope.findUserPortfolio() should remove a bad database entry from portfolio', function() {
 			//Define a sample portfolio
 			var samplePortfolio = ['3aA'];
 			//Define a sample User
-			var sampleUser = new Users({
+			var sampleUser = {
 				firstName: 'Sample',
 				lastName: 'User',
 				portfolios: samplePortfolio,
 				username: 'testBoy@ufl.edu',
 				id: 'id'
-			});
+			};
 
 			//Set GET response
-			$httpBackend.expectGET(/users\/([0-9a-fA-F]{24})$/).respond(200, sampleUser);
+			$httpBackend.expectGET('databases/3aA').respond(400, 'DB does not exist');
 
 			//Set URL parameter
 			$stateParams.userId = 'id';
@@ -115,12 +116,12 @@
 			scope.user = sampleUser;
 
 			//Remove any bad elements
-			scope.findAll();
+			scope.findUserPortfolio();
+			$httpBackend.flush();
+
 			expect(scope.user.portfolios).toEqual([]);
 
-		}));
-
-
-
 		});
+		
+	});
 }());

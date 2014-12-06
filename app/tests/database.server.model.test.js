@@ -418,8 +418,136 @@ describe('Database Model Unit Tests:', function() {
 				done();
 			});
 		});
-
+// -------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------ Quad Test -----------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------
 		
+it('should be able to show an error if name, descriptionLong, descirpitonShort are empty and save without url', function(done) {
+			database.name = '';
+			database.descriptionLong = '';
+			database.descriptionShort='';
+			database.url = '';
+
+			return database.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+it('should be able to show an error if name, descriptionLong, descirpitonShort are empty and url does not contain http:// or https://', function(done) {
+			database.name = '';
+			database.descriptionLong = '';
+			database.descriptionShort='';
+			database.url = 'url.com';
+
+			return database.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+it('should be able to show an error if name, descriptionLong, descirpitonShort are empty and when the URL does not contain ending TLD', function(done) {
+			database.name = '';
+			database.descriptionLong = '';
+			database.descriptionShort='';
+			database.url = 'http://incompleteURL';
+
+			return database.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+it('should be able to show an error if  descriptionLong, descirpitonShort, and url are empty and url does not contain http://', function(done) {
+			database.descriptionLong = '';
+			database.descriptionShort='';
+			database.url = '';
+			database.url = 'url.com';
+
+
+			return database.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+it('should be able to show an error if  descriptionLong, descirpitonShort, and url are empty and URL does not contain ending TLD', function(done) {
+			database.descriptionLong = '';
+			database.descriptionShort='';
+			database.url = '';
+			database.url = 'http://incompleteURL';
+
+			return database.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+
+it('should be able to show an error if  descirpitonShort and url are empty, URL does not contain ending TLD and url does not contain htt[://', function(done) {
+			database.url = 'url.com';
+			database.descriptionShort='';
+			database.url = '';
+			database.url = 'http://incompleteURL';
+
+			return database.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+
+
+
+
+
+// -------------------------------------------------------------------------------------------------------------------------
+// ------------------------------------------------------ Final Tests -----------------------------------------------------
+// -------------------------------------------------------------------------------------------------------------------------
+it('should be able to show an error if name, descriptionLong, descirpitonShort are empty and save without url and without http', function(done) {
+			database.name = '';
+			database.descriptionLong = '';
+			database.descriptionShort='';
+			database.url = '';
+			database.url = 'url.com';
+
+			return database.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+it('should be able to show an error if name, descriptionLong, descirpitonShort are empty and save without url and does not contain TLD', function(done) {
+			database.name = '';
+			database.descriptionLong = '';
+			database.descriptionShort='';
+			database.url = '';
+			database.url = 'http://incompleteURL';
+
+			return database.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+it('should be able to show an error if descriptionLong, descirpitonShort, and url are empty and does not contain TLD or http', function(done) {
+			database.url = 'http://incompleteURL';
+			database.descriptionLong = '';
+			database.descriptionShort='';
+			database.url = '';
+			database.url = 'url.com';
+
+			return database.save(function(err) {
+				should.exist(err);
+				done();
+			});
+		});
+
+
+
+
+
+
 // -------------------------------------------------------------------------------------------------------------------------
 // ------------------------------------------------------ End of Tests -----------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------------
