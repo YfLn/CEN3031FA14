@@ -57,6 +57,7 @@ exports.signup = function(req, res) {
 			user.password = undefined;
 			user.salt = undefined;
 
+			if(!req.user){
 			req.login(user, function(err) {
 				if (err) {
 					res.status(400).send(err);
@@ -64,25 +65,27 @@ exports.signup = function(req, res) {
 					res.jsonp(user);
 				}
 			});
+			}
+
 		}
 	});
 
 	// Verification
 	// Fill out template
-	res.render('templates/users-signup-verificaion-email', { 
-		name: user.firstName + ' ' + user.lastName, 
-		appName: config.app.title,
-		// url: Need to Create Route
-	});
+	 res.render('templates/users-signup-verification-email', { 
+						name: user.firstName + ' ' + user.lastName, 
+						appName: config.app.title,
+						// url: Need to Create Route
+					});
 
 	// Send the Email
 	smtpTransport.sendMail({
 		to: user.username,
 		from: 'UF Database Collaboration Project <ufdatabasestest@yahoo.com>',
 		subject: 'Account Email Verification',
-		// html: emailHTML
-	});
-			
+		//html:
+	}); 
+
 };
 
 //var lookupPortfolios = function(user, callback){
@@ -123,8 +126,8 @@ exports.signin = function(req, res, next) {
 					req.login(user, function(err) {
 						if (err) {
 							res.status(400).send(err);
-						} else {
-							res.jsonp(user);					
+						} else {							
+							res.jsonp(user);			
 							//console.log(user);
 						}
 					//});
