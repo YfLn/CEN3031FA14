@@ -5,6 +5,7 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 		$scope.authentication = Authentication;
 		$scope.user = {};
 		$scope.users = {};
+		$scope.inactive;
 		
 		//retrieve a list of users in the website
 		$scope.findAllUsers = function(){
@@ -13,9 +14,19 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 
 		//Retrieve a specific user from the back end
 		$scope.findOneUser = function() {
-			$scope.user = Users.get({userId: $stateParams.userId}, function() {
-				$scope.findUserPortfolio();
-			});
+
+       		var allUsers = Users.query({}, function(){
+	       		for(var i=0; i < allUsers.length; i++)
+	       		{
+	       			var currUser = allUsers[i];
+	       			if(currUser._id == $stateParams.userId)
+	       			{
+	       				$scope.user = currUser;
+	       				$scope.inactive = ($scope.user.roles.indexOf('inactive') !== -1);
+	       			}
+	       		}
+        	});
+
 		};
 
 		//Retrieve user's portfolio
@@ -58,14 +69,17 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 		};
 
 		$scope.userInactive = function() {
-			return ($scope.user.roles.indexOf('inactive') !== -1);
+			return ($scope.inactive);
 		};
 
 		//Functions for Deactivation and Reactivation of users
 		$scope.deactivateUser = function() {
 			$scope.user.roles.push('inactive');
+			$scope.inactive = true;
 
-        	$scope.user.$update(function(response) {
+			var user = $scope.user;
+
+        	user.$update(function(response) {
         		$scope.success = true;
         		$scope.user = response;
         	}, function(response) {
@@ -75,6 +89,7 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 
 		$scope.reactivateUser = function() {
 			$scope.user.roles.splice($scope.user.roles.indexOf('inactive'));
+			$scope.inactive = false;
         	
         	$scope.user.$update(function(response) {
         		$scope.success = true;
