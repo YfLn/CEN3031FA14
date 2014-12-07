@@ -9,6 +9,10 @@ angular.module('databases').config(['$stateProvider',
 			url: '/databases',
 			templateUrl: 'modules/databases/views/list-databases.client.view.html'
 		}).
+		//state('viewUser', {
+			//url: '/users/:userId',
+			//templateUrl: 'modules/users/views/view-user.client.view.html'
+		//}).	
 		state('createDatabase', {
 			url: '/databases/create',
 			templateUrl: 'modules/databases/views/create-database.client.view.html'
