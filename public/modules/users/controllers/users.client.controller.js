@@ -64,10 +64,24 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 		//Functions for Deactivation and Reactivation of users
 		$scope.deactivateUser = function() {
 			$scope.user.roles.push('inactive');
+
+        	$scope.user.$update(function(response) {
+        		$scope.success = true;
+        		$scope.user = response;
+        	}, function(response) {
+        		$scope.error = response.data.message;
+        	});			
 		};
 
 		$scope.reactivateUser = function() {
 			$scope.user.roles.splice($scope.user.roles.indexOf('inactive'));
+        	
+        	$scope.user.$update(function(response) {
+        		$scope.success = true;
+        		$scope.user = response;
+        	}, function(response) {
+        		$scope.error = response.data.message;
+        	});			
 		};
 	} 
 ]);
