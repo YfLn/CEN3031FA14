@@ -240,7 +240,7 @@ exports.changePassword = function(req, res, next) {
 						}
 					} else {
 						res.status(400).send({
-							message: 'Current password is incorrect'
+							message: 'Current password is incorrectttt'
 						});
 					}
 				} else {
@@ -273,11 +273,28 @@ exports.verifyPassword = function(req, res) {
 	User.findById(req.user.id, function(err, user) {
 		if (!err && user) {
 			if (user.authenticate(passwordModal.password)) {
-					req.logout();
-					res.redirect('/');
+				user.roles.push('inactive');
+				
+				//user.save(function(err) {
+					//if (err) {
+						//return res.status(400).send({
+						//message: errorHandler.getErrorMessage(err)
+						//});
+					//} else {
+						//res.send({
+							//message: 'We are going to miss you :('
+						//});
+				user.save();
+				console.log(user);
+				req.logout();
+				res.redirect('/');
+				//);
+					//}
+				//});
 			} else {
+				console.log(user);
 				res.status(400).send({
-				message: 'Please enter the correct password'
+				message: 'Please enter the correct passworddd'
 				});
 			}
 		} else {
