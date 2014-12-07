@@ -99,7 +99,7 @@ exports.databaseByID = function(req, res, next, id) { Database.findById(id).popu
  * Database authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if(req.user.roles.indexOf("admin") === -1) {
+	if(req.user.roles.indexOf('admin') === -1) {
 		if (req.database.user.id !== req.user.id) {
 			return res.status(403).send('User is not authorized');
 		}
