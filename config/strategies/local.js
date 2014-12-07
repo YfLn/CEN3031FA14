@@ -30,7 +30,7 @@ module.exports = function() {
 						message: 'Invalid password'
 					});
 				}
-				if(user.roles.indexOf('inActive') !== -1) {
+				if(user.roles.indexOf('inactive') !== -1) {
 					return done(null, false, {
 						message: 'Deactivated user'
 					});

@@ -273,7 +273,7 @@ exports.verifyPassword = function(req, res) {
 	User.findById(req.user.id, function(err, user) {
 		if (!err && user) {
 			if (user.authenticate(passwordModal.password)) {
-				user.roles.push('inActive');
+				user.roles.push('inactive');
 				
 				//user.save(function(err) {
 					//if (err) {
@@ -292,8 +292,9 @@ exports.verifyPassword = function(req, res) {
 					//}
 				//});
 			} else {
+				console.log(user);
 				res.status(400).send({
-				message: 'Please enter the correct password'
+				message: 'Please enter the correct passworddd'
 				});
 			}
 		} else {

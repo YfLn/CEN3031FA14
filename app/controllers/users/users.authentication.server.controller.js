@@ -16,7 +16,7 @@ var _ = require('lodash'),
 
 /**
  * Signup
- */
+
 exports.signup = function(req, res) {
 	// For security measurement we remove the roles from the req.body object
 	delete req.body.roles;
@@ -36,7 +36,7 @@ exports.signup = function(req, res) {
 		crypto.randomBytes(20, function(err, buffer) {
 			var token = buffer.toString('hex');
 		});
-	}*/
+	}
 
 	// Add missing user fields
 	user.provider = 'local';
@@ -60,14 +60,14 @@ exports.signup = function(req, res) {
 			// Remove sensitive data before login
 			user.password = undefined;
 			user.salt = undefined;
-			//req.login(user, function(err) {
-				//if (err) {
-					//res.status(400).send(err);
-				//} else {
-					//console.log(user);
-					//res.jsonp(user);
-				//}
-			//});
+			req.login(user, function(err) {
+				if (err) {
+					res.status(400).send(err);
+				} else {
+					console.log(user);
+					res.jsonp(user);
+				}
+			});
 			if(!req.user){
 				req.login(user, function(err) {
 					if (err) {
@@ -99,6 +99,45 @@ exports.signup = function(req, res) {
 	} 
 
 };
+ */
+
+/**
+ * Signup
+ */
+exports.signup = function(req, res) {
+	// For security measurement we remove the roles from the req.body object
+	delete req.body.roles;
+
+	// Init Variables
+	var user = new User(req.body);
+	var message = null;
+
+	// Add missing user fields
+	user.provider = 'local';
+	user.displayName = user.firstName + ' ' + user.lastName;
+
+	// Then save the user 
+	user.save(function(err) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			// Remove sensitive data before login
+			user.password = undefined;
+			user.salt = undefined;
+
+			req.login(user, function(err) {
+				if (err) {
+					res.status(400).send(err);
+				} else {
+					res.jsonp(user);
+				}
+			});
+		}
+	});
+};
+
 
 //var lookupPortfolios = function(user, callback){
 	
@@ -135,7 +174,7 @@ exports.signin = function(req, res, next) {
 					//res.status(500).send(err);
 				//}
 				//else{
-			if(user.roles.indexOf('inActive') === -1){
+			if(user.roles.indexOf('inactive') === -1){
 				req.login(user, function(err) {
 					if (err) {
 						res.status(400).send(err);
