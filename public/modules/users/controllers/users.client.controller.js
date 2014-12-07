@@ -5,6 +5,7 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 		$scope.authentication = Authentication;
 		$scope.user = {};
 		$scope.users = {};
+		$scope.inactive;
 		
 		//retrieve a list of users in the website
 		$scope.findAllUsers = function(){
@@ -13,9 +14,19 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 
 		//Retrieve a specific user from the back end
 		$scope.findOneUser = function() {
-			$scope.user = Users.get({userId: $stateParams.userId}, function() {
-				$scope.findUserPortfolio();
-			});
+
+       		var allUsers = Users.query({}, function(){
+	       		for(var i=0; i < allUsers.length; i++)
+	       		{
+	       			var currUser = allUsers[i];
+	       			if(currUser._id == $stateParams.userId)
+	       			{
+	       				$scope.user = currUser;
+	       				$scope.inactive = ($scope.user.roles.indexOf('inactive') !== -1);
+	       			}
+	       		}
+        	});
+
 		};
 
 		//Retrieve user's portfolio
@@ -54,7 +65,38 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 		$scope.sortorder = 'displayname';
 
 		$scope.isAdmin = function(){
-			return angular.equals(Authentication.user.roles, ['admin']);
+			return (Authentication.user.roles.indexOf('admin') !== -1);
+		};
+
+		$scope.userInactive = function() {
+			return ($scope.inactive);
+		};
+
+		//Functions for Deactivation and Reactivation of users
+		$scope.deactivateUser = function() {
+			$scope.user.roles.push('inactive');
+			$scope.inactive = true;
+
+			var user = $scope.user;
+
+        	user.$update(function(response) {
+        		$scope.success = true;
+        		$scope.user = response;
+        	}, function(response) {
+        		$scope.error = response.data.message;
+        	});			
+		};
+
+		$scope.reactivateUser = function() {
+			$scope.user.roles.splice($scope.user.roles.indexOf('inactive'));
+			$scope.inactive = false;
+        	
+        	$scope.user.$update(function(response) {
+        		$scope.success = true;
+        		$scope.user = response;
+        	}, function(response) {
+        		$scope.error = response.data.message;
+        	});			
 		};
 	} 
 ]);

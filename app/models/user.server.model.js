@@ -49,7 +49,7 @@ var UserSchema = new Schema({
 		trim: true,
 		default: '',
 		validate: [validateLocalStrategyProperty, 'Please fill in your UF email'],
-		match: [/^.*@ufl\.edu$/, 'Please fill in a valid @ufl.edu email address']
+		match: [/^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/, 'Please fill in a valid @ufl.edu email address']
 		// Previously matched to : "/.+\@.+\..+/"
 		// Still need to add some form of authentication to make sure its a real UF email.
 	},
@@ -58,7 +58,6 @@ var UserSchema = new Schema({
 		trim: false,
 		default: ''
 	},
-
 	//portfolios goes here
 	portfolios: [{ 
 		type: Schema.ObjectId, 
@@ -82,7 +81,7 @@ var UserSchema = new Schema({
 	roles: {
 		type: [{
 			type: String,
-			enum: ['user', 'admin', 'inActive']
+			enum: ['user', 'admin', 'inactive']
 		}],
 		default: ['user']
 	},
@@ -99,6 +98,10 @@ var UserSchema = new Schema({
 	},
   	resetPasswordExpires: {
   		type: Date
+  	},
+  	/* Idea is to make verified a unique string that matches to each user that is set to a blank string on verification. */
+  	verified: { 
+  		type: String
   	},
   	privateProfile: {
   		type: Boolean,

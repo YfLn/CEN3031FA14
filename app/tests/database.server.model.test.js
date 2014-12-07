@@ -55,9 +55,22 @@ describe('Database Model Unit Tests:', function() {
 // ------------------------------------------------ Databases / Save Tests -------------------------------------------------
 // -------------------------------------------------------------------------------------------------------------------------
 				
+		it('should begin with no databases', function(done) {
+			User.find({}, function(err, databases) {
+				databases.should.have.length(0);
+				done();
+			});
+		});
+
 		it('should be able to save without problems', function(done) {
-				return database.save(function(err) {
-				should.not.exist(err);
+			database.save(done);
+		});
+
+		it('should show a database in the database after one is saved', function(done) {
+			database.save();
+
+			database.find({}, function(err, databases) {
+				databases.should.have.length(1);
 				done();
 			});
 		});

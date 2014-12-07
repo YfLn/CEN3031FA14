@@ -9,7 +9,10 @@ var _ = require('lodash'),
 	passport = require('passport'),
 	User = mongoose.model('User'),
 	Database = mongoose.model('Database'),
-	async = require('async');
+	async = require('async'),
+	config = require('../../../config/config'),
+	nodemailer = require('nodemailer'),
+	crypto = require('crypto');
 
 /**
  * Signup
@@ -21,10 +24,31 @@ exports.signup = function(req, res) {
 	// Init Variables
 	var user = new User(req.body);
 	var message = null;
+	var smtpTransport = nodemailer.createTransport({
+		service: 'Yahoo',
+		auth: {
+			user: 'ufdatabasestest@yahoo.com',
+			pass: 'Aighb123'
+		}
+	});
+
+	/*function tokengen() {
+		crypto.randomBytes(20, function(err, buffer) {
+			var token = buffer.toString('hex');
+		});
+	}*/
 
 	// Add missing user fields
 	user.provider = 'local';
 	user.displayName = user.firstName + ' ' + user.lastName;
+	if(!req.user){
+		user.verified = crypto.randomBytes(20, function(err, buffer) {
+			var token = buffer.toString('hex');
+			return token;
+		});
+	} else {
+		user.verified = '';
+	}
 
 	// Then save the user 
 	user.save(function(err) {
@@ -36,17 +60,44 @@ exports.signup = function(req, res) {
 			// Remove sensitive data before login
 			user.password = undefined;
 			user.salt = undefined;
-
-			req.login(user, function(err) {
-				if (err) {
-					res.status(400).send(err);
-				} else {
-					console.log(user);
-					res.jsonp(user);
-				}
-			});
+			//req.login(user, function(err) {
+				//if (err) {
+					//res.status(400).send(err);
+				//} else {
+					//console.log(user);
+					//res.jsonp(user);
+				//}
+			//});
+			if(!req.user){
+				req.login(user, function(err) {
+					if (err) {
+						res.status(400).send(err);
+					} else {
+						res.jsonp(user);
+					}
+				});
+			}
 		}
 	});
+
+	if(!req.user){
+		// Verification
+		// Fill out template
+		 res.render('templates/users-signup-verification-email', { 
+							name: user.firstName + ' ' + user.lastName, 
+							appName: config.app.title,
+							// url: Need to Create Route
+						});
+
+		// Send the Email
+		smtpTransport.sendMail({
+			to: user.username,
+			from: 'UF Database Collaboration Project <ufdatabasestest@yahoo.com>',
+			subject: 'Account Email Verification',
+			//html:
+		}); 
+	} 
+
 };
 
 //var lookupPortfolios = function(user, callback){

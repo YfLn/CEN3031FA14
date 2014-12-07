@@ -147,6 +147,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 						$scope.removeElementfromPortfolio(index); //Remove the bad db
 					$scope.finishEditPortfolio(); 
 			});	
+			//It appears as if each time finishEditPf is called, it will fail if there is already another async request being processed.	
 		};
 
 		$scope.editPortfolioBoolean = false;

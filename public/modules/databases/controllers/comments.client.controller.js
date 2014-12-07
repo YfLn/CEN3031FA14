@@ -66,5 +66,9 @@ angular.module('comments').controller('CommentsController', ['$scope', '$statePa
 		$scope.resetCommentField = function(){
 			$scope.reviews = null;
 		};
+
+		$scope.isAdmin = function() {
+			return (Authentication.user.roles.indexOf('admin') !== -1);
+		};		
 	}
 ]);

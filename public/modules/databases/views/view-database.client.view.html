@@ -80,7 +80,9 @@
         <li data-ng-controller="CommentsController" data-ng-repeat="comment in dbComments" class="list-group-item">
             <b><a data-ng-href="#!/users/{{comment.user._id}}" data-ng-bind="comment.user.displayName"></a></b>
             <small class="list-group-item-test"> on <span data-ng-bind="comment.created | date:'medium'"></span>
-            <i class="glyphicon glyphicon-remove" ng-show="authentication.user._id === comment.user._id" style="color:red; cursor: pointer" ng-click="remove(comment); getComments(database._id);"></i>                
+                
+            <!--Delete Comment Button-->
+            <i class="glyphicon glyphicon-remove" ng-show="authentication.user._id === comment.user._id || authentication.user.roles.indexOf('admin') !== -1" style="color:red; cursor: pointer" ng-click="remove(comment); getComments(database._id);"></i>                
             <h5 class="list-group-item-heading" data-ng-bind="comment.reviews" style="padding-top:4px"></h5>
         </li>
     </div>
