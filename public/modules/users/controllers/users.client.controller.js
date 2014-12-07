@@ -59,7 +59,7 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 
 		$scope.userInactive = function() {
 			return ($scope.user.roles.indexOf('inactive') !== -1);
-		}
+		};
 
 		//Functions for Deactivation and Reactivation of users
 		$scope.deactivateUser = function() {

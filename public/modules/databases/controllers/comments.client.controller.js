@@ -68,7 +68,7 @@ angular.module('comments').controller('CommentsController', ['$scope', '$statePa
 		};
 
 		$scope.isAdmin = function() {
-			return (authentication.user.roles.indexOf('admin') !== -1);
+			return (Authentication.user.roles.indexOf('admin') !== -1);
 		};		
 	}
 ]);

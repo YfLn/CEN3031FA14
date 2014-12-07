@@ -15,7 +15,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 					$scope.error = 'You must use a valid UFL email address';
 				}
 				else {
-					//email address is valid, continue with signin
+					//email address is valid, continue with signup
 					$http.post('/auth/signup', $scope.credentials).success(function(response) {
 						// If successful we assign the response to the global user model
 						
