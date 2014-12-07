@@ -64,6 +64,12 @@ var UserSchema = new Schema({
 		ref: 'Database' 
 	}],
 
+	//proficient portfolios
+	proficientpors:[{ 
+		type: Schema.ObjectId, 
+		ref: 'Database' 
+	}],
+
 	password: {
 		type: String,
 		default: '',

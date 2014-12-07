@@ -27,17 +27,39 @@
             <th><a href="" ng-click="predicate = 'user.displayName'; reverse=!reverse">Posted By</th>
         </tr>
         <tr data-ng-repeat="database in databases | orderBy: predicate : reverse | filter:query" >
-            <td><button style = "vertical-align: center; margin-left: 25px" ng-show="checkForDatabaseInPortfolio({{database}})" data-ng-click="addDatabaseToPortfolio({{database}})" class="btn addDatabases"><i class="glyphicon glyphicon-plus"></i></button> 
+            <td>
+                <div>
+             <script type="text/ng-template" id="addDBModal">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="$dismiss()">&times;</button>
+                    <h3 class="modal-title"> Add Database to Portfolio </h3>
+                </div>
+                    <div class="modal-body">
+                        <p>You are adding &quot{{database.name}}&quot created by {{database.user.displayName}} to your portfolio.</p>
+                        <div class="checkbox">
+                        <label> 
+                            <input type="checkbox" data-ng-model="proficient" id="proficient" unchecked>
+
+                            I am proficient with this database and am willing to answer questions about it.
+                        </label>
+                    </div>
+                        <button class="btn large btn-success" data-ng-click="addDatabaseToPortfolio({{database}}, proficient)">Add Database to Porfolio</button>
+                        <button class="btn" ng-click="cancel()">Cancel</button>
+                </div>
+        </script>
+    </div>
+
+                <button style = "vertical-align: center; margin-left: 25px" ng-show="checkForDatabaseInPortfolio({{database}})" data-ng-click="open('md', database)" class="btn addDatabases"><i class="glyphicon glyphicon-plus"></i></button> 
                 <button style = "vertical-align: center; margin-left: 25px" ng-show="!checkForDatabaseInPortfolio({{database}})" data-ng-click="removeDatabaseFromPortfolio({{database}})" class="btn removeDatabase"><i class="glyphicon glyphicon-minus"></i></button>
             </td>
             <td><a data-ng-href="#!/databases/{{database._id}}" class="list-group-item"> {{database.name}} </td>
             <td>{{database.descriptionShort}}</td>
-            <td>{{database.created | date:'medium'}}</td>
+            <td>{{database.created | date:'shortDate'}}</td>
             <td>{{database.user.displayName}}</td>
 
 
     </table>
-
+<!-- data-ng-click="addDatabaseToPortfolio({{database}})" -->
 
     <div class="alert alert-warning text-center" data-ng-hide="!databases.$resolved || databases.length">
     	No Databases yet, why don't you <a href="/#!/databases/create">create one</a>?
