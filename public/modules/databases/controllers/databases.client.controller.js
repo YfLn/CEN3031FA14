@@ -1,8 +1,8 @@
 'use strict';
 
 // Databases controller
-angular.module('databases').controller('DatabasesController', ['$scope', '$stateParams', '$location', '$window', 'Users', 'Authentication', 'Databases', 'Comments', 
-	function($scope, $stateParams, $location, $window, Users, Authentication, Databases, Comments) {
+angular.module('databases').controller('DatabasesController', ['$scope', '$stateParams', '$location', '$window', 'Users', 'Authentication', 'Databases', 'Comments', '$modal', 
+	function($scope, $stateParams, $location, $window, Users, Authentication, Databases, Comments, $modal) {
 		$scope.user = {};
 		angular.copy(Authentication.user, $scope.user);
 		$scope.authentication = Authentication;
@@ -28,6 +28,22 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 			}, function(errorResponse) {
 				$scope.error = errorResponse.data.message;
 			});
+		};
+			//open modals
+		$scope.open = function (size, _database) {
+			$scope.modalInstance = $modal.open({
+		      templateUrl: 'addDBModal',
+		      controller: 'ModalInstanceCtrl',
+		      size: size,
+		      backdrop: 'static',
+		      scope: $scope,
+		      resolve:{
+		      	database: function()
+		      	{
+		      		return _database;
+		      	}
+		      }
+		   	});
 		};
 
 		// Remove existing Database
@@ -75,7 +91,7 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 		};
 
 		// Add databases into portfolio
-		$scope.addDatabaseToPortfolio = function(arg_database) {
+		$scope.addDatabaseToPortfolio = function(arg_database, proficiency) {
             $scope.success = $scope.error = null;
             var user = new Users(Authentication.user);
             var database = new Databases($scope.database);
@@ -85,14 +101,24 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
             if (user.portfolios.indexOf(database._id) === -1) {
             	user.portfolios.push(database._id);
             	
-                user.$update(function(response) {
+
+				//if user is proficient, then add them to list of proficient users
+				if(proficiency){
+					user.proficientpors.push(database._id);
+
+				}
+				user.$update(function(response) {
 					$scope.success = true;
 					Authentication.user = response;
 					$scope.user = response;
 				}, function(response) {
 					$scope.error = response.data.message;
-				});      	
-            }
+				});
+
+			}
+            console.log(user);
+
+         $scope.modalInstance.dismiss('cancel');
         };
 
         //Checks for database in user's portfolio. Returns TRUE if database is NOT in portfolio.
@@ -116,6 +142,7 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
         	if(arg_database) {database = arg_database;}
 
         	user.portfolios.splice(user.portfolios.indexOf(database._id), 1);
+        	user.proficientpors.splice(user.portfolios.indexOf(database._id),1);
 
         	user.$update(function(response) {
         		$scope.success = true;
@@ -160,6 +187,18 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 			});
 		};
 
+		$scope.isProficient = function(proficients,dbID){
+			for (var i=0; i<proficients.length; i++)
+			{
+				var profID = proficients[i];
+				if (proficients[i] === dbID)
+				{
+					return true; 
+				}
+			}
+			return false; 
+		};
+
 		$scope.isAdmin = function() {
 			return (Authentication.user.roles.indexOf('admin') !== -1);
 		};
@@ -168,3 +207,16 @@ angular.module('databases').controller('DatabasesController', ['$scope', '$state
 		$scope.sortorder = 'name';
 	}
 ]);
+
+angular.module('databases').controller('ModalInstanceCtrl', function ($scope, $modalInstance, database, Users, Authentication, Databases)
+{
+			$scope.database = database;
+
+
+    $scope.cancel = function () {
+    $modalInstance.dismiss('cancel');
+
+
+  };
+
+});
