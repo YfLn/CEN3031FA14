@@ -41,10 +41,14 @@ exports.signup = function(req, res) {
 	// Add missing user fields
 	user.provider = 'local';
 	user.displayName = user.firstName + ' ' + user.lastName;
-	user.verified = crypto.randomBytes(20, function(err, buffer) {
-						var token = buffer.toString('hex');
-						return token;
-					});
+	if(!req.user){
+		user.verified = crypto.randomBytes(20, function(err, buffer) {
+			var token = buffer.toString('hex');
+			return token;
+		});
+	} else {
+		user.verified = '';
+	}
 
 	// Then save the user 
 	user.save(function(err) {
@@ -70,21 +74,23 @@ exports.signup = function(req, res) {
 		}
 	});
 
-	// Verification
-	// Fill out template
-	 res.render('templates/users-signup-verification-email', { 
-						name: user.firstName + ' ' + user.lastName, 
-						appName: config.app.title,
-						// url: Need to Create Route
-					});
+	if(!req.user){
+		// Verification
+		// Fill out template
+		 res.render('templates/users-signup-verification-email', { 
+							name: user.firstName + ' ' + user.lastName, 
+							appName: config.app.title,
+							// url: Need to Create Route
+						});
 
-	// Send the Email
-	smtpTransport.sendMail({
-		to: user.username,
-		from: 'UF Database Collaboration Project <ufdatabasestest@yahoo.com>',
-		subject: 'Account Email Verification',
-		//html:
-	}); 
+		// Send the Email
+		smtpTransport.sendMail({
+			to: user.username,
+			from: 'UF Database Collaboration Project <ufdatabasestest@yahoo.com>',
+			subject: 'Account Email Verification',
+			//html:
+		}); 
+	} 
 
 };
 
