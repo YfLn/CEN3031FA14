@@ -22,12 +22,17 @@ module.exports = function() {
 				}
 				if (!user) {
 					return done(null, false, {
-						message: 'Unknown user'
+						message: 'Unknown userrr'
 					});
 				}
 				if (!user.authenticate(password)) {
 					return done(null, false, {
 						message: 'Invalid password'
+					});
+				}
+				if(user.roles.indexOf('inActive') !== -1) {
+					return done(null, false, {
+						message: 'Deactivated user'
 					});
 				}
 

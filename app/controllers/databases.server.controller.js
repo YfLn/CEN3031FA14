@@ -73,7 +73,8 @@ exports.delete = function(req, res) {
 /**
  * List of Databases
  */
-exports.list = function(req, res) { Database.find().sort('-created').populate('user', 'displayName').exec(function(err, databases) {
+exports.list = function(req, res) { 
+	Database.find().sort('-created').populate('user', 'displayName').exec(function(err, databases) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -87,7 +88,8 @@ exports.list = function(req, res) { Database.find().sort('-created').populate('u
 /**
  * Database middleware
  */
-exports.databaseByID = function(req, res, next, id) { Database.findById(id).populate('user', 'displayName').exec(function(err, database) {
+exports.databaseByID = function(req, res, next, id) { 
+	Database.findById(id).populate('user', 'displayName').exec(function(err, database) {
 		if (err) return next(err);
 		if (! database) return next(new Error('Failed to load Database ' + id));
 		req.database = database ;
@@ -99,7 +101,7 @@ exports.databaseByID = function(req, res, next, id) { Database.findById(id).popu
  * Database authorization middleware
  */
 exports.hasAuthorization = function(req, res, next) {
-	if(req.user.roles.indexOf("admin") === -1) {
+	if(req.user.roles.indexOf('admin') === -1) {
 		if (req.database.user.id !== req.user.id) {
 			return res.status(403).send('User is not authorized');
 		}

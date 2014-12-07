@@ -41,6 +41,7 @@ exports.signup = function(req, res) {
 				if (err) {
 					res.status(400).send(err);
 				} else {
+					console.log(user);
 					res.jsonp(user);
 				}
 			});
@@ -71,6 +72,7 @@ exports.signup = function(req, res) {
 exports.signin = function(req, res, next) {
 	passport.authenticate('local', function(err, user, info) {
 		if (err || !user) {
+			console.log(user);
 			res.status(400).send(info);
 		} else {
 			// Remove sensitive data before login
@@ -82,18 +84,23 @@ exports.signin = function(req, res, next) {
 					//res.status(500).send(err);
 				//}
 				//else{
-
-					req.login(user, function(err) {
-						if (err) {
-							res.status(400).send(err);
-						} else {
-							res.jsonp(user);					
-							//console.log(user);
-						}
+			if(user.roles.indexOf('inActive') === -1){
+				req.login(user, function(err) {
+					if (err) {
+						res.status(400).send(err);
+					} else {
+						console.log(user);
+						res.jsonp(user);					
+					}
 					//});
 				//}
-			});
-		}
+				});
+			}
+			else{
+				console.log(user);
+				res.status(400).send(info);
+			}
+	}
 	})(req, res, next);
 };
 

@@ -16,7 +16,7 @@ exports.userByID = function(req, res, next, id) {
 	}).exec(function(err, user) {
 		if (err) return next(err);
 		if (!user) return next(new Error('Failed to load User ' + id));
-		req.user = user;
+		req.profile = user;
 		next();
 	});
 };
@@ -44,7 +44,7 @@ exports.hasAuthorization = function(roles) {
 		_this.requiresLogin(req, res, function() {
 			if (_.intersection(req.user.roles, roles).length) {
 				return next();
-			} else if(req.user.roles.indexOf("admin") === -1){
+			} else if(req.user.roles.indexOf('admin') === -1){
 				return res.status(403).send({
 					message: 'User is not authorized'
 				});

@@ -82,7 +82,7 @@ exports.read = function(req, res) {
 /**
  * Find userByID
 
-exports.userByID = function(req, res, next, id) { User.findById(id).exec(function(err, user) {
+exports.userListByID = function(req, res, next, id) { User.findById(id).exec(function(err, user) {
 		if (err) return next(err);
 		if (! user) return next(new Error('Failed to find user ' + id));
 		req.user = user ;
@@ -106,4 +106,4 @@ exports.delete = function(req, res) {
 		}
 	});
 };
- */
+*/

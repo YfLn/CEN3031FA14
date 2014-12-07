@@ -114,7 +114,7 @@ angular.module('users').controller('SettingsController', ['$scope', '$http', '$t
 				$scope.modalInstance.dismiss('delete');
 
 			}).error(function(response) {
-				$scope.error = 'Please enter the correct password';
+				$scope.error = response.message;
 			});
 		};
 
