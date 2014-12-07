@@ -5,7 +5,7 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 		$scope.authentication = Authentication;
 		$scope.user = {};
 		$scope.users = {};
-		$scope.inactive;
+		$scope.inactive = '';
 		
 		//retrieve a list of users in the website
 		$scope.findAllUsers = function(){
@@ -19,7 +19,7 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 	       		for(var i=0; i < allUsers.length; i++)
 	       		{
 	       			var currUser = allUsers[i];
-	       			if(currUser._id == $stateParams.userId)
+	       			if(currUser._id === $stateParams.userId)
 	       			{
 	       				$scope.user = currUser;
 	       				$scope.inactive = ($scope.user.roles.indexOf('inactive') !== -1);
@@ -77,7 +77,7 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 			$scope.user.roles.push('inactive');
 			$scope.inactive = true;
 
-			var user = $scope.user;
+			var user = new Users($scope.user);
 
         	user.$update(function(response) {
         		$scope.success = true;
