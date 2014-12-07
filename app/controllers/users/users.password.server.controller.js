@@ -240,7 +240,7 @@ exports.changePassword = function(req, res, next) {
 						}
 					} else {
 						res.status(400).send({
-							message: 'Current password is incorrectttt'
+							message: 'Current password is incorrect'
 						});
 					}
 				} else {
@@ -294,7 +294,7 @@ exports.verifyPassword = function(req, res) {
 			} else {
 				console.log(user);
 				res.status(400).send({
-				message: 'Please enter the correct passworddd'
+				message: 'Please enter the correct password'
 				});
 			}
 		} else {

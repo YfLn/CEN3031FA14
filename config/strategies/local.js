@@ -22,7 +22,7 @@ module.exports = function() {
 				}
 				if (!user) {
 					return done(null, false, {
-						message: 'Unknown userrr'
+						message: 'Unknown user'
 					});
 				}
 				if (!user.authenticate(password)) {
