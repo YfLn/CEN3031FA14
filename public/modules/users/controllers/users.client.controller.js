@@ -25,7 +25,9 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 	       				$scope.inactive = ($scope.user.roles.indexOf('inactive') !== -1);
 	       			}
 	       		}
+	       		$scope.findUserPortfolio();
         	});
+
 
 		};
 
@@ -33,6 +35,7 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 		$scope.findUserPortfolio = function() {		
 			//Must save initial count because we will be changing this array
 			var initPortCount = $scope.user.portfolios.length;
+			console.log('something');
 
 			for(var i = 0; i < initPortCount; i++)
 			{
