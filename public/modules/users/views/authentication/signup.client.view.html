@@ -1,14 +1,14 @@
 <section class="row" data-ng-controller="AuthenticationController">
-	<h3 class="col-md-12 text-center" ng-show="authentication.user.roles.indexOf('admin') === -1">Sign up with your UF email account</h3>
-	<h3 class="col-md-12 text-center" ng-show=" authentication.user.roles.indexOf('admin') !== -1">Add a User</h3>
+	<h3 class="col-md-12 text-center" ng-show="authentication.user.roles.indexOf('admin') === -1 || !authentication.user">Sign up with your UF email account</h3>
+	<h3 class="col-md-12 text-center" ng-show=" authentication.user.roles.indexOf('admin') !== -1 && authentication.user">Add a User</h3>
 
 	<!--Information displayed when registration is closed-->
-    <div ng-show="registration === 'closed' && authentication.user.roles.indexOf('admin') === -1" class="alert alert-warning text-center">
+    <div ng-show="registration === 'closed' && (authentication.user.roles.indexOf('admin') === -1 || !authentication.user)" class="alert alert-warning text-center">
 		Sorry, registration is currently closed to the public.
 	</div>
 	
 	<!--Signup section-->
-	<div class="col-xs-offset-2 col-xs-8 col-md-offset-5 col-md-2" ng-show="registration === 'open' || authentication.user.roles.indexOf('admin') !== -1">
+	<div class="col-xs-offset-2 col-xs-8 col-md-offset-5 col-md-2" ng-show="registration === 'open' || authentication.user.roles.indexOf('admin') !== -1" ng-hide="registration === 'closed' && (authentication.user.roles.indexOf('admin') === -1 || !authentication.user)">
 		<form name="userForm" data-ng-submit="signup()" class="signin form-horizontal" novalidate autocomplete="off">
 			<fieldset>
 				<div class="form-group">
