@@ -5,12 +5,12 @@
     <h5>Search by:</h5> 
     <select ng-model="searchKey" style="margin-bottom: 10px;">
         <option value="$" selected="selected"> Any </option>
-        <option value="name"> Name </option>
-        <option value="descriptionShort"> Short Description </option> 
+        <option value="name" id="nameChoice"> Name </option>
+        <option value="descriptionShort" id="descChoice"> Short Description </option> 
     </select>
 
     <div class="input-group input-group-sm" style="margin-bottom:10px">
-         Search: <input ng-model="query[searchKey]" class="form-control" placeholder = "Filter Criteria">
+         Search: <input id="query" ng-model="query[searchKey]" class="form-control" placeholder = "Filter Criteria">
     </div>
 
     <table class = "table table-striped table-bordered table-hover table-condensed">
@@ -52,7 +52,7 @@
                 <button style = "vertical-align: center; margin-left: 25px" ng-show="checkForDatabaseInPortfolio({{database}})" data-ng-click="open('md', database)" class="btn addDatabases"><i class="glyphicon glyphicon-plus"></i></button> 
                 <button style = "vertical-align: center; margin-left: 25px" ng-show="!checkForDatabaseInPortfolio({{database}})" data-ng-click="removeDatabaseFromPortfolio({{database}})" class="btn removeDatabase"><i class="glyphicon glyphicon-minus"></i></button>
             </td>
-            <td><a data-ng-href="#!/databases/{{database._id}}" class="list-group-item"> {{database.name}} </td>
+            <td><a data-ng-href="#!/databases/{{database._id}}" class="list-group-item" id="dbClick"> {{database.name}} </td>
             <td>{{database.descriptionShort}}</td>
             <td>{{database.created | date:'shortDate'}}</td>
             <td>{{database.user.displayName}}</td>
