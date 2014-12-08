@@ -15,7 +15,7 @@ public static void main(String[] args) {
 	"Environmental Protection", "Fairy Tales", "Fashion", "Fast Foods", "FBI", "Forecasting", "Free and Fair Trade",
 	"Freedom of Speech", "Freedom of the Press", "Junk Food", "Juvenile Crime", "Labor Unions", "Learning Disabilities",
 	"Literacy and Illiteracy", "Malpractice", "Marriage", "Medical Ethics", "Mental Health", "Millennium",
-	"Minors' Rights"};
+	"Minors Rights"};
 
 	String password ="rleon94";
 
@@ -35,11 +35,12 @@ System.out.println("db.users.insert(");
     String name2 = names2.get(index);
     String researchTs = researchT.get(indexR);
     
-    	System.out.println("{username:'"+i+"@ufl.edu',");
+    	System.out.println("{\nusername:'"+i+"@ufl.edu',");
     	System.out.println("password: 'rleon94',");
     	System.out.println("firstName:'"+name1+"',");
     	System.out.println("lastName:'"+name2+"',");
-    	System.out.println("researchinterests'"+researchTs+"'}");
+    	System.out.println("displayName:'"+name1+" "+ name2+"',");
+    	System.out.println("researchinterests:'"+researchTs+"'\n}, ");
     }
     System.out.println(");");
 
