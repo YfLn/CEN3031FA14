@@ -88,7 +88,7 @@ researchinterests'Endangered Species'}
 password: 'rleon94',
 firstName:'Tod',
 lastName:'Willene',
-researchinterests'Minors' Rights'}
+researchinterests'Minors Rights'}
 {username:'19@ufl.edu',
 password: 'rleon94',
 firstName:'Kary',
