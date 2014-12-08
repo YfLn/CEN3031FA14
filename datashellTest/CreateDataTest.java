@@ -25,7 +25,7 @@ public static void main(String[] args) {
 	List<String> researchT = Arrays.asList(researchTopics);
    
     
-System.out.println("db.users.insert({");
+System.out.println("db.users.insert(");
     for(int i = 1; i <=30; i++){
     int index = new Random().nextInt(names1.size());
     int indexR = new Random().nextInt(researchT.size());
@@ -35,13 +35,13 @@ System.out.println("db.users.insert({");
     String name2 = names2.get(index);
     String researchTs = researchT.get(indexR);
     
-    	System.out.println("username:'"+i+"@ufl.edu',");
+    	System.out.println("{username:'"+i+"@ufl.edu',");
     	System.out.println("password: 'rleon94',");
     	System.out.println("firstName:'"+name1+"',");
     	System.out.println("lastName:'"+name2+"',");
-    	System.out.println("researchinterests'"+researchTs+"'");
+    	System.out.println("researchinterests'"+researchTs+"'}");
     }
-    System.out.println("});");
+    System.out.println(");");
 
 
 
