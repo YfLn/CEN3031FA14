@@ -63,7 +63,7 @@
 
 		<ul class="nav navbar-nav navbar-right" data-ng-show="authentication.user">
 			<li>
-				<a href="/#!/settings/profile"><span data-ng-bind="authentication.user.displayName"></span>
+				<a href="/#!/settings/profile"><span data-ng-bind="authentication.user.firstName+ ' ' +authentication.user.lastName"></span>
 				</a>
 			</li>
 		</ul>
