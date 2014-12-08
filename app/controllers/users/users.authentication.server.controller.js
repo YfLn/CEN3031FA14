@@ -16,7 +16,7 @@ var _ = require('lodash'),
 
 /**
  * Signup
-
+ */
 exports.signup = function(req, res) {
 	// For security measurement we remove the roles from the req.body object
 	delete req.body.roles;
@@ -32,15 +32,24 @@ exports.signup = function(req, res) {
 		}
 	});
 
-	/*function tokengen() {
-		crypto.randomBytes(20, function(err, buffer) {
-			var token = buffer.toString('hex');
+	/*if(!req.user){
+	// Verification
+	// Fill out template
+		res.render('templates/users-signup-verification-email', { 
+			name: user.firstName + ' ' + user.lastName, 
+			appName: config.app.title,
+			// url: Need to Create Route
 		});
-	}
 
-	// Add missing user fields
-	user.provider = 'local';
-	user.displayName = user.firstName + ' ' + user.lastName;
+		// Send the Email
+		smtpTransport.sendMail({
+			to: user.username,
+			from: 'UF Database Collaboration Project <ufdatabasestest@yahoo.com>',
+			subject: 'Account Email Verification',
+			//html:
+		}); 
+	} 
+
 	if(!req.user){
 		user.verified = crypto.randomBytes(20, function(err, buffer) {
 			var token = buffer.toString('hex');
@@ -48,7 +57,17 @@ exports.signup = function(req, res) {
 		});
 	} else {
 		user.verified = '';
-	}
+	}*/
+
+	//function tokengen() {
+		//crypto.randomBytes(20, function(err, buffer) {
+			//var token = buffer.toString('hex');
+		//});
+	//}
+
+	// Add missing user fields
+	user.provider = 'local';
+	user.displayName = user.firstName + ' ' + user.lastName;
 
 	// Then save the user 
 	user.save(function(err) {
@@ -60,50 +79,33 @@ exports.signup = function(req, res) {
 			// Remove sensitive data before login
 			user.password = undefined;
 			user.salt = undefined;
-			req.login(user, function(err) {
-				if (err) {
-					res.status(400).send(err);
-				} else {
-					console.log(user);
-					res.jsonp(user);
-				}
-			});
-			if(!req.user){
+			//req.login(user, function(err) {
+				//if (err) {
+					//res.status(400).send(err);
+				//} else {
+					//console.log(user);
+					//res.jsonp(user);
+				//}
+			//});
+			
+			//if(!req.user){
 				req.login(user, function(err) {
 					if (err) {
 						res.status(400).send(err);
 					} else {
+						console.log(req.user);
 						res.jsonp(user);
 					}
 				});
-			}
+			//}
 		}
 	});
-
-	if(!req.user){
-		// Verification
-		// Fill out template
-		 res.render('templates/users-signup-verification-email', { 
-							name: user.firstName + ' ' + user.lastName, 
-							appName: config.app.title,
-							// url: Need to Create Route
-						});
-
-		// Send the Email
-		smtpTransport.sendMail({
-			to: user.username,
-			from: 'UF Database Collaboration Project <ufdatabasestest@yahoo.com>',
-			subject: 'Account Email Verification',
-			//html:
-		}); 
-	} 
-
 };
- */
+
 
 /**
  * Signup
- */
+
 exports.signup = function(req, res) {
 	// For security measurement we remove the roles from the req.body object
 	delete req.body.roles;
@@ -137,7 +139,7 @@ exports.signup = function(req, res) {
 		}
 	});
 };
-
+ */
 
 //var lookupPortfolios = function(user, callback){
 	
