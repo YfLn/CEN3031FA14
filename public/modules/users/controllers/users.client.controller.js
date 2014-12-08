@@ -81,17 +81,18 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 			$scope.inactive = true;
 
 			var user = new Users($scope.user);
+			user.$save();
 
-        	user.$update(function(response) {
+        	/*user.$update(function(response) {
         		$scope.success = true;
         		$scope.user = response;
         	}, function(response) {
         		$scope.error = response.data.message;
-        	});			
+        	});	*/		
 		};
 
 		$scope.reactivateUser = function() {
-			$scope.user.roles.splice($scope.user.roles.indexOf('inactive'));
+			$scope.user.roles.splice($scope.user.roles.indexOf('inactive'),1);
 			$scope.inactive = false;
         	
         	$scope.user.$update(function(response) {

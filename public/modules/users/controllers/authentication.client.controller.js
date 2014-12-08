@@ -9,6 +9,9 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 		if ($scope.authentication.user && $scope.authentication.user.roles.indexOf('admin') === -1) $location.path('/databases');
 
 		$scope.signup = function() {
+			if($scope.credentials.confirmpassword !== $scope.credentials.password) {
+				$scope.error = 'Passwords do not match';
+			} else {
 			//If user is not logged in or not an administrator, check if UFL email address
 			if(!$scope.authentication.user || $scope.authentication.user.roles.indexOf('admin') === -1) {
 				var match = $scope.credentials.username.match(/^.*@ufl\.edu$/);
@@ -29,8 +32,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 					}).error(function(response) {
 						$scope.error = response.message;
 					});
-				}
-			}
+				}}
 			//user is an administrator
 			else {
 				$http.post('/auth/signup', $scope.credentials).success(function(response) {
@@ -39,7 +41,7 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 				}).error(function(response) {
 					$scope.error = response.message;
 				});				
-			}
+			}}
 		};
 
 		$scope.signin = function() {
