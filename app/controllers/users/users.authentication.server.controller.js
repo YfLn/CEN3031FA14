@@ -48,7 +48,7 @@ exports.signup = function(req, res) {
 			subject: 'Account Email Verification',
 			//html:
 		}); 
-	} 
+	}
 
 	if(!req.user){
 		user.verified = crypto.randomBytes(20, function(err, buffer) {
@@ -87,8 +87,8 @@ exports.signup = function(req, res) {
 					//res.jsonp(user);
 				//}
 			//});
-			
-			//if(!req.user){
+			console.log(!req.user);
+			if(!req.user){
 				req.login(user, function(err) {
 					if (err) {
 						res.status(400).send(err);
@@ -97,7 +97,7 @@ exports.signup = function(req, res) {
 						res.jsonp(user);
 					}
 				});
-			//}
+			}
 		}
 	});
 };
