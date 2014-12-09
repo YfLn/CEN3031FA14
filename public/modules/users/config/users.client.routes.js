@@ -52,7 +52,11 @@ angular.module('users').config(['$stateProvider',
 		state('viewUser', {
 			url: '/users/:userId',
 			templateUrl: 'modules/users/views/view-user.client.view.html'
-		}).		
+		}).	
+		state('verify', {
+			url: '/verify',
+			templateUrl: 'modules/users/views/authentication/verify-email.client.view.html'
+		}).	
 		state('reset', {
 			url: '/password/reset/:token',
 			templateUrl: 'modules/users/views/password/reset-password.client.view.html'
