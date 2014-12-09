@@ -268,37 +268,36 @@ exports.verifyPassword = function(req, res) {
 	// Init Variables
 	var passwordModal = req.body;
 	var message = null;
-	//console.log(passwordModal);
 
 	User.findById(req.user.id, function(err, user) {
 		if (!err && user) {
 			if (user.authenticate(passwordModal.password)) {
 				user.roles.push('inactive');
-				
-				//user.save(function(err) {
-					//if (err) {
-						//return res.status(400).send({
-						//message: errorHandler.getErrorMessage(err)
-						//});
-					//} else {
-						//res.send({
-							//message: 'We are going to miss you :('
-						//});
-				user.save();
-				console.log(user);
-				req.logout();
-				res.redirect('/');
-				//);
-					//}
-				//});
+
+				user.save(function(err) {
+					if (err) {
+						return res.status(400).send({
+						message: errorHandler.getErrorMessage(err)
+					});
+					} else {
+						req.login(user, function(err) {
+							if (err) {
+								res.status(400).send(err);
+							} else {
+								req.logout();
+								res.redirect('/');
+							}
+						});
+					}
+				});
+				//user.save();
+				//console.log(user);
 			} else {
-				console.log(user);
 				res.status(400).send({
 				message: 'Please enter the correct password'
 				});
 			}
 		} else {
-			console.log(passwordModal);
 			res.status(400).send({
 			message: 'User is not found'
 			});

@@ -79,28 +79,15 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 		$scope.deactivateUser = function() {
 			$scope.user.roles.push('inactive');
 			$scope.inactive = true;
-
-			var user = new Users($scope.user);
-			user.$save();
-
-        	/*user.$update(function(response) {
-        		$scope.success = true;
-        		$scope.user = response;
-        	}, function(response) {
-        		$scope.error = response.data.message;
-        	});	*/		
+  			var currUser = $scope.user;
+  			Users.save(currUser);	
 		};
 
 		$scope.reactivateUser = function() {
 			$scope.user.roles.splice($scope.user.roles.indexOf('inactive'),1);
 			$scope.inactive = false;
-        	
-        	$scope.user.$update(function(response) {
-        		$scope.success = true;
-        		$scope.user = response;
-        	}, function(response) {
-        		$scope.error = response.data.message;
-        	});			
+        	var currUser = $scope.user;
+  			Users.save(currUser);		
 		};
 	} 
 ]);
