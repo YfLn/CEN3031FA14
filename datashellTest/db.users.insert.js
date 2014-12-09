@@ -222,6 +222,7 @@ firstName:'Natacha',
 lastName:'Lazaro',
 displayName:'Natacha Lazaro',
 researchinterests:'Freedom of Speech'
+privateProfile:'true'
 }, 
 {
 username:'29@ufl.edu',
@@ -230,6 +231,7 @@ firstName:'Natacha',
 lastName:'Lazaro',
 displayName:'Natacha Lazaro',
 researchinterests:'Forecasting'
+privateProfile:'true'
 }, 
 {
 username:'30@ufl.edu',
@@ -237,7 +239,8 @@ password: 'rleon94',
 firstName:'Jeanmarie',
 lastName:'Samual',
 displayName:'Jeanmarie Samual',
-researchinterests:'Juvenile Crime'
+researchinterests:'Juvenile Crime',
+privateProfile:'true'
 }, 
 );
 
