@@ -36,49 +36,7 @@ exports.signup = function(req, res) {
 	user.provider = 'local';
 	user.displayName = user.firstName + ' ' + user.lastName;
 
-/*
-
-	if(!req.user){
-		var token = crypto.randomBytes(20, function(err, buffer) {
-							var token = buffer.toString('hex');
-							console.log('token');
-							console.log(token);
-							return token;
-						});
-		console.log('token2');
-		console.log(token);
-		user.verified = token;
-		console.log('USER TOKEN :::');
-		console.log(user.verified);
-	} else {
-		user.verified = '';
-	}
-
-*/
-
-	// Then save the user 
-	user.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			// Remove sensitive data before login
-			user.password = undefined;
-			user.salt = undefined;
-
-			if(!req.user){
-				req.login(user, function(err) {
-					if (err) {
-						res.status(400).send(err);
-					} else {
-						res.jsonp(user);
-					}
-				});
-			}
-		}
-	});
-
+	// Email Verification
 	if(!req.user){
 		async.waterfall([
 			// Generate random token
@@ -93,14 +51,34 @@ exports.signup = function(req, res) {
 				res.render('templates/users-signup-verification-email', { 
 					name: user.firstName + user.lastName,
 					appName: config.app.title,
-					url : 'http://' + req.headers.host + '/auth/verify/' + token
+					url : 'http://' + req.headers.host + '/auth/verification/' + token
 				}, function(err, emailHTML) {
 					done(err, emailHTML, user);
 				});
 
+				//Save the User
 				user.verified = token;
-				console.log('USER TOKEN :::');
-				console.log(user.verified);
+				user.save(function(err) {
+					if (err) {
+						return res.status(400).send({
+							message: errorHandler.getErrorMessage(err)
+						});
+					} else {
+						// Remove sensitive data before login
+						user.password = undefined;
+						user.salt = undefined;
+
+						if(!req.user){
+							req.login(user, function(err) {
+								if (err) {
+									res.status(400).send(err);
+								} else {
+									res.jsonp(user);
+								}
+							});
+						}
+					}
+				});
 			},
 			//Send email
 			function(emailHTML, user, done) {
@@ -127,8 +105,55 @@ exports.signup = function(req, res) {
 	   		// result now equals 'done'
 		});
 	} else {
+		//Save the User for admin creation.
 		user.verified = '';
+		user.save(function(err) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			// Remove sensitive data before login
+			user.password = undefined;
+			user.salt = undefined;
+
+			if(!req.user){
+				req.login(user, function(err) {
+					if (err) {
+						res.status(400).send(err);
+					} else {
+						res.jsonp(user);
+					}
+				});
+			}
+		}
+	});
 	}
+
+	// Save the user.
+	/*
+	user.save(function(err) {
+		if (err) {
+			return res.status(400).send({
+				message: errorHandler.getErrorMessage(err)
+			});
+		} else {
+			// Remove sensitive data before login
+			user.password = undefined;
+			user.salt = undefined;
+
+			if(!req.user){
+				req.login(user, function(err) {
+					if (err) {
+						res.status(400).send(err);
+					} else {
+						res.jsonp(user);
+					}
+				});
+			}
+		}
+	});
+	*/
 
 };
 
@@ -186,11 +211,10 @@ exports.validateVerificationToken = function(req, res) {
 		verified: req.params.token
 	}, function(err, user) {
 		if (!user) {
-			console.log('error verifying');
-			return res.redirect('/#!/auth/verify/' + req.params.token);
+			return res.redirect('/#!/auth/verification/' + req.params.token);
 		}
 		console.log('redirect correct');
-		res.redirect('/#!/auth/verify/' + req.params.token);
+		res.redirect('/#!/auth/verification/' + req.params.token);
 	});
 };
 
@@ -212,18 +236,9 @@ exports.verifyEmail = function(req, res) {
 								return res.status(400).send({
 									message: errorHandler.getErrorMessage(err)
 								});
-							} else {
-								req.login(user, function(err) {
-									if (err) {
-										res.status(400).send(err);
-									} else {
-										// Return Verified user 
-										res.jsonp(user);
-										done(err, user);
-									}
-								});
 							}
 						});
+						res.redirect('/#!/verify');
 				} else {
 					return res.status(400).send({
 						message: 'Email Validation token is invalid.'

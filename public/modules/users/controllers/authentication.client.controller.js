@@ -53,7 +53,8 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$stat
 		$scope.verifyEmail = function() {
 			$scope.success = $scope.error = null;
 
-			$http.post('/auth/verify/' + $stateParams.token).success(function(response) {
+			$http.post('/auth/verification/' + $stateParams.token).success(function(response) {
+				console.log('verify email called');
 				// Attach user profile
 				Authentication.user = response;
 				//$scope.error = 'none';

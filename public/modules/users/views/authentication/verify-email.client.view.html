@@ -1,11 +1,4 @@
-<section class="row text-center" data-ng-controller="AuthenticationController" data-ng-init="verifyEmail()">
-	<div ng-show="error === 'none'">
-		<h3 class="col-md-12">Email Verification Successful!</h3>
-		<a href="/#!/" class="col-md-12">Continue to home page</a>
-	</div>
-	<div ng-show="error !== 'none'">
-		<h3 class="col-md-12">Email Verification Unsuccessful</h3>
-		<p>Perhaps you tried to access this page without an email token.</p>
-		<p>Error: {{error}}</p>
-	</div>	
+<section class="row text-center">
+	<h3 class="col-md-12">Email successfully Verified</h3>
+	<a href="/#!/" class="col-md-12">Continue to home page</a>
 </section>
