@@ -5,7 +5,8 @@ password: 'rleon94',
 firstName:'Tod',
 lastName:'Willene',
 displayName:'Tod Willene',
-researchinterests:'Millennium'
+researchinterests:'Millennium',
+roles:'inactive'
 }, 
 {
 username:'2@ufl.edu',
@@ -13,7 +14,8 @@ password: 'rleon94',
 firstName:'Norman',
 lastName:'Cindie',
 displayName:'Norman Cindie',
-researchinterests:'Fashion'
+researchinterests:'Fashion',
+roles:'inactive
 }, 
 {
 username:'3@ufl.edu',
@@ -221,7 +223,7 @@ password: 'rleon94',
 firstName:'Natacha',
 lastName:'Lazaro',
 displayName:'Natacha Lazaro',
-researchinterests:'Freedom of Speech'
+researchinterests:'Freedom of Speech',
 privateProfile:'true'
 }, 
 {
@@ -230,7 +232,7 @@ password: 'rleon94',
 firstName:'Natacha',
 lastName:'Lazaro',
 displayName:'Natacha Lazaro',
-researchinterests:'Forecasting'
+researchinterests:'Forecasting',
 privateProfile:'true'
 }, 
 {
