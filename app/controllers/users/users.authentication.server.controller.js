@@ -32,23 +32,29 @@ exports.signup = function(req, res) {
 		}
 	});
 
-	/*function tokengen() {
-		crypto.randomBytes(20, function(err, buffer) {
-			var token = buffer.toString('hex');
-		});
-	}*/
-
 	// Add missing user fields
 	user.provider = 'local';
 	user.displayName = user.firstName + ' ' + user.lastName;
+
+/*
+
 	if(!req.user){
-		user.verified = crypto.randomBytes(20, function(err, buffer) {
-			var token = buffer.toString('hex');
-			return token;
-		});
+		var token = crypto.randomBytes(20, function(err, buffer) {
+							var token = buffer.toString('hex');
+							console.log('token');
+							console.log(token);
+							return token;
+						});
+		console.log('token2');
+		console.log(token);
+		user.verified = token;
+		console.log('USER TOKEN :::');
+		console.log(user.verified);
 	} else {
 		user.verified = '';
 	}
+
+*/
 
 	// Then save the user 
 	user.save(function(err) {
@@ -70,27 +76,59 @@ exports.signup = function(req, res) {
 					}
 				});
 			}
-
 		}
 	});
 
 	if(!req.user){
-		// Verification
-		// Fill out template
-		 res.render('templates/users-signup-verification-email', { 
-							name: user.firstName + ' ' + user.lastName, 
-							appName: config.app.title,
-							// url: Need to Create Route
-						});
+		async.waterfall([
+			// Generate random token
+			function(done) {
+				crypto.randomBytes(20, function(err, buffer) {
+					var token = buffer.toString('hex');
+					done(err, token);
+				});
+			},
+			//Generate Email to be sent.
+			function(token, done) {
+				res.render('templates/users-signup-verification-email', { 
+					name: user.firstName + user.lastName,
+					appName: config.app.title,
+					url : 'http://' + req.headers.host + '/auth/verify/' + token
+				}, function(err, emailHTML) {
+					done(err, emailHTML, user);
+				});
 
-		// Send the Email
-		smtpTransport.sendMail({
-			to: user.username,
-			from: 'UF Database Collaboration Project <ufdatabasestest@yahoo.com>',
-			subject: 'Account Email Verification',
-			//html:
-		}); 
-	} 
+				user.verified = token;
+				console.log('USER TOKEN :::');
+				console.log(user.verified);
+			},
+			//Send email
+			function(emailHTML, user, done) {
+				var smtpTransport = nodemailer.createTransport({
+					service: 'Yahoo',
+					auth: {
+						user: 'ufdatabasestest@yahoo.com', // temp email, need to talk w/ joost
+						pass: 'Aighb123'
+					}
+				});
+				var mailOptions = {
+					to: user.username, // reciever
+					from: 'UF Database Collaboration Project <ufdatabasestest@yahoo.com>', // sender
+					subject: 'Account Email Verification',
+					html: emailHTML
+				};
+				
+				smtpTransport.sendMail(mailOptions, function(err) {
+					done(err, 'done');
+				});
+
+			}
+		],function (err, result) {
+	   		// result now equals 'done'
+		});
+	} else {
+		user.verified = '';
+	}
 
 };
 
@@ -142,6 +180,54 @@ exports.signin = function(req, res, next) {
 		}
 	})(req, res, next);
 };
+
+
+
+exports.verifyEmail = function(req, res) {
+
+ 	async.waterfall([
+ 		function(done) {
+			User.findOne({
+				verified: req.params.token,
+			}, function(err, user) {
+				if (!err && user) {
+						user.verified = '';
+						console.log('email');
+						console.log(user.username);
+						console.log('verified');
+						console.log(user.verified);
+
+						user.save(function(err) {
+							if (err) {
+								return res.status(400).send({
+									message: errorHandler.getErrorMessage(err)
+								});
+							} else {
+								req.login(user, function(err) {
+									if (err) {
+										res.status(400).send(err);
+									} else {
+										// Return Verified user 
+										res.jsonp(user);
+										done(err, user);
+									}
+								});
+							}
+						});
+				} else {
+					return res.status(400).send({
+						message: 'Email Validation token is invalid.'
+					});
+				}
+			});
+		},
+
+	],function (err, result) {
+   		// result now equals 'done'
+	}); // End of async.waterfall
+};
+
+
 
 /**
  * Signout
