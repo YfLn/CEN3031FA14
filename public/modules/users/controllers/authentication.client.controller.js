@@ -56,7 +56,8 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$stat
 			$http.post('/auth/verify/' + $stateParams.token).success(function(response) {
 				// Attach user profile
 				Authentication.user = response;
-				$scope.error = 'none';
+				//$scope.error = 'none';
+				$location.path('/verify');
 			}).error(function(response) {
 				$scope.error = response.message;
 			});

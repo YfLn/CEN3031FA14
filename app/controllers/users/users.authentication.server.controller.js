@@ -181,14 +181,24 @@ exports.signin = function(req, res, next) {
 	})(req, res, next);
 };
 
-
+exports.validateVerificationToken = function(req, res) {
+	User.findOne({
+		verified: req.params.token
+	}, function(err, user) {
+		if (!user) {
+			console.log('error verifying');
+			return res.redirect('/#!/auth/verify/' + req.params.token);
+		}
+		console.log('redirect correct');
+		res.redirect('/#!/auth/verify/' + req.params.token);
+	});
+};
 
 exports.verifyEmail = function(req, res) {
-
  	async.waterfall([
  		function(done) {
 			User.findOne({
-				verified: req.params.token,
+				verified: req.params.token
 			}, function(err, user) {
 				if (!err && user) {
 						user.verified = '';
