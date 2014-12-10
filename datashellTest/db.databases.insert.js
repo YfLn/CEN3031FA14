@@ -1,5 +1,5 @@
 db.databases.insert(
-{
+[{
 name:'Airiti Inc',
 descrpitonLong:'random description',
 descriptionShort:'random description',
@@ -179,4 +179,4 @@ descrpitonLong:'random description',
 descriptionShort:'random description',
 url:'google.com'
 }, 
-);
+])
