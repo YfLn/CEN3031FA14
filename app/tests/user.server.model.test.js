@@ -430,7 +430,6 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 
-*/
 		it('should be able to show an error if fname and pass and username are empty', function(done) {
 			user.fname = '';
 			user.password = '';
@@ -552,7 +551,6 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 
-*/
 
 		it('should be able to show an error if fname, lname, email, and pass are empty', function(done) {
 			user.fname = '';
