@@ -10,12 +10,12 @@ public static void main(String[] args) {
 "The Internet Book Database", "Internet Broadway Database", "Internet Movie Database", "Internet Public Library",
 };
 
-	String description="random description";
+	String description="random comment";
 
 
 	List<String> names1 = Arrays.asList(name);
 	
-System.out.println("db.databases.insert(");
+System.out.println("db.comments.insert(");
     for(int i = 1; i <=30; i++){
     int index = new Random().nextInt(names1.size());
     String name1 = names1.get(index);
