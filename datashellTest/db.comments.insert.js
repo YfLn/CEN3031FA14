@@ -1,4 +1,4 @@
-db.comments.insert(
+db.comments.insert([
 {
 databaseID:'Internet Archive',
 reviews:'random comment'
@@ -119,4 +119,4 @@ reviews:'random comment'
 databaseID:'Airiti Inc',
 reviews:'random comment'
 }, 
-);
+])

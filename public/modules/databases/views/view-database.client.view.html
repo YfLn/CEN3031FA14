@@ -3,7 +3,7 @@
     <!--Buttons to add/remove database in portfolio-->
     <button ng-show="checkForDatabaseInPortfolio()" id="addDBButton" data-ng-click="open('md', database);" class="btn addDatabases pull-right">
     Add Database To Your Portfolio <i class="glyphicon glyphicon-plus"></i></button> 
-    <button ng-show="!checkForDatabaseInPortfolio()" data-ng-click="removeDatabaseFromPortfolio(); findDBUsers(database._id);" class="btn removeDatabase pull-right"> Remove Database From Portfolio <i class="glyphicon glyphicon-minus"></i></button>
+    <button ng-show="!checkForDatabaseInPortfolio()" id="removeDBButton" data-ng-click="removeDatabaseFromPortfolio(); findDBUsers(database._id);" class="btn removeDatabase pull-right"> Remove Database From Portfolio <i class="glyphicon glyphicon-minus"></i></button>
 
     <!-- Div for the modal for adding DBs -->
      <div>
@@ -30,7 +30,7 @@
 
     <!-- Name Here -->
     <div class="page-header" style="margin-bottom:3px;">
-        <h1 data-ng-bind="database.name" id="DBName" style="margin-bottom:3px"></h1>
+        <h1 id="DBName" style="margin-bottom:3px">{{database.name}}</h1>
     </div>
 
     <div class="row">
@@ -109,7 +109,7 @@
             <small class="list-group-item-test"> on <span data-ng-bind="comment.created | date:'medium'"></span>
                 
             <!--Delete Comment Button-->
-            <i class="glyphicon glyphicon-remove" ng-show="authentication.user._id === comment.user._id || authentication.user.roles.indexOf('admin') !== -1" style="color:red; cursor: pointer" ng-click="remove(comment); getComments(database._id);"></i>                
+            <i class="glyphicon glyphicon-remove" id="delComment" ng-show="authentication.user._id === comment.user._id || authentication.user.roles.indexOf('admin') !== -1" style="color:red; cursor: pointer" ng-click="remove(comment); getComments(database._id);"></i>                
             <h5 class="list-group-item-heading" data-ng-bind="comment.reviews" style="padding-top:4px"></h5>
         </li>
     </div>
@@ -127,7 +127,7 @@
                 </div>            
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-default" style="margin-left:10px;">
+                <input type="submit" class="btn btn-default" id="commentSubmit" style="margin-left:10px;">
             </div>    
             <div data-ng-show="error" class="text-danger">
                 <strong data-ng-bind="error"></strong>

@@ -33,9 +33,16 @@ describe('UserDirectories', function(){
 	});
 
 	it('should search username through the list of users', function(){
-		query.sendKeys('Kena');
+		query.sendKeys('Zena');
+		expect(userlist.count()).toEqual(2);
+		query.clear();
+	});
+
+	it('should refine the username search', function(){
+		query.sendKeys('Zena Boris');
 		expect(userlist.count()).toEqual(1);
 		query.clear();
+
 	});
 
 
