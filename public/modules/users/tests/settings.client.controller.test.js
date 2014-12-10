@@ -270,7 +270,7 @@
 		});*/
 
 		it('$scope.deleteAccount() should display error message if password is incorrect', function(){
-			$httpBackend.expect('POST', '/users/verify').respond(400, 'Incorrect Password');
+			$httpBackend.expect('POST', '/users/verify').respond(400, {message:'Incorrect Password'});
 			
 			scope.modalInstance = {password: 'foo'};
 			scope.deleteAccount(scope.modalInstance);

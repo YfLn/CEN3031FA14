@@ -8,6 +8,7 @@
 			scope,
 			$httpBackend,
 			$stateParams,
+			Authentication,
 			$location;
 
 		beforeEach(function() {
@@ -30,7 +31,7 @@
 		// The injector ignores leading and trailing underscores here (i.e. _$httpBackend_).
 		// This allows us to inject a service but then attach it to a variable
 		// with the same name as the service.
-		beforeEach(inject(function($controller, $rootScope, _$location_, _$stateParams_, _$httpBackend_) {
+		beforeEach(inject(function($controller, $rootScope, _$location_, _$stateParams_, _$httpBackend_,_Authentication_) {
 			// Set a new global scope
 			scope = $rootScope.$new();
 
@@ -38,7 +39,7 @@
 			$stateParams = _$stateParams_;
 			$httpBackend = _$httpBackend_;
 			$location = _$location_;
-
+			Authentication = _Authentication_;
 			// Initialize the Authentication controller
 			AuthenticationController = $controller('AuthenticationController', {
 				$scope: scope
@@ -90,7 +91,8 @@
 
 		it('$scope.signup() should register with correct data', function() {
 			// Test expected GET request
-			scope.authentication.user = 'Fred';
+			scope.credentials = {password:'foo', confirmpassword:'foo', username:'whit@ufl.edu'};
+			scope.authentication.user ={name:'Fred', researchinterests:'Food', portfolios:['0','1'], proficientpors:[], roles:['user']};
 			$httpBackend.when('POST', '/auth/signup').respond(200, 'Fred');
 
 			scope.signup();
@@ -103,6 +105,8 @@
 		});
 
 		it('$scope.signup() should fail to register with duplicate Username', function() {
+			scope.credentials = {password:'foo', confirmpassword:'foo', username:'whit@ufl.edu'};
+			scope.authentication.user ={name:'Fred', researchinterests:'Food', portfolios:['0','1'], proficientpors:[], roles:['user']};
 			// Test expected POST request
 			$httpBackend.when('POST', '/auth/signup').respond(400, {
 				'message': 'Username already exists'

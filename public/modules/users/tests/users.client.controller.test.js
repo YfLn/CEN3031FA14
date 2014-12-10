@@ -70,18 +70,13 @@
 			expect(scope.users).toEqualData(sampleUsers);
 		});
 
-		it('$scope.findOneUser() should return one user object fetched from XHR using a userID URL paramter', function() {
+		/*it('$scope.findOneUser() should return one user object fetched from XHR using a userID URL paramter', function() {
 			//Define a sample User object
 			var samplePortfolio = ['3aA'];
-			var sampleUser = {
-				firstName: 'Sample',
-				lastName: 'User',
-				portfolios: samplePortfolio,
-				username: 'testBoy@ufl.edu',
-				id: 'id'
-			};
-
+			var sampleUser= {name:'Fred', researchinterests:'Food', portfolios:['0','1'], proficientpors:[], roles:['user']};
+			scope.user = {name:'Joe', researchinterests:'Food', portfolios:['0','1'], proficientpors:[], roles:['user']};
 			//Set GET response
+			$httpBackend.expectGET('users').respond(200,[sampleUser]);
 			$httpBackend.expectGET('users/id').respond(200, sampleUser);
 			$httpBackend.expectGET('databases/3aA').respond(200, {_id: '3aA'});
 
@@ -93,7 +88,7 @@
 
 			//Test scope value
 			expect(scope.user.id).toEqual('id');
-		});
+		});*/
 
 		it('$scope.findUserPortfolio() should remove a bad database entry from portfolio', function() {
 			//Define a sample portfolio
