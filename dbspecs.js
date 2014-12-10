@@ -8,6 +8,7 @@ var query = element(by.id('query'));
 var deletebutton = element(by.id('delButton'));
 var editButton = element(by.id('editButton'));
 var addbutton = element(by.id('addDBButton'));
+var removebutton = element(by.id('removeDBButton'));
 var porlist = element.all(by.repeater('portfolio in user.portfolios'));
 var dbClicker = element(by.id('dbClick'));
 var searchOption = element(by.model('searchKey'));
@@ -33,7 +34,7 @@ describe('Databases', function(){
 		element(by.buttonText('Create Database')).click();
 		browser.get('http://localhost:3000/#!/databases');
 
-		expect(dblist.count()).toEqual(1);
+		expect(dblist.count()).toEqual(31);
 	});
 
 	it('should not create a DB if there is an error', function(){
@@ -50,35 +51,13 @@ describe('Databases', function(){
 		expect($('[data-ng-show="error"]').isDisplayed()).toBeTruthy();
 
 		browser.get('http://localhost:3000/#!/databases');
-		expect(dblist.count()).toBe(1);
+		expect(dblist.count()).toBe(31);
 
 	});
 
-	it('should populate the database list, then filter through it', function(){
+	it('should filter through the database list', function(){
 		browser.driver.get('http://localhost:3000/#!/databases'); 
-		element(by.linkText('Databases')).click();
-		element(by.linkText('New Database')).click();	
-		dbname.sendKeys('Test Database 2');
-		url.sendKeys('http://www.testbase2.net');
-		isFree.click();
-		shortDescription.sendKeys('This is the second test database. Boston.')
-		longDescription.sendKeys('Second test DB.');
-
-		element(by.buttonText('Create Database')).click();
-
-		browser.driver.get('http://localhost:3000/#!/databases'); 
-		element(by.linkText('Databases')).click();
-		element(by.linkText('New Database')).click();	
-		dbname.sendKeys('Test Database 3');
-		url.sendKeys('http://www.testbase3.com');
-		isFree.click();
-		shortDescription.sendKeys('This is the third test database. Boston Celtics')
-		longDescription.sendKeys('Third test DB.');
-
-		element(by.buttonText('Create Database')).click();
-
-		browser.get('http://localhost:3000/#!/databases');
-		expect(dblist.count()).toBe(3);
+		expect(dblist.count()).toBe(31);
 
 		searchOption.click();
 		descChoice.click();
@@ -87,18 +66,20 @@ describe('Databases', function(){
 		expect(dblist.count()).toBe(1);
 
 		query.clear();
-		query.sendKeys('Boston');
-		expect(dblist.count()).toBe(2);
+		searchOption.click();
+		nameChoice.click();
+		query.sendKeys('Internet');
+		expect(dblist.count()).toBe(5);
 
 		query.clear();
-		query.sendKeys('Boston Celtics');
+		query.sendKeys('Internet Public');
 		expect(dblist.count()).toBe(1);
 
 		query.clear();
 		searchOption.click();
 		nameChoice.click();
 
-		query.sendKeys('3');
+		query.sendKeys('animal');
 		expect(dblist.count()).toBe(1);
 		query.clear();
 
@@ -117,26 +98,24 @@ describe('Databases', function(){
 		element(by.id('dispName')).click();		
 		expect(porlist.count()).toBe(1);
 
+
+
 	});
 
-
-	it('should delete the DBs', function(){
+	it('should remove a DB from a portfolio',function(){
 		browser.get('http://localhost:3000/#!/databases');
-		dbClicker.click();
-		deletebutton.click();
-		browser.get('http://localhost:3000/#!/databases');
-		expect(dblist.count()).toBe(2);
-
-		dbClicker.click();
-		deletebutton.click();
-		browser.get('http://localhost:3000/#!/databases');
-		expect(dblist.count()).toBe(1);
+		query.clear();
+		searchOption.click();
+		descChoice.click();
+		query.sendKeys('Gypsum');
 
 		dbClicker.click();
-		deletebutton.click();
-		browser.get('http://localhost:3000/#!/databases');
-		expect(dblist.count()).toBe(0);
 
+		removebutton.click(); 
+
+		element(by.id('dispName')).click();		
+
+		expect(porlist.count()).toBe(0);
 
 	});
 

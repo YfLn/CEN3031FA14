@@ -49,7 +49,7 @@ describe('Logging in',function() {
 	it ('should be able to log in', function() {
   	browser.get('http://localhost:3000');
 
-  	username.sendKeys('1@ufl.edu'); 
+  	username.sendKeys('3@ufl.edu'); 
   	password.sendKeys('rleon94');
 
   	element(by.buttonText('Sign in')).click();
