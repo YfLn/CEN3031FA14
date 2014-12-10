@@ -34,8 +34,13 @@ System.out.println("db.users.insert(");
     String name1 = names1.get(index);
     String name2 = names2.get(index);
     String researchTs = researchT.get(indexR);
+<<<<<<< HEAD
+    	
+    	System.out.println("{username:'"+i+"@ufl.edu',");
+=======
     
     	System.out.println("{\nusername:'"+i+"@ufl.edu',");
+>>>>>>> master
     	System.out.println("password: 'rleon94',");
     	System.out.println("firstName:'"+name1+"',");
     	System.out.println("lastName:'"+name2+"',");
