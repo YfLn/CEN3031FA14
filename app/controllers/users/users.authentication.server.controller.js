@@ -32,45 +32,81 @@ exports.signup = function(req, res) {
 		}
 	});
 
-	/*if(!req.user){
-	// Verification
-	// Fill out template
-		res.render('templates/users-signup-verification-email', { 
-			name: user.firstName + ' ' + user.lastName, 
-			appName: config.app.title,
-			// url: Need to Create Route
-		});
-
-		// Send the Email
-		smtpTransport.sendMail({
-			to: user.username,
-			from: 'UF Database Collaboration Project <ufdatabasestest@yahoo.com>',
-			subject: 'Account Email Verification',
-			//html:
-		}); 
-	}
-
-	if(!req.user){
-		user.verified = crypto.randomBytes(20, function(err, buffer) {
-			var token = buffer.toString('hex');
-			return token;
-		});
-	} else {
-		user.verified = '';
-	}*/
-
-	//function tokengen() {
-		//crypto.randomBytes(20, function(err, buffer) {
-			//var token = buffer.toString('hex');
-		//});
-	//}
-
 	// Add missing user fields
 	user.provider = 'local';
 	user.displayName = user.firstName + ' ' + user.lastName;
 
-	// Then save the user 
-	user.save(function(err) {
+	if(!req.user){
+		async.waterfall([
+			// Generate random token
+			function(done) {
+				crypto.randomBytes(20, function(err, buffer) {
+					var token = buffer.toString('hex');
+					done(err, token);
+				});
+			},
+			//Generate Email to be sent.
+			function(token, done) {
+				res.render('templates/users-signup-verification-email', { 
+					name: user.firstName + user.lastName,
+					appName: config.app.title,
+					url : 'http://' + req.headers.host + '/auth/verification/' + token
+				}, function(err, emailHTML) {
+					done(err, emailHTML, user);
+				});
+
+				//Save the User
+				user.verified = token;
+				user.save(function(err) {
+					if (err) {
+						return res.status(400).send({
+							message: errorHandler.getErrorMessage(err)
+						});
+					} else {
+						// Remove sensitive data before login
+						user.password = undefined;
+						user.salt = undefined;
+
+						if(!req.user){
+							req.login(user, function(err) {
+								if (err) {
+									res.status(400).send(err);
+								} else {
+									res.jsonp(user);
+								}
+							});
+						}
+					}
+				});
+			},
+			//Send email
+			function(emailHTML, user, done) {
+				var smtpTransport = nodemailer.createTransport({
+					service: 'Yahoo',
+					auth: {
+						user: 'ufdatabasestest@yahoo.com', // temp email, need to talk w/ joost
+						pass: 'Aighb123'
+					}
+				});
+				var mailOptions = {
+					to: user.username, // reciever
+					from: 'UF Database Collaboration Project <ufdatabasestest@yahoo.com>', // sender
+					subject: 'Account Email Verification',
+					html: emailHTML
+				};
+				
+				smtpTransport.sendMail(mailOptions, function(err) {
+					done(err, 'done');
+				});
+
+			}
+		],function (err, result) {
+	   		// result now equals 'done'
+		});
+	} else {
+		//Save the User for admin creation.
+		user.verified = '';
+		user.save(function(err) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
@@ -79,67 +115,21 @@ exports.signup = function(req, res) {
 			// Remove sensitive data before login
 			user.password = undefined;
 			user.salt = undefined;
-			//req.login(user, function(err) {
-				//if (err) {
-					//res.status(400).send(err);
-				//} else {
-					//console.log(user);
-					//res.jsonp(user);
-				//}
-			//});
-			console.log(!req.user);
+
 			if(!req.user){
 				req.login(user, function(err) {
 					if (err) {
 						res.status(400).send(err);
 					} else {
-						console.log(req.user);
 						res.jsonp(user);
 					}
 				});
 			}
 		}
 	});
+	}
 };
 
-
-/**
- * Signup
-
-exports.signup = function(req, res) {
-	// For security measurement we remove the roles from the req.body object
-	delete req.body.roles;
-
-	// Init Variables
-	var user = new User(req.body);
-	var message = null;
-
-	// Add missing user fields
-	user.provider = 'local';
-	user.displayName = user.firstName + ' ' + user.lastName;
-
-	// Then save the user 
-	user.save(function(err) {
-		if (err) {
-			return res.status(400).send({
-				message: errorHandler.getErrorMessage(err)
-			});
-		} else {
-			// Remove sensitive data before login
-			user.password = undefined;
-			user.salt = undefined;
-
-			req.login(user, function(err) {
-				if (err) {
-					res.status(400).send(err);
-				} else {
-					res.jsonp(user);
-				}
-			});
-		}
-	});
-};
- */
 
 //var lookupPortfolios = function(user, callback){
 	
@@ -157,6 +147,7 @@ exports.signup = function(req, res) {
 		//callback(null, user);
 	//});
 //};
+
 
 /**
  * Signin after passport authentication
@@ -195,6 +186,54 @@ exports.signin = function(req, res, next) {
 	}
 	})(req, res, next);
 };
+
+exports.validateVerificationToken = function(req, res) {
+	User.findOne({
+		verified: req.params.token
+	}, function(err, user) {
+		if (!user) {
+			return res.redirect('/#!/auth/verification/' + req.params.token);
+		}
+		console.log('redirect correct');
+		res.redirect('/#!/auth/verification/' + req.params.token);
+	});
+};
+
+exports.verifyEmail = function(req, res) {
+ 	async.waterfall([
+ 		function(done) {
+			User.findOne({
+				verified: req.params.token
+			}, function(err, user) {
+				if (!err && user) {
+						user.verified = '';
+						console.log('email');
+						console.log(user.username);
+						console.log('verified');
+						console.log(user.verified);
+
+						user.save(function(err) {
+							if (err) {
+								return res.status(400).send({
+									message: errorHandler.getErrorMessage(err)
+								});
+							}
+						});
+						res.redirect('/#!/verify');
+				} else {
+					return res.status(400).send({
+						message: 'Email Validation token is invalid.'
+					});
+				}
+			});
+		},
+
+	],function (err, result) {
+   		// result now equals 'done'
+	}); // End of async.waterfall
+};
+
+
 
 /**
  * Signout

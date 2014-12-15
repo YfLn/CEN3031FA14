@@ -139,7 +139,8 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
-	*/
+	*/ 
+
 		it('should be able to show an error when there is not an ObjectID provided in portfolio array', function(done) {
 			user.portfolios = [''];
 
@@ -226,8 +227,7 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 
-
-	it('should be able to show an error if lname is empty and research interests is empty', function(done) {
+		it('should be able to show an error if lname is empty and research interests is empty', function(done) {
 			user.lname = '';
 			user.researchinterests = '';
 
@@ -475,7 +475,6 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 
-
 		it('should be able to show an error if lname and pass are empty and email is invalid', function(done) {
 			user.lname = '';
 			user.password = '';
@@ -497,10 +496,6 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
-
-		
-
-		
 
 		it('should be able to show an error if lname, ri, and pass are empty', function(done) {
 			user.lname = '';
@@ -550,7 +545,6 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
-
 
 		it('should be able to show an error if fname, lname, email, and pass are empty', function(done) {
 			user.fname = '';
@@ -681,14 +675,6 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 
-
-
-
-
-
-
-
-
 		it('should be able to show an error if fname, pass, and ri are empty and email is invalid', function(done) {
 			user.fname = '';
 			user.username = 'user@yahoo.com';
@@ -742,9 +728,6 @@ it('should be able to show an error if  lname, pass and username are empty and u
 			user.username = 'user@yahoo.com';
 			user.username = '';
 			user.portfolios = [''];
-
-			
-
 
 
 			return user.save(function(err) {

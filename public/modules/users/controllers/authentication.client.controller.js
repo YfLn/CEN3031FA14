@@ -1,7 +1,7 @@
 'use strict';
 
-angular.module('users').controller('AuthenticationController', ['$scope', '$http', '$location', 'Authentication',
-	function($scope, $http, $location, Authentication) {
+angular.module('users').controller('AuthenticationController', ['$scope', '$stateParams', '$http', '$location', 'Authentication',
+	function($scope, $stateParams, $http, $location, Authentication) {
 		$scope.authentication = Authentication;
 		$scope.registration = 'open';
 
@@ -51,6 +51,19 @@ angular.module('users').controller('AuthenticationController', ['$scope', '$http
 
 				// And redirect to the index page
 				$location.path('/databases');
+			}).error(function(response) {
+				$scope.error = response.message;
+			});
+		};
+
+		$scope.verifyEmail = function() {
+			$scope.success = $scope.error = null;
+
+			$http.post('/auth/verification/' + $stateParams.token).success(function(response) {
+				// Attach user profile
+				Authentication.user = response;
+				//$scope.error = 'none';
+				$location.path('/verify');
 			}).error(function(response) {
 				$scope.error = response.message;
 			});
