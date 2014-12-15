@@ -3,16 +3,18 @@
 		<h1>User Directory</h1>
 	</div>
 	<div class="input-group" style="margin-bottom:10px">
-         Search: <input ng-model="query" class="form-control" placeholder = "Name or Email">
+         Search: <input ng-model="query" id = "query" class="form-control" placeholder = "Name/Email/Research">
     </div>
-	<div class="list-group">
+	
+		<div>
 		<li class="list-group-item" style="height:35px; background-color:#4A6FB4; color:white; vertical-align:center;">
-			<h4 class="pull-left list-group-item-heading">Name and Research Interests</h4>
-			<h4 class="pull-right list-group-item-heading">Email</h4>
+			<a href = "" ng-click="predicate = 'firstName'; reverse=!reverse"> <h4 class="pull-left list-group-item-heading" style="color:#ffffff"> Name and Research Interests</h4>
+			<h4 class="pull-right list-group-item-heading"> <a href="" ng-click="predicate = 'username'; reverse=!reverse" style="color:#ffffff"> Email</h4>
 		</li>
-
-		<li data-ng-repeat="user in users | orderBy:lastName | filter:query" ng-style="myStyle" class="list-group-item" style="min-height:75px;">
-			<h4 class="list-group-item-heading" style="margin-bottom:2px;">{{user.firstName}} {{user.lastName}}</h4>
+	</div>
+	<div class="list-group">
+		<li data-ng-repeat="user in users | orderBy:predicate : reverse | filter:query" ng-style="myStyle" class="list-group-item" style="min-height:75px;">
+			<a><h4 class="list-group-item-heading" style="margin-bottom:2px; color:#000000"> {{user.firstName}} {{user.lastName}}</h4>
 			<a class="pull-right list-group-item-text" data-ng-href="mailto:{{user.username}}" data-ng-show="!user.privateProfile">{{user.username}}</a>
 			<p class="list-group-item-text" style="margin-left:10px; margin-bottom:2px; padding-left=10px" ng-show="!user.privateProfile">{{user.researchinterests}}</p>			
 			<a class="list-group-item-text" data-ng-href="#!/users/{{user._id}}">View Profile</a>

@@ -11,11 +11,14 @@ module.exports = function(app) {
 
 	// Setting up the users profile api
 	app.route('/users/me').get(users.me);
-	app.route('/users').put(users.update).get(users.list);
+	app.route('/users').put(users.update)
+					   .get(users.list);
+
 	app.route('/users/accounts').delete(users.removeOAuthProvider);
 	app.route('/users/:userId').get(users.read)
-								.put(users.requiresLogin, users.update)
-								.delete(users.requiresLogin);
+							   .put(users.requiresLogin, users.update)
+							   .delete(users.requiresLogin)
+							   .post(users.updateUserRoles);
 
 	// Setting up the users password api
 	app.route('/users/password').post(users.changePassword);

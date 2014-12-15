@@ -1,6 +1,14 @@
 <section class="row" data-ng-controller="AuthenticationController">
-	<h3 class="col-md-12 text-center">Sign up with your UF email account</h3>
-	<div class="col-xs-offset-2 col-xs-8 col-md-offset-5 col-md-2">
+	<h3 class="col-md-12 text-center" ng-show="authentication.user.roles.indexOf('admin') === -1 || !authentication.user">Sign up with your UF email account</h3>
+	<h3 class="col-md-12 text-center" ng-show=" authentication.user.roles.indexOf('admin') !== -1 && authentication.user">Add a User</h3>
+
+	<!--Information displayed when registration is closed-->
+    <div ng-show="registration === 'closed' && (authentication.user.roles.indexOf('admin') === -1 || !authentication.user)" class="alert alert-warning text-center">
+		Sorry, registration is currently closed to the public.
+	</div>
+	
+	<!--Signup section-->
+	<div class="col-xs-offset-2 col-xs-8 col-md-offset-5 col-md-2" ng-show="registration === 'open' || authentication.user.roles.indexOf('admin') !== -1" ng-hide="registration === 'closed' && (authentication.user.roles.indexOf('admin') === -1 || !authentication.user)">
 		<form name="userForm" data-ng-submit="signup()" class="signin form-horizontal" novalidate autocomplete="off">
 			<fieldset>
 				<div class="form-group">
@@ -18,6 +26,10 @@
 				<div class="form-group">
 					<label for="password">Password</label>
 					<input type="password" id="password" name="password" class="form-control" data-ng-model="credentials.password" placeholder="Password">
+				</div>
+				<div class="form-group">
+					<label for="confirmpassword">Confirm Password</label>
+					<input type="password" id="confirmpassword" name="confirmpassword" class="form-control" data-ng-model="credentials.confirmpassword" placeholder="Password">
 				</div>				
 				<div class="form-group">
 					<label for="researchinterests">Research Interests</label>

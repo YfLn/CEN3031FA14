@@ -73,12 +73,14 @@ exports.delete = function(req, res) {
 /**
  * List of Databases
  */
-exports.list = function(req, res) { Database.find().sort('-created').populate('user', 'displayName').exec(function(err, databases) {
+exports.list = function(req, res) { 
+	Database.find().sort('-created').populate('user', 'displayName').exec(function(err, databases) {
 		if (err) {
 			return res.status(400).send({
 				message: errorHandler.getErrorMessage(err)
 			});
 		} else {
+			console.log(databases);
 			res.jsonp(databases);
 		}
 	});
@@ -87,7 +89,8 @@ exports.list = function(req, res) { Database.find().sort('-created').populate('u
 /**
  * Database middleware
  */
-exports.databaseByID = function(req, res, next, id) { Database.findById(id).populate('user', 'displayName').exec(function(err, database) {
+exports.databaseByID = function(req, res, next, id) { 
+	Database.findById(id).populate('user', 'displayName').exec(function(err, database) {
 		if (err) return next(err);
 		if (! database) return next(new Error('Failed to load Database ' + id));
 		req.database = database ;

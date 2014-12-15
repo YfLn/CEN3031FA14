@@ -179,7 +179,11 @@
 
 			Auth.user = {name:'Fred', researchinterests:'Food', portfolios:['0']};
 			scope.database = {_id: '1'};
-
+			scope.modalInstance = {
+				dismiss: function(string)
+				{
+				}
+			}
 			scope.addDatabaseToPortfolio();
 			$httpBackend.flush();
 
@@ -188,9 +192,9 @@
 
 		it('$scope.removeDatabaseFromPortfolio() should correctly remove database from Authentication.user', function(){
 			$httpBackend.expectPUT('users').respond(200, 
-					{name:'Fred', researchinterests:'Food', portfolios:['0']});
+					{name:'Fred', researchinterests:'Food', portfolios:['0'], proficientpors:[]});
 
-			Auth.user = {name:'Fred', researchinterests:'Food', portfolios:['0','1']};
+			Auth.user = {name:'Fred', researchinterests:'Food', portfolios:['0','1'], proficientpors:[]};
 			scope.database = {_id: '1'};
 
 			scope.removeDatabaseFromPortfolio();
@@ -219,6 +223,13 @@
 			$httpBackend.flush();
 
 			expect(scope.dbUsers[0].firstName).toEqual('Joe');
+		});
+
+		it('$scope.isAdmin should return true if the user is an admin', function(){
+			Auth.user = {name:'Fred', researchinterests:'Food', portfolios:['0','1'], roles:['admin']};
+			var isAdmin = scope.isAdmin();
+
+			expect(isAdmin).toEqual(true);
 		});
 	});
 }());

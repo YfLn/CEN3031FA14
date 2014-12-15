@@ -227,7 +227,6 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 
-
 		it('should be able to show an error if lname is empty and research interests is empty', function(done) {
 			user.lname = '';
 			user.researchinterests = '';
@@ -431,7 +430,6 @@ describe('User Model Unit Tests:', function() {
 			});
 		});
 
-
 		it('should be able to show an error if fname and pass and username are empty', function(done) {
 			user.fname = '';
 			user.password = '';
@@ -476,8 +474,6 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
-
-
 
 		it('should be able to show an error if lname and pass are empty and email is invalid', function(done) {
 			user.lname = '';
@@ -549,8 +545,6 @@ describe('User Model Unit Tests:', function() {
 				done();
 			});
 		});
-
-
 
 		it('should be able to show an error if fname, lname, email, and pass are empty', function(done) {
 			user.fname = '';
@@ -734,9 +728,6 @@ it('should be able to show an error if  lname, pass and username are empty and u
 			user.username = 'user@yahoo.com';
 			user.username = '';
 			user.portfolios = [''];
-
-			
-
 
 
 			return user.save(function(err) {

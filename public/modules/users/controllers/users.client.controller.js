@@ -5,6 +5,7 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 		$scope.authentication = Authentication;
 		$scope.user = {};
 		$scope.users = {};
+		$scope.inactive = '';
 		
 		//retrieve a list of users in the website
 		$scope.findAllUsers = function(){
@@ -13,15 +14,28 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 
 		//Retrieve a specific user from the back end
 		$scope.findOneUser = function() {
-			$scope.user = Users.get({userId: $stateParams.userId}, function() {
-				$scope.findUserPortfolio();
-			});
+
+       		var allUsers = Users.query({}, function(){
+	       		for(var i=0; i < allUsers.length; i++)
+	       		{
+	       			var currUser = allUsers[i];
+	       			if(currUser._id === $stateParams.userId)
+	       			{
+	       				$scope.user = currUser;
+	       				$scope.inactive = ($scope.user.roles.indexOf('inactive') !== -1);
+	       			}
+	       		}
+	       		$scope.findUserPortfolio();
+        	});
+
+
 		};
 
 		//Retrieve user's portfolio
 		$scope.findUserPortfolio = function() {		
 			//Must save initial count because we will be changing this array
 			var initPortCount = $scope.user.portfolios.length;
+			console.log('something');
 
 			for(var i = 0; i < initPortCount; i++)
 			{
@@ -58,16 +72,22 @@ angular.module('users').controller('UsersController', ['$scope', '$stateParams',
 		};
 
 		$scope.userInactive = function() {
-			return ($scope.user.roles.indexOf('inactive') !== -1);
+			return ($scope.inactive);
 		};
 
 		//Functions for Deactivation and Reactivation of users
 		$scope.deactivateUser = function() {
 			$scope.user.roles.push('inactive');
+			$scope.inactive = true;
+  			var currUser = $scope.user;
+  			Users.save(currUser);	
 		};
 
 		$scope.reactivateUser = function() {
-			$scope.user.roles.splice($scope.user.roles.indexOf('inactive'));
+			$scope.user.roles.splice($scope.user.roles.indexOf('inactive'),1);
+			$scope.inactive = false;
+        	var currUser = $scope.user;
+  			Users.save(currUser);		
 		};
 	} 
 ]);

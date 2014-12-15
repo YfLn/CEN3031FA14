@@ -80,13 +80,13 @@ exports.read = function(req, res) {
 };
 
 /**
- * Find userByID
-
-exports.userByID = function(req, res, next, id) { User.findById(id).exec(function(err, user) {
-		if (err) return next(err);
-		if (! user) return next(new Error('Failed to find user ' + id));
-		req.user = user ;
-		next();
+ * Update specific User
+*/
+exports.updateUserRoles = function(req, res) { 
+	var currUser = req.body;
+	User.findById(currUser._id, function(err, user) {
+		user.roles = currUser.roles;
+		user.save();
 	});
 };
 
@@ -106,4 +106,4 @@ exports.delete = function(req, res) {
 		}
 	});
 };
- */
+*/

@@ -1,13 +1,36 @@
 <section data-ng-controller="DatabasesController" data-ng-init="findOne();">
 
     <!--Buttons to add/remove database in portfolio-->
-    <button ng-show="checkForDatabaseInPortfolio()" data-ng-click="addDatabaseToPortfolio(); findDBUsers(database._id);" class="btn addDatabases pull-right">
+    <button ng-show="checkForDatabaseInPortfolio()" id="addDBButton" data-ng-click="open('md', database);" class="btn addDatabases pull-right">
     Add Database To Your Portfolio <i class="glyphicon glyphicon-plus"></i></button> 
-    <button ng-show="!checkForDatabaseInPortfolio()" data-ng-click="removeDatabaseFromPortfolio(); findDBUsers(database._id);" class="btn removeDatabase pull-right"> Remove Database From Portfolio <i class="glyphicon glyphicon-minus"></i></button>
+    <button ng-show="!checkForDatabaseInPortfolio()" id="removeDBButton" data-ng-click="removeDatabaseFromPortfolio(); findDBUsers(database._id);" class="btn removeDatabase pull-right"> Remove Database From Portfolio <i class="glyphicon glyphicon-minus"></i></button>
+
+    <!-- Div for the modal for adding DBs -->
+     <div>
+             <script type="text/ng-template" id="addDBModal">
+                <div class="modal-header">
+                    <button type="button" class="close" ng-click="$dismiss()">&times;</button>
+                    <h3 class="modal-title"> Add Database to Portfolio </h3>
+                </div>
+                    <div class="modal-body">
+                        <p>You are adding &quot{{database.name}}&quot created by {{database.user.displayName}} to your portfolio.</p>
+                        <div class="checkbox">
+                        <label> 
+                            <input type="checkbox" data-ng-model="proficient" id="proficient" unchecked>
+
+                            I am proficient with this database and am willing to answer questions about it.
+                        </label>
+                    </div>
+                        <button class="btn large btn-success" id="submitAdd" data-ng-click="addDatabaseToPortfolio({{database}}, proficient); findDBUsers(database._id);">Add Database to Porfolio</button>
+                        <button class="btn" ng-click="cancel()">Cancel</button>
+                </div>
+        </script>
+    </div>
+
 
     <!-- Name Here -->
     <div class="page-header" style="margin-bottom:3px;">
-        <h1 data-ng-bind="database.name" style="margin-bottom:3px"></h1>
+        <h1 id="DBName" style="margin-bottom:3px">{{database.name}}</h1>
     </div>
 
     <div class="row">
@@ -47,10 +70,10 @@
         
         <!-- Buttons for Delete / Edit -->
             <div class="" data-ng-show="authentication.user._id == database.user._id || isAdmin()">
-                <a class="btn btn-primary" href="/#!/databases/{{database._id}}/edit">
+                <a class="btn btn-primary" id="editButton" href="/#!/databases/{{database._id}}/edit">
                     <i class="glyphicon glyphicon-edit"></i>
                 </a>
-                <a class="btn btn-primary" data-ng-click="remove();">
+                <a class="btn btn-primary" id="delButton" data-ng-click="remove();">
                  <i class="glyphicon glyphicon-trash"></i>
                 </a>
            </div>
@@ -63,12 +86,16 @@
             </div>
             <li data-ng-repeat="user in dbUsers" class="list-group-item">
                 <div style="display:flex">
-                    <a class="list-group-item-text" data-ng-href="#!/users/{{user._id}}" id="attributes" style="min-width: 350px;">
+                    <a class="list-group-item-text" data-ng-href="#!/users/{{user._id}}" id="attributes" style="max-width: 350px;">
                         <span class="list-group-item-heading" data-ng-bind="user.firstName"></span>
                         <span class="list-group-item-heading" data-ng-bind="user.lastName"></span>
+                        <span class="glyphicon glyphicon-star" style="color:#ffcc00" ng-show="isProficient({{user.proficientpors}},database._id)"></span>
                     </a>
                 </div>
             </li>
+            <div class="page-footer">
+         <h6>Star denotes users who are knowledgeable of the database.</h6>
+     </div>
         </div>
     </div>
 
@@ -82,7 +109,7 @@
             <small class="list-group-item-test"> on <span data-ng-bind="comment.created | date:'medium'"></span>
                 
             <!--Delete Comment Button-->
-            <i class="glyphicon glyphicon-remove" ng-show="authentication.user._id === comment.user._id || authentication.user.roles.indexOf('admin') !== -1" style="color:red; cursor: pointer" ng-click="remove(comment); getComments(database._id);"></i>                
+            <i class="glyphicon glyphicon-remove" id="delComment" ng-show="authentication.user._id === comment.user._id || authentication.user.roles.indexOf('admin') !== -1" style="color:red; cursor: pointer" ng-click="remove(comment); getComments(database._id);"></i>                
             <h5 class="list-group-item-heading" data-ng-bind="comment.reviews" style="padding-top:4px"></h5>
         </li>
     </div>
@@ -100,7 +127,7 @@
                 </div>            
             </div>
             <div class="form-group">
-                <input type="submit" class="btn btn-default" style="margin-left:10px;">
+                <input type="submit" class="btn btn-default" id="commentSubmit" style="margin-left:10px;">
             </div>    
             <div data-ng-show="error" class="text-danger">
                 <strong data-ng-bind="error"></strong>
