@@ -1,6 +1,6 @@
 Project description: Customer: Joost Impink. Make a web app for UF faculty, researchers, and grad students to share databases that they use. Users can also create a portfolio so that they can keep track of databases they use, as well as add databases that they find that other users have added. 
 
-Team Name: UNDECIDED
+Team Name: "Databases Collaborators"
 
 GatorLinkID: Yufan Lin - yufanlin,
              Elli Carranza - ecarranza,
@@ -8,29 +8,11 @@ GatorLinkID: Yufan Lin - yufanlin,
              Ishin Iwasaki - iiwasaki,
              Richard Leon - rleon019,
              Kun Cao - kuncao0228,
-             Chris Whitten - cwhitten,
-             Hugo
+             Chris Whitten - cwhitten
 
 GroupA(Front-end): Ishin Iwasaki - iiwasaki, Elli Carranza - ecarranza, Richard Leon - rleon019, Chris Whitten - cwhitten 				   
 
-GroupB(Back-end): Kun Cao - kuncao0228, Yufan Lin - yufanlin, Tyler Willis - tjww2794, Hugo
+GroupB(Back-end): Kun Cao - kuncao0228, Yufan Lin - yufanlin, Tyler Willis - tjww2794
 
 
 CEN3031FA14
-
-===========
-
-User Schema (PLEASE CHANGE THIS IF FIELDS ARE ADDED/UPDATED/REMOVED) (
-Name;
-Email Address;
-Profile Picture;
-Research Interests;
-Portfolio (not relevant to register page))
-------
-Database Schema(
-Name;
-Description;
-Tags;
-URL;
-Members (not relevant to creation);
-isFree? (boolean value))
