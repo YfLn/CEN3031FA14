@@ -24,6 +24,10 @@ var CommentSchema = new Schema({
 		type: Schema.ObjectId,
 		ref: 'User'
 	},
+	gistId: {
+		type: String,
+		default: '',
+	},
 	databaseId: {
 		type:String
 	}

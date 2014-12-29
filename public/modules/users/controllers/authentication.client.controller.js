@@ -3,7 +3,10 @@
 angular.module('users').controller('AuthenticationController', ['$scope', '$stateParams', '$http', '$location', 'Authentication',
 	function($scope, $stateParams, $http, $location, Authentication) {
 		$scope.authentication = Authentication;
+		
+		//USE THESE LINES TO CONTROL OPEN/CLOSED REGISTRATION
 		$scope.registration = 'open';
+		//$scope.registration = 'closed';
 
 		// If user is signed in and not an administrator then redirect back home
 		if ($scope.authentication.user && $scope.authentication.user.roles.indexOf('admin') === -1) $location.path('/databases');

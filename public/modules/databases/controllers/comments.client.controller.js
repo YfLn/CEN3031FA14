@@ -10,7 +10,8 @@ angular.module('comments').controller('CommentsController', ['$scope', '$statePa
 			// Create new Comment object
 			var comment = new Comments ({
 				reviews: this.reviews,
-				databaseId: databaseId
+				databaseId: databaseId,
+				gistId: this.gistId
 			});
 
 			// Redirect after save

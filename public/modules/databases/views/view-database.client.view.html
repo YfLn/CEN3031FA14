@@ -107,10 +107,11 @@
         <li data-ng-controller="CommentsController" data-ng-repeat="comment in dbComments" class="list-group-item">
             <b><a data-ng-href="#!/users/{{comment.user._id}}" data-ng-bind="comment.user.displayName"></a></b>
             <small class="list-group-item-test"> on <span data-ng-bind="comment.created | date:'medium'"></span>
-                
             <!--Delete Comment Button-->
             <i class="glyphicon glyphicon-remove" id="delComment" ng-show="authentication.user._id === comment.user._id || authentication.user.roles.indexOf('admin') !== -1" style="color:red; cursor: pointer" ng-click="remove(comment); getComments(database._id);"></i>                
-            <h5 class="list-group-item-heading" data-ng-bind="comment.reviews" style="padding-top:4px"></h5>
+            <h5 class="list-group-item-heading" data-ng-bind="comment.reviews" style="padding-top:4px"></h5><br>
+            <h5 ng-show="comment.gistId !== ''"><i>Included gist:</i></h5>
+            <gist ng-show="comment.gistId !== ''" id="{{comment.gistId}}"></gist>
         </li>
     </div>
 
@@ -118,13 +119,15 @@
         No comments yet.
     </div>
 
+    <!-- Add Comment Section Here -->
     <form class="form-horizontal" data-ng-controller="CommentsController" novalidate data-ng-submit="create(database._id); getComments(database._id); resetCommentField()">
         <fieldset>
             <div class="form-group">
                 <label class="control-label" for="reviews" style="padding-left:10px">Add Comment</label>
                 <div class="controls">
                     <textarea type="text" data-ng-model="reviews" id="reviews" class="form-control" style="margin-left:10px; max-width:700px;" placeholder="Enter your comment here" required></textarea>
-                </div>            
+                    <input type="text" data-ng-model="gistId" id="gistId" class="form-control" style="margin-left:10px; max-width:700px;" placeholder="gist id (optional)">
+                </div>           
             </div>
             <div class="form-group">
                 <input type="submit" class="btn btn-default" id="commentSubmit" style="margin-left:10px;">

@@ -2,6 +2,12 @@
     <div class="page-header">
         <h1>Databases</h1>
     </div>
+
+    <div ng-show="Authentication.user.verified !== ''" class="alert alert-warning text-center">
+        Your account is not yet verified. Please validate your email address before viewing the website.
+    </div>
+    
+    <div ng-hide="Authentication.user.verified !== ''">        
     <h5>Search by:</h5> 
     <select ng-model="searchKey" style="margin-bottom: 10px;">
         <option value="$" selected="selected"> Any </option>
@@ -63,5 +69,5 @@
 
     <div class="alert alert-warning text-center" data-ng-hide="!databases.$resolved || databases.length">
     	No Databases yet, why don't you <a href="/#!/databases/create">create one</a>?
-    </div>
+    </div></div>
 </section>

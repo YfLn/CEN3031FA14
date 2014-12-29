@@ -44,8 +44,8 @@
 					<li data-ng-show="authentication.user.roles.indexOf('admin') !== -1">
 						<a href="/#!/signup">Add User</a>
 					</li>
-					<li data-ng-show="authentication.user.roles.indexOf('admin') !== -1">
-						<a data-ng-controller="AuthenticationController" ng-click="toggleRegistration()">Registration is: {{registration}}</a>
+					<li data-ng-show="authentication.user.roles.indexOf('admin') !== -1" data-ng-controller="AuthenticationController">
+						<a>Registration is: <b><span ng-show="registration === 'open'" style="color:green">OPEN</span><span ng-show="registration === 'closed'" style="color:red">CLOSED</span></b></a>
 					</li>
 					<li>
 						<a href="/#!/settings/list" id="userDirectory">User Directory</a>
